@@ -3,25 +3,34 @@ package borell.com.suino;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.facebook.appevents.AppEventsLogger;
-
 import java.security.MessageDigest;
 
 
-public class Suino extends ActionBarActivity {
+public class Suino extends FragmentActivity {
+
+LoginFragment loginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_suino);
-        getKayHash();
+
+
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        loginFragment  = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_login);
     }
 
     @Override
@@ -29,7 +38,7 @@ public class Suino extends ActionBarActivity {
         super.onResume();
 
         // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
+        //AppEventsLogger.activateApp(this);
     }
 
     @Override
@@ -37,8 +46,9 @@ public class Suino extends ActionBarActivity {
         super.onPause();
 
         // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
+        //AppEventsLogger.deactivateApp(this);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,7 +73,7 @@ public class Suino extends ActionBarActivity {
     }
 
 
-    public void getKayHash(){
+    public void getKeyHash(){
 
                 try {
             PackageInfo info = getPackageManager().getPackageInfo(
