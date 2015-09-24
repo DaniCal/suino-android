@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.appevents.AppEventsLogger;
+
 import java.security.MessageDigest;
 
 
@@ -22,6 +24,21 @@ public class Suino extends ActionBarActivity {
         getKayHash();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,7 +67,7 @@ public class Suino extends ActionBarActivity {
 
                 try {
             PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.dok.daniellohse.itstimeto",
+                    "borell.com.suino",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
