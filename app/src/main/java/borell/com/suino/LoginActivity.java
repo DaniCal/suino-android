@@ -1,32 +1,23 @@
 package borell.com.suino;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.security.MessageDigest;
 
-
-public class Suino extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suino);
-        getKayHash();
+        setContentView(R.layout.activity_login);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_suino, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -43,22 +34,5 @@ public class Suino extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void getKayHash(){
-
-                try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.dok.daniellohse.itstimeto",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (Exception e) {
-
-        }
     }
 }
