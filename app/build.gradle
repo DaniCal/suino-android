@@ -25,4 +25,5 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'com.android.support:recyclerview-v7:22.2.+'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.google.code.gson:gson:1.7.2'
 }

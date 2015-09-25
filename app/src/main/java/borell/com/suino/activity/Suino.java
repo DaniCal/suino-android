@@ -24,11 +24,12 @@ import borell.com.suino.R;
 import borell.com.suino.fragment.SuinoFragment;
 
 
-public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener{
+public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, UIInterface{
 
     private FragmentDrawer drawerFragment;
-//    private LoginFragment loginFragment;
+    private LoginFragment loginFragment;
     private Toolbar mToolbar;
+    private boolean loginSession = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-//        loginFragment  = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_login);
+        loginFragment  = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_login);
     }
 
     @Override
@@ -107,10 +108,6 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
                 fragment = new SuinoFragment();
                 title = getString(R.string.title_home);
                 break;
-            case 1:
-                fragment = new LoginFragment();
-                title = getString(R.string.title_friends);
-                break;
             default:
                 break;
         }
@@ -140,6 +137,26 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
             }
         } catch (Exception e) {
 
+        }
+    }
+
+    @Override
+    public void onShowLogin() {
+        loginFragment.show();
+        loginSession = true;
+    }
+
+    @Override
+    public void onHideLogin() {
+        loginFragment.show();
+        loginSession = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(loginSession){
+            loginFragment.hide();
+            loginSession = true;
         }
     }
 }

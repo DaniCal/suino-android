@@ -43,7 +43,6 @@ public class LoginFragment extends Fragment {
     AccessToken accessToken;
     ProfileTracker profileTracker;
     Activity activity;
-    Profile currentProfile;
     SuinoUser user;
     HttpUtils httpUtils;
 
@@ -63,12 +62,12 @@ public class LoginFragment extends Fragment {
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
-
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        getView().setVisibility(View.GONE);
         loginButton = (LoginButton) getView().findViewById(R.id.login_button);
 
 
@@ -169,34 +168,48 @@ public class LoginFragment extends Fragment {
         profileTracker.stopTracking();
     }
 
+    public void show(){
+        getView().setVisibility(View.VISIBLE);
+    }
+
+    public void hide(){
+        getView().setVisibility(View.GONE);
+    }
+
 
     private void login(){
 
         httpUtils.getRequest(user.createLoginUrl(), new HttpCallback() {
             @Override
             public void onSuccess(Response response) {
-                Toast.makeText(activity, "Http Success: " + response.code(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Login Success: " + response.code(), Toast.LENGTH_SHORT).show();
+                if(response.code() == 204){
+                    register();
+                }else if(response.code() == 200){
+
+                }
             }
 
             @Override
             public void onError() {
-                Toast.makeText(activity, "Http Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Login Error", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
     private void register(){
-        httpUtils.postRequest(user.createLoginUrl(),"",  new HttpCallback() {
+        httpUtils.postRequest(user.createRegisterUrl(),user.createRegisterJson(),  new HttpCallback() {
             @Override
             public void onSuccess(Response response) {
-                Toast.makeText(activity, "Http Success: " + response.code(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Register Success: " + response.code(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Register Success: " + response.message(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onError() {
-                Toast.makeText(activity, "Http Error", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(activity, "Register Error", Toast.LENGTH_SHORT).show();
             }
         });
     }

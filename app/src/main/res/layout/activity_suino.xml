@@ -39,6 +39,15 @@
         android:layout="@layout/fragment_navigation_drawer"
         tools:layout="@layout/fragment_navigation_drawer" />
 
+    <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:name="borell.com.suino.fragment.LoginFragment"
+        android:id="@+id/fragment_login"
+        android:layout_weight="2"
+        >
+    </fragment>
+
 
 </android.support.v4.widget.DrawerLayout>
 

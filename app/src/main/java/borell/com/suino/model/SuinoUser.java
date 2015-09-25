@@ -4,12 +4,24 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.facebook.Profile;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+
+import borell.com.suino.activity.Suino;
 
 
 public class SuinoUser {
@@ -62,16 +74,13 @@ public class SuinoUser {
         return url.toString();
     }
 
-//    public void login(){
-//        try {
-//            get(createLoginUrl());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
+    public String createRegisterJson(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(SuinoUser.class, new SuinoUserSerializer());
+//        gsonBuilder.registerTypeAdapter(ITTInvited.class, new InvitedDeserializer());
+        final Gson gson = gsonBuilder.create();
+        return gson.toJsonTree(this, SuinoUser.class).toString();
+    }
 
     public String getFbFirstName() {
         return fbFirstName;
@@ -100,4 +109,37 @@ public class SuinoUser {
     public String getFbGender() {
         return fbGender;
     }
+
+
+    private class SuinoUserSerializer implements JsonSerializer<SuinoUser> {
+
+        @Override
+        public JsonElement serialize(SuinoUser src, Type typeOfSrc, JsonSerializationContext context) {
+            final JsonObject jsonObject = new JsonObject();
+
+
+            jsonObject.addProperty("fbId", getFbId());
+            jsonObject.addProperty("fbName", getFbFirstName());
+            jsonObject.addProperty("email", getFbEmail());
+            jsonObject.addProperty("platform", "android");
+            jsonObject.addProperty("deviceToken", "123123");
+
+            return jsonObject;
+        }
+    }
+
+//    private class SuinoUserDeserializer implements JsonDeserializer<SuinoUser> {
+//        public SuinoUser deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+//                throws JsonParseException {
+//
+//            final JsonObject jsonObject = json.getAsJsonObject();
+//
+//            final String fbId = jsonObject.get("fbId").getAsString();
+//            final String fbName = jsonObject.get("fbName").getAsString();
+//
+//
+//            return new SuinoUser(fb_id, fb_name, readString);
+//
+//        }
+//    }
 }
