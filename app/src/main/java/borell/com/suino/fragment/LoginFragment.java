@@ -16,12 +16,20 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+
 import borell.com.suino.R;
+import borell.com.suino.model.SuinoUser;
 
 
 public class LoginFragment extends Fragment {
@@ -31,6 +39,8 @@ public class LoginFragment extends Fragment {
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
     ProfileTracker profileTracker;
+    Profile currentProfile;
+    SuinoUser user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +64,11 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         loginButton = (LoginButton) getView().findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions("user_likes");
+        loginButton.setReadPermissions("public_profile");
+
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_friends, user_likes"));
         // If using in a fragment
         loginButton.setFragment(this);
         // Other app specific specialization
@@ -76,8 +91,7 @@ public class LoginFragment extends Fragment {
             protected void onCurrentProfileChanged(
                     Profile oldProfile,
                     Profile currentProfile) {
-                Log.d("FacebookLogin", "Profile");
-
+                user = new SuinoUser(currentProfile);
             }
         };
         // If the access token is available already assign it.
@@ -89,6 +103,34 @@ public class LoginFragment extends Fragment {
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(getActivity(), "Login Succeed", Toast.LENGTH_SHORT).show();
                 Log.d("FacebookLogin", "Succeed");
+
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+
+                                try {
+                                    String email = object.getString("email");
+                                    String gender = object.getString("gender");
+                                    if(user != null){
+                                        user.setFbEmail(email);
+                                        user.setFbGender(gender);
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, name, email, gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+
             }
 
             @Override
