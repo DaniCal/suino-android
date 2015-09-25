@@ -15,7 +15,9 @@ public class HttpManager {
     private static OkHttpClient client = new OkHttpClient();
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
-    public HttpManager(){}
+    public HttpManager(){
+
+    }
 
 
     public void getRequest(String url, HttpCallback callback){
