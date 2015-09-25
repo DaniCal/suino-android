@@ -148,7 +148,7 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
 
     @Override
     public void onHideLogin() {
-        loginFragment.show();
+        loginFragment.hide();
         loginSession = true;
     }
 

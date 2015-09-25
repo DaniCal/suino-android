@@ -1,4 +1,4 @@
-package borell.com.suino;
+package borell.com.suino.Http;
 
 import com.squareup.okhttp.Response;
 

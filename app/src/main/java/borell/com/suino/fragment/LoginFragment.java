@@ -29,9 +29,10 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-import borell.com.suino.HttpCallback;
-import borell.com.suino.HttpUtils;
+import borell.com.suino.Http.HttpCallback;
+import borell.com.suino.Http.HttpManager;
 import borell.com.suino.R;
+import borell.com.suino.activity.UIInterface;
 import borell.com.suino.model.SuinoUser;
 
 
@@ -44,7 +45,8 @@ public class LoginFragment extends Fragment {
     ProfileTracker profileTracker;
     Activity activity;
     SuinoUser user;
-    HttpUtils httpUtils;
+    HttpManager httpUtils;
+    UIInterface mCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +56,7 @@ public class LoginFragment extends Fragment {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
         activity = getActivity();
-        httpUtils = new HttpUtils();
+        httpUtils = new HttpManager();
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -62,6 +64,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
+        mCallback = (UIInterface) activity;
     }
 
     @Override
@@ -182,11 +185,10 @@ public class LoginFragment extends Fragment {
         httpUtils.getRequest(user.createLoginUrl(), new HttpCallback() {
             @Override
             public void onSuccess(Response response) {
-                Toast.makeText(activity, "Login Success: " + response.code(), Toast.LENGTH_SHORT).show();
                 if(response.code() == 204){
                     register();
                 }else if(response.code() == 200){
-
+                    mCallback.onHideLogin();
                 }
             }
 
@@ -202,9 +204,9 @@ public class LoginFragment extends Fragment {
         httpUtils.postRequest(user.createRegisterUrl(),user.createRegisterJson(),  new HttpCallback() {
             @Override
             public void onSuccess(Response response) {
-                Toast.makeText(activity, "Register Success: " + response.code(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(activity, "Register Success: " + response.message(), Toast.LENGTH_SHORT).show();
-
+                if(response.code() == 201){
+                    mCallback.onHideLogin();
+                }
             }
 
             @Override

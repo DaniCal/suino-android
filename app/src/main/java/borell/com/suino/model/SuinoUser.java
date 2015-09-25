@@ -1,27 +1,20 @@
 package borell.com.suino.model;
 
 import android.net.Uri;
-import android.util.Log;
 
 import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 
-import borell.com.suino.activity.Suino;
+import borell.com.suino.Http.HttpConfig;
+import borell.com.suino.Http.HttpValues;
 
 
 public class SuinoUser {
@@ -32,6 +25,13 @@ public class SuinoUser {
     private Uri fbPictureLink;
     private String fbEmail;
     private String fbGender;
+
+    private static final String VALUE_FB_NAME = "fbName";
+    private static final String VALUE_FB_ID = "fbId";
+    private static final String VALUE_DEVICE_TOKEN = "fbId";
+    private static final String VALUE_PLATFORM = "platform";
+    private static final String VALUE_EMAIL = "email";
+
 
     public SuinoUser(Profile profile){
         this.fbFirstName = profile.getFirstName();
@@ -53,13 +53,13 @@ public class SuinoUser {
     public String createLoginUrl(){
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
-                .host("192.168.1.65")
-                .port(3000)
-                .addPathSegment("login")
-                .addQueryParameter("fbName", this.getFbFirstName())
-                .addQueryParameter("fbId", this.getFbId())
-                .addQueryParameter("deviceToken", "123123")
-                .addQueryParameter("platform", "android")
+                .host(HttpConfig.HOST)
+                .port(HttpConfig.PORT)
+                .addPathSegment(HttpValues.PATH_LOGIN)
+                .addQueryParameter(VALUE_FB_NAME, this.getFbFirstName())
+                .addQueryParameter(VALUE_FB_ID, this.getFbId())
+                .addQueryParameter(VALUE_DEVICE_TOKEN, "123123")
+                .addQueryParameter(VALUE_PLATFORM, "android")
                 .build();
         return url.toString();
     }
@@ -67,9 +67,9 @@ public class SuinoUser {
     public String createRegisterUrl(){
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
-                .host("192.168.1.65")
-                .port(3000)
-                .addPathSegment("register")
+                .host(HttpConfig.HOST)
+                .port(HttpConfig.PORT)
+                .addPathSegment(HttpValues.PATH_REGISTER)
                 .build();
         return url.toString();
     }
@@ -77,7 +77,6 @@ public class SuinoUser {
     public String createRegisterJson(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(SuinoUser.class, new SuinoUserSerializer());
-//        gsonBuilder.registerTypeAdapter(ITTInvited.class, new InvitedDeserializer());
         final Gson gson = gsonBuilder.create();
         return gson.toJsonTree(this, SuinoUser.class).toString();
     }
@@ -118,11 +117,11 @@ public class SuinoUser {
             final JsonObject jsonObject = new JsonObject();
 
 
-            jsonObject.addProperty("fbId", getFbId());
-            jsonObject.addProperty("fbName", getFbFirstName());
-            jsonObject.addProperty("email", getFbEmail());
-            jsonObject.addProperty("platform", "android");
-            jsonObject.addProperty("deviceToken", "123123");
+            jsonObject.addProperty(VALUE_FB_ID, getFbId());
+            jsonObject.addProperty(VALUE_FB_NAME, getFbFirstName());
+            jsonObject.addProperty(VALUE_EMAIL, getFbEmail());
+            jsonObject.addProperty(VALUE_PLATFORM, "android");
+            jsonObject.addProperty(VALUE_DEVICE_TOKEN, "123123");
 
             return jsonObject;
         }

@@ -1,4 +1,4 @@
-package borell.com.suino;
+package borell.com.suino.Http;
 
 import android.os.AsyncTask;
 
@@ -11,11 +11,11 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 
 
-public class HttpUtils {
+public class HttpManager {
     private static OkHttpClient client = new OkHttpClient();
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
-    public HttpUtils(){}
+    public HttpManager(){}
 
 
     public void getRequest(String url, HttpCallback callback){
