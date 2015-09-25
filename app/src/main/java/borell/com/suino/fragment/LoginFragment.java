@@ -22,12 +22,15 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import borell.com.suino.HttpCallback;
+import borell.com.suino.HttpUtils;
 import borell.com.suino.R;
 import borell.com.suino.model.SuinoUser;
 
@@ -39,8 +42,10 @@ public class LoginFragment extends Fragment {
     AccessTokenTracker accessTokenTracker;
     AccessToken accessToken;
     ProfileTracker profileTracker;
+    Activity activity;
     Profile currentProfile;
     SuinoUser user;
+    HttpUtils httpUtils;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +54,8 @@ public class LoginFragment extends Fragment {
 
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
+        activity = getActivity();
+        httpUtils = new HttpUtils();
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -63,10 +70,7 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         loginButton = (LoginButton) getView().findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends");
-        loginButton.setReadPermissions("email");
-        loginButton.setReadPermissions("user_likes");
-        loginButton.setReadPermissions("public_profile");
+
 
         loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_friends, user_likes"));
         // If using in a fragment
@@ -91,7 +95,9 @@ public class LoginFragment extends Fragment {
             protected void onCurrentProfileChanged(
                     Profile oldProfile,
                     Profile currentProfile) {
-                user = new SuinoUser(currentProfile);
+                if(currentProfile != null && currentProfile.getId() != null){
+                    user = new SuinoUser(currentProfile);
+                }
             }
         };
         // If the access token is available already assign it.
@@ -100,7 +106,7 @@ public class LoginFragment extends Fragment {
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 Toast.makeText(getActivity(), "Login Succeed", Toast.LENGTH_SHORT).show();
                 Log.d("FacebookLogin", "Succeed");
 
@@ -119,6 +125,7 @@ public class LoginFragment extends Fragment {
                                     if(user != null){
                                         user.setFbEmail(email);
                                         user.setFbGender(gender);
+                                        login();
                                     }
 
                                 } catch (JSONException e) {
@@ -160,5 +167,37 @@ public class LoginFragment extends Fragment {
         super.onDestroy();
         accessTokenTracker.stopTracking();
         profileTracker.stopTracking();
+    }
+
+
+    private void login(){
+
+        httpUtils.getRequest(user.createLoginUrl(), new HttpCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                Toast.makeText(activity, "Http Success: " + response.code(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(activity, "Http Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void register(){
+        httpUtils.postRequest(user.createLoginUrl(),"",  new HttpCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                Toast.makeText(activity, "Http Success: " + response.code(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(activity, "Http Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }
