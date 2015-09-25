@@ -1,4 +1,4 @@
-package borell.com.suino;
+package borell.com.suino.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import borell.com.suino.R;
 
 
 public class LoginFragment extends Fragment {

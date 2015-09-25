@@ -1,11 +1,12 @@
-package borell.com.suino;
+package borell.com.suino.activity;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -13,10 +14,14 @@ import android.view.MenuItem;
 
 import java.security.MessageDigest;
 
+import borell.com.suino.fragment.LoginFragment;
+import borell.com.suino.R;
 
-public class Suino extends FragmentActivity {
 
-LoginFragment loginFragment;
+public class Suino extends AppCompatActivity {
+
+    private LoginFragment loginFragment;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,10 @@ LoginFragment loginFragment;
 
         setContentView(R.layout.activity_suino);
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
