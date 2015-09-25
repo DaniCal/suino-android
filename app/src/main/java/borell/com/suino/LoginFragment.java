@@ -66,9 +66,6 @@ public class LoginFragment extends Fragment {
                     AccessToken currentAccessToken) {
                 Log.d("FacebookLogin", "Access Token");
 
-                
-                // Set the access token using
-                // currentAccessToken when it's loaded or set.
             }
         };
 
@@ -78,6 +75,7 @@ public class LoginFragment extends Fragment {
                     Profile oldProfile,
                     Profile currentProfile) {
                 Log.d("FacebookLogin", "Profile");
+
             }
         };
         // If the access token is available already assign it.
@@ -118,6 +116,5 @@ public class LoginFragment extends Fragment {
         super.onDestroy();
         accessTokenTracker.stopTracking();
         profileTracker.stopTracking();
-
     }
 }
