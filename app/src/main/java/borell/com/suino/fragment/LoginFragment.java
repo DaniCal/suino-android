@@ -38,23 +38,43 @@ import borell.com.suino.model.SuinoUser;
 
 public class LoginFragment extends Fragment {
 
-    LoginButton loginButton;
-    CallbackManager callbackManager;
-    AccessTokenTracker accessTokenTracker;
-    AccessToken accessToken;
-    ProfileTracker profileTracker;
-    Activity activity;
-    SuinoUser user;
-    HttpManager httpUtils;
-    UIInterface mCallback;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private AccessToken accessToken;
+    private ProfileTracker profileTracker;
+    private Activity activity;
+    private SuinoUser user;
+    private HttpManager httpUtils;
+    private UIInterface mCallback;
+
+    FacebookCallback<LoginResult> facebookCallback =  new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(final LoginResult loginResult) {
+            GraphRequest request = createGraphRequest(loginResult.getAccessToken());
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id, name, email, gender, birthday");
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
+
+        @Override
+        public void onCancel() {
+            Toast.makeText(getActivity(), "Login Canceled", Toast.LENGTH_SHORT).show();
+            Log.d("FacebookLogin", "Cancel");
+        }
+
+        @Override
+        public void onError(FacebookException exception) {
+            Toast.makeText(getActivity(), "Login Error", Toast.LENGTH_SHORT).show();
+            Log.d("FacebookLogin", "Error");
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
-
         activity = getActivity();
         httpUtils = new HttpManager();
         return inflater.inflate(R.layout.fragment_login, container, false);
@@ -70,92 +90,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        getView().setVisibility(View.GONE);
-        loginButton = (LoginButton) getView().findViewById(R.id.login_button);
+        hide();
+        initFbLoginButton();
 
+        createAccessTokenTracker();
+        createProfileTracker();
 
-        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_friends, user_likes"));
-        // If using in a fragment
-        loginButton.setFragment(this);
-        // Other app specific specialization
-
-        callbackManager = CallbackManager.Factory.create();
-
-
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(
-                    AccessToken oldAccessToken,
-                    AccessToken currentAccessToken) {
-                Log.d("FacebookLogin", "Access Token");
-
-            }
-        };
-
-        profileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(
-                    Profile oldProfile,
-                    Profile currentProfile) {
-                if(currentProfile != null && currentProfile.getId() != null){
-                    user = new SuinoUser(currentProfile);
-                }
-            }
-        };
-        // If the access token is available already assign it.
         accessToken = AccessToken.getCurrentAccessToken();
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(final LoginResult loginResult) {
-                Toast.makeText(getActivity(), "Login Succeed", Toast.LENGTH_SHORT).show();
-                Log.d("FacebookLogin", "Succeed");
-
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(
-                                    JSONObject object,
-                                    GraphResponse response) {
-                                // Application code
-
-                                try {
-                                    String email = object.getString("email");
-                                    String gender = object.getString("gender");
-                                    if(user != null){
-                                        user.setFbEmail(email);
-                                        user.setFbGender(gender);
-                                        login();
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, name, email, gender, birthday");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getActivity(), "Login Canceled", Toast.LENGTH_SHORT).show();
-                Log.d("FacebookLogin", "Cancel");
-
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Toast.makeText(getActivity(), "Login Error", Toast.LENGTH_SHORT).show();
-                Log.d("FacebookLogin", "Error");
-
-            }
-        });
 
     }
     @Override
@@ -171,12 +112,77 @@ public class LoginFragment extends Fragment {
         profileTracker.stopTracking();
     }
 
+
+    public void initFbLoginButton(){
+        loginButton = (LoginButton) getView().findViewById(R.id.login_button);
+
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_friends, user_likes"));
+        // If using in a fragment
+        loginButton.setFragment(this);
+        // Other app specific specialization
+
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton.registerCallback(callbackManager, facebookCallback);
+    }
+
+    private void createAccessTokenTracker(){
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                Log.d("FacebookLogin", "Access Token");
+
+            }
+        };
+    }
+
+    private void createProfileTracker(){
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(
+                    Profile oldProfile,
+                    Profile currentProfile) {
+                if(currentProfile != null && currentProfile.getId() != null){
+                    user = new SuinoUser(currentProfile);
+                }
+            }
+        };
+    }
+
+    private GraphRequest createGraphRequest(AccessToken accessToken){
+        GraphRequest request = GraphRequest.newMeRequest(
+                accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            String email = object.getString("email");
+                            String gender = object.getString("gender");
+                            if(user != null){
+                                user.setFbEmail(email);
+                                user.setFbGender(gender);
+                                login();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        return request;
+    }
+
     public void show(){
-        getView().setVisibility(View.VISIBLE);
+        if(getView() != null){
+            getView().setVisibility(View.VISIBLE);
+        }
     }
 
     public void hide(){
-        getView().setVisibility(View.GONE);
+        if(getView() != null){
+            getView().setVisibility(View.GONE);
+        }
     }
 
 
@@ -189,6 +195,8 @@ public class LoginFragment extends Fragment {
                     register();
                 }else if(response.code() == 200){
                     mCallback.onHideLogin();
+                }else{
+                    Toast.makeText(getActivity(), "Login Error" + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -206,6 +214,8 @@ public class LoginFragment extends Fragment {
             public void onSuccess(Response response) {
                 if(response.code() == 201){
                     mCallback.onHideLogin();
+                }else{
+                    Toast.makeText(getActivity(), "Register Error" + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 

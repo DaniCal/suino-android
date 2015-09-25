@@ -28,7 +28,7 @@ public class SuinoUser {
 
     private static final String VALUE_FB_NAME = "fbName";
     private static final String VALUE_FB_ID = "fbId";
-    private static final String VALUE_DEVICE_TOKEN = "fbId";
+    private static final String VALUE_DEVICE_TOKEN = "deviceToken";
     private static final String VALUE_PLATFORM = "platform";
     private static final String VALUE_EMAIL = "email";
 
