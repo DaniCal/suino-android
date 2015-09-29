@@ -4,7 +4,7 @@
     <color name="colorPrimaryHollow">#AAF50057</color>
     <color name="colorPrimaryDark">#C51162</color>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#FFFFFF</color>
+    <color name="windowBackground">#E0E0E0</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FF80AB</color>
 </resources>

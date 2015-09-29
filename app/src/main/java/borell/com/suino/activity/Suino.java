@@ -1,5 +1,6 @@
 package borell.com.suino.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -59,7 +60,6 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
     @Override
     protected void onResume() {
         super.onResume();
-
         // Logs 'install' and 'app activate' App Events.
         //AppEventsLogger.activateApp(this);
     }
@@ -67,7 +67,6 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
     @Override
     protected void onPause() {
         super.onPause();
-
         // Logs 'app deactivate' App Event.
         //AppEventsLogger.deactivateApp(this);
     }
@@ -150,6 +149,12 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
     public void onHideLogin() {
         loginFragment.hide();
         loginSession = true;
+    }
+
+    @Override
+    public void onCreateCourse() {
+        Intent intent = new Intent(this, CreateCourseActivity.class);
+        startActivity(intent);
     }
 
     @Override

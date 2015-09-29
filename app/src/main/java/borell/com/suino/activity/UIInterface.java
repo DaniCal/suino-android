@@ -6,5 +6,6 @@ package borell.com.suino.activity;
 public interface UIInterface {
     void onShowLogin();
     void onHideLogin();
+    void onCreateCourse();
 
 }

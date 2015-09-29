@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/windowBackground">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <FrameLayout
+        android:id="@+id/container_create_course"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+    </FrameLayout>
+
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="bottom"
+        android:layout_width="fill_parent"
+        android:layout_margin="@dimen/card_margin_side"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="6dp">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textSize="18dp"
+            android:text="Create Course"
+            android:id="@+id/button_create_course"
+            android:textColor="@color/windowBackground"
+
+            />
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

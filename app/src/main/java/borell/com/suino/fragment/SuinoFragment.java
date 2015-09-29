@@ -18,6 +18,7 @@ import borell.com.suino.activity.UIInterface;
 public class SuinoFragment extends Fragment {
 
     Button loginButton;
+    Button createCourse;
     private UIInterface mCallback;
 
     public SuinoFragment() {
@@ -44,6 +45,14 @@ public class SuinoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mCallback.onShowLogin();
+            }
+        });
+
+        createCourse = (Button) getView().findViewById((R.id.button_create_course_test));
+        createCourse.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mCallback.onCreateCourse();
             }
         });
     }
