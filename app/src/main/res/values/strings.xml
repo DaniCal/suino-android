@@ -17,6 +17,14 @@
         <item>@string/nav_item_notifications</item>
     </string-array>
 
+    <string-array name="category_list">
+        <item>"Sport and games"</item>
+        <item>"Languages"</item>
+        <item>"Music and instruments"</item>
+        <item>"Cooking and baking"</item>
+
+    </string-array>
+
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
