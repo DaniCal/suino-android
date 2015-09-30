@@ -1,5 +1,6 @@
 package borell.com.suino.fragment;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,10 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 
 import borell.com.suino.R;
@@ -19,6 +24,8 @@ public class SelectLocationFragment extends Fragment {
 
     MyMapFragment mapFragment;
     CardView confirmLocation;
+    ImageView iv_location;
+    FrameLayout mapContainer;
 
     @Override
     public void onResume() {
@@ -52,6 +59,25 @@ public class SelectLocationFragment extends Fragment {
                 if (mapFragment != null) {
                     mCallback.onConfirmLocation(mapFragment.getSelectLocation());
                 }
+            }
+        });
+
+        initLocationImage();
+
+
+
+    }
+
+    private void initLocationImage(){
+        mapContainer = (FrameLayout) getView().findViewById(R.id.container_map);
+        iv_location = (ImageView) getView().findViewById(R.id.iv_location);
+        ViewTreeObserver vto = iv_location.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                iv_location.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                iv_location.setY(iv_location.getY() - iv_location.getHeight()/2);
+                return true;
             }
         });
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import borell.com.suino.R;
+import borell.com.suino.activity.CreateCourseInterface;
 
 
 public class MyMapFragment extends SupportMapFragment {
@@ -28,6 +31,7 @@ public class MyMapFragment extends SupportMapFragment {
     LocationManager locationManager;
 
     Marker locationMarker;
+
 
     @Override
     public void onResume() {
@@ -58,6 +62,14 @@ public class MyMapFragment extends SupportMapFragment {
         return view;
     }
 
+    @Override
+    public void onAttach(final Activity activity){
+        super.onAttach(activity);
+
+    }
+
+
+
     LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
 
@@ -69,6 +81,8 @@ public class MyMapFragment extends SupportMapFragment {
 
         public void onProviderDisabled(String provider) {}
     };
+
+
 
 
 
@@ -95,7 +109,7 @@ public class MyMapFragment extends SupportMapFragment {
     }
 
     private void setLatLng(LatLng latlng){
-        CameraPosition position = new CameraPosition(latlng, 14, 0 ,0 );
+        CameraPosition position = new CameraPosition(latlng, 16, 0 ,0 );
         CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
         getMap().moveCamera(update);
     }
