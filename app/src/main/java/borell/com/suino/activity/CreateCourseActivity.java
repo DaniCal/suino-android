@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import borell.com.suino.R;
 import borell.com.suino.fragment.CreateCourseFragment;
+import borell.com.suino.fragment.MyMapFragment;
 import borell.com.suino.fragment.SuinoFragment;
 
 
@@ -35,22 +36,6 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     private Toolbar mToolbar;
     private Button createCourse;
     private Activity activity;
-    String locationProvider = LocationManager.NETWORK_PROVIDER;
-
-    LocationManager locationManager;
-
-    LocationListener locationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            // Called when a new location is found by the network location provider.
-            makeUseOfNewLocation(location);
-        }
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-        public void onProviderEnabled(String provider) {}
-
-        public void onProviderDisabled(String provider) {}
-    };
 
     private void makeUseOfNewLocation(Location location) {
     }
@@ -77,8 +62,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
             }
         });
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
 
 
 
@@ -104,29 +88,14 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
 
     @Override
     public void showMap(){
-        GoogleMapOptions options = new GoogleMapOptions();
-        options.tiltGesturesEnabled(false);
-        options.zoomControlsEnabled(false);
-        LatLng latlng;
-        Location location = locationManager.getLastKnownLocation(locationProvider);
-        latlng = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraPosition position = new CameraPosition(latlng, 14, 0 ,0 );
 
-        options.camera(position);
-
-
-
-
-
-
-        SupportMapFragment mMapFragment = SupportMapFragment.newInstance(options);
+        SupportMapFragment mMapFragment = new MyMapFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_create_course, mMapFragment);
         fragmentTransaction.commit();
 
-//        Marker marker = mMapFragment.getMap().addMarker(new MarkerOptions()
-//                .position(latlng));
+
 
         
     }
