@@ -26,8 +26,6 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     private Toolbar mToolbar;
     private Button createCourse;
     private Activity activity;
-    private SuinoCourse course;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     }
 
     @Override
-    public void showMap(){
+    public void onShowMap(){
         SupportMapFragment mMapFragment = new MyMapFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

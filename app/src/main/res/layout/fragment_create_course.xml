@@ -13,8 +13,8 @@
         android:id="@+id/cv_category"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_marginLeft="@dimen/card_margin_side"
-        android:layout_marginRight="@dimen/card_margin_side"
+        android:layout_marginEnd="@dimen/card_margin_side"
+        android:layout_marginStart="@dimen/card_margin_side"
         android:layout_marginTop="@dimen/card_margin_top"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -34,21 +34,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="@dimen/card_margin_side"
+                android:layout_marginEnd="@dimen/card_margin_side"
                 android:layout_marginTop="5dp"
-
-                android:textSize="14dp"
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/textColorHollow"
                 android:text="Category"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/card_margin_side"
-                android:textSize="18dp"
+                android:textSize="@dimen/text_size_medium"
                 android:layout_centerHorizontal="true"
-                android:text="Sport and Games"
+                android:textColor="@color/textColorHollow"
+                android:text="Choose Category"
                 android:id="@+id/tv_category"
 
                 />
@@ -63,8 +64,8 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/card_margin_side"
-        android:layout_marginRight="@dimen/card_margin_side"
+        android:layout_marginEnd="@dimen/card_margin_side"
+        android:layout_marginStart="@dimen/card_margin_side"
         android:layout_marginTop="@dimen/card_margin_top"
         card_view:cardCornerRadius="4dp">
         <RelativeLayout
@@ -75,12 +76,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
 
-                android:layout_marginRight="@dimen/card_margin_side"
-                android:layout_marginTop="5dp"
-                android:textSize="14dp"
+                android:layout_marginEnd="@dimen/card_margin_side"
+                android:layout_marginTop="@dimen/card_margin_top"
+                android:textSize="@dimen/text_size_tiny"
                 android:text="Price"/>
 
             <TextView
@@ -88,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginTop="@dimen/card_margin_side"
-                android:textSize="18dp"
+                android:textSize="@dimen/text_size_medium"
                 android:layout_centerHorizontal="true"
                 android:text="15$ per hour"
                 android:id="@+id/tv_price"
@@ -100,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:id="@+id/seekBar"
+                android:id="@+id/sb_price"
                 android:layout_below="@id/tv_price"
                 android:indeterminate="false" />
 
@@ -115,8 +116,8 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/card_margin_side"
-        android:layout_marginRight="@dimen/card_margin_side"
+        android:layout_marginEnd="@dimen/card_margin_side"
+        android:layout_marginStart="@dimen/card_margin_side"
         android:layout_marginTop="@dimen/card_margin_top"
         card_view:cardCornerRadius="4dp">
     <RelativeLayout
@@ -160,8 +161,8 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/card_margin_side"
-        android:layout_marginRight="@dimen/card_margin_side"
+        android:layout_marginEnd="@dimen/card_margin_side"
+        android:layout_marginStart="@dimen/card_margin_side"
         android:layout_marginTop="@dimen/card_margin_top"
         card_view:cardCornerRadius="4dp">
         <RelativeLayout
@@ -190,8 +191,8 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/card_margin_side"
-        android:layout_marginRight="@dimen/card_margin_side"
+        android:layout_marginEnd="@dimen/card_margin_side"
+        android:layout_marginStart="@dimen/card_margin_side"
         android:layout_marginTop="@dimen/card_margin_top"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -219,19 +220,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/windowBackground"
+                android:textColor="@color/textColorPrimary"
                 android:layout_margin="@dimen/card_margin_top"
-                android:textSize="18dp"
+                android:textSize="@dimen/text_size_medium"
                 android:text="Select your location"
                 />
 
     </RelativeLayout>
-
-        <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--android:name="com.google.android.gms.maps.MapFragment"-->
-            <!--android:id="@+id/map"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
