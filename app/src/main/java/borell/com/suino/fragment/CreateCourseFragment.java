@@ -1,15 +1,19 @@
 package borell.com.suino.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -24,6 +28,8 @@ public class CreateCourseFragment extends Fragment {
 
     private CreateCourseInterface mCallback;
     private Activity activity;
+    private ScrollView scrollView;
+    private Toolbar toolbar;
     private CardView cv_category;
     private TextView tv_category;
     private TextView tv_price;
@@ -31,6 +37,7 @@ public class CreateCourseFragment extends Fragment {
     private CardView cv_location;
     private CardView cv_increase;
     private CardView cv_decrease;
+    private CardView cv_description;
     private TextView tv_groupSize;
     private EditText et_description;
     private SuinoCourse course;
@@ -72,6 +79,7 @@ public class CreateCourseFragment extends Fragment {
         if(course == null){
             course = new SuinoCourse("123123","Dani","somedomain.com/pic");
         }
+        scrollView = (ScrollView) getView().findViewById(R.id.scrollView_createCourse);
         initCardViews();
     }
 
@@ -191,7 +199,18 @@ public class CreateCourseFragment extends Fragment {
     }
 
     private void initDescriptionCardView(){
+
         et_description = (EditText) getView().findViewById(R.id.et_description);
+        cv_description = (CardView) getView().findViewById(R.id.cv_description);
+        cv_description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                et_description.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(et_description, InputMethodManager.SHOW_IMPLICIT);
+                scrollView.scrollTo(0, cv_description.getTop());
+            }
+        });
         et_description.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

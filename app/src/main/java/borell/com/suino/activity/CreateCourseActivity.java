@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import borell.com.suino.model.SuinoCourse;
 
 public class CreateCourseActivity extends AppCompatActivity implements CreateCourseInterface {
     private Toolbar mToolbar;
-    private Button createCourse;
+    private CardView createCourse;
     private Activity activity;
     Fragment createCourseFragment;
     SuinoCourse course;
@@ -43,11 +44,10 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         createCourseFragment = new CreateCourseFragment();
         displayView();
         activity = this;
-        createCourse = (Button) findViewById(R.id.button_create_course);
+        createCourse = (CardView) findViewById(R.id.cv_createCourse);
         createCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "TODO: Create Course", Toast.LENGTH_SHORT).show();
             }
         });
     }
