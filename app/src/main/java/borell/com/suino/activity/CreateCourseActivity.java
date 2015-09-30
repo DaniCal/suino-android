@@ -73,6 +73,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_create_course, mMapFragment);
         fragmentTransaction.commit();
+        createCourse.setVisibility(View.GONE);
     }
 
     @Override
@@ -88,6 +89,10 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
             fragmentTransaction.replace(R.id.container_create_course, createCourseFragment);
             fragmentTransaction.commit();
         }
+
+        if(createCourse != null){
+            createCourse.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -95,6 +100,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_create_course);
         if (f instanceof MyMapFragment){
             displayView();
+
         }else if(f instanceof CreateCourseFragment){
             Intent intent = new Intent(this, Suino.class);
             startActivity(intent);

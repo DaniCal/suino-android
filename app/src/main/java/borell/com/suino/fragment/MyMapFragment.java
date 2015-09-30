@@ -15,6 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MyMapFragment extends SupportMapFragment {
@@ -22,6 +23,8 @@ public class MyMapFragment extends SupportMapFragment {
     String locationProvider = LocationManager.NETWORK_PROVIDER;
 
     LocationManager locationManager;
+
+    Marker locationMarker;
 
     LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
@@ -82,7 +85,7 @@ public class MyMapFragment extends SupportMapFragment {
         setLatLng(latlng);
 
 
-        getMap().addMarker(new MarkerOptions()
+        locationMarker = getMap().addMarker(new MarkerOptions()
                 .position(getMap().getCameraPosition().target));
 
     }
