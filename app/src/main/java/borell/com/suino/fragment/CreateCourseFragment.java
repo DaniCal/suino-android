@@ -2,33 +2,26 @@ package borell.com.suino.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.model.LatLng;
-import com.squareup.okhttp.Response;
 
-import borell.com.suino.Http.HttpCallback;
-import borell.com.suino.Http.HttpManager;
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
 import borell.com.suino.model.SuinoCourse;
@@ -58,10 +51,14 @@ public class CreateCourseFragment extends Fragment {
     private final int GROUP_SIZE_DEFAULT= 2;
     private final int DESCRIPTION_MAX = 200;
 
-    private HttpManager httpUtils;
-    RelativeLayout rl_map;
+    MapFormFragment mapFragment;
+    LatLng latLng;
 
     public CreateCourseFragment() {
+    }
+
+    public void setLatLng(LatLng latLng){
+        this.latLng = latLng;
     }
 
     @Override
@@ -82,7 +79,7 @@ public class CreateCourseFragment extends Fragment {
         mCallback = (CreateCourseInterface) activity;
         super.onAttach(activity);
         this.activity = activity;
-
+        initMap();
     }
 
     @Override
@@ -92,38 +89,22 @@ public class CreateCourseFragment extends Fragment {
             course = new SuinoCourse("123123","Dani","somedomain.com/pic");
         }
         scrollView = (ScrollView) getView().findViewById(R.id.scrollView_createCourse);
-        rl_map = (RelativeLayout) getView().findViewById(R.id.rl_map);
         initCardViews();
     }
 
+    private void initMap(){
+        MapFormFragment mapFragment = new MapFormFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_map_form, mapFragment);
+        fragmentTransaction.commit();
+        mapFragment.updateCamera(latLng);
+    }
+
     public void setLocation(LatLng latLng){
-        if(latLng != null){
+        if(latLng != null) {
             course.setLocation(latLng.longitude, latLng.latitude);
-            httpUtils = new HttpManager();
-
-            String main1 = "https://maps.googleapis.com/maps/api/staticmap?center=";
-            String main2 = "&zoom=15&size=2560x500";
-            main1 += latLng.latitude + "," + latLng.longitude + main2;
-
-
-            httpUtils.loadImageRequest(main1, new HttpCallback() {
-                @Override
-                public void onSuccess(Response response) {
-
-                }
-
-                @Override
-                public void onError() {
-                    Log.d("", "");
-                }
-
-                @Override
-                public void onSuccessLoadingImage(Bitmap result) {
-                    Drawable dr = new BitmapDrawable(result);
-                    rl_map.setBackground(dr);
-                }
-            });
-
+            this.latLng = latLng;
         }
     }
 
@@ -278,6 +259,7 @@ public class CreateCourseFragment extends Fragment {
     }
 
     private void initLocationCardView(){
+
         cv_location =(CardView) getView().findViewById(R.id.cv_location);
         cv_location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,6 +267,8 @@ public class CreateCourseFragment extends Fragment {
                 mCallback.onShowMap();
             }
         });
+
+
     }
 
     private void initCourseDateCardView(){

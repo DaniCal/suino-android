@@ -49,6 +49,8 @@ public class MyMapFragment extends SupportMapFragment {
     public void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager.removeUpdates(locationListener);
+
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
@@ -91,16 +93,13 @@ public class MyMapFragment extends SupportMapFragment {
         settings.setMyLocationButtonEnabled(true);
         settings.setTiltGesturesEnabled(false);
         settings.setZoomControlsEnabled(false);
-
+        getMap().setMyLocationEnabled(true);
+        
 
         LatLng latlng;
         Location location = locationManager.getLastKnownLocation(locationProvider);
         latlng = new LatLng(location.getLatitude(), location.getLongitude());
         setLatLng(latlng);
-
-
-        locationMarker = getMap().addMarker(new MarkerOptions()
-                .position(getMap().getCameraPosition().target));
 
     }
 

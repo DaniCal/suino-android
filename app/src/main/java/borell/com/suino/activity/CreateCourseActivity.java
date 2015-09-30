@@ -24,7 +24,6 @@ import borell.com.suino.model.SuinoCourse;
 public class CreateCourseActivity extends AppCompatActivity implements CreateCourseInterface {
     private Toolbar mToolbar;
     private CardView createCourse;
-    private Activity activity;
     CreateCourseFragment createCourseFragment;
     SuinoCourse course;
 
@@ -39,9 +38,10 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create Course");
-        createCourseFragment = new CreateCourseFragment();
+        if(createCourseFragment == null){
+            createCourseFragment = new CreateCourseFragment();
+        }
         displayView();
-        activity = this;
         createCourse = (CardView) findViewById(R.id.cv_createCourse);
         createCourse.setOnClickListener(new View.OnClickListener() {
             @Override
