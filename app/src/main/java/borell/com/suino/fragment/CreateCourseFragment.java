@@ -1,14 +1,15 @@
 package borell.com.suino.fragment;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -28,17 +29,33 @@ public class CreateCourseFragment extends Fragment {
     private TextView tv_price;
     private SeekBar sb_price;
     private CardView cv_location;
+    private CardView cv_increase;
+    private CardView cv_decrease;
+    private TextView tv_groupSize;
+    private EditText et_description;
     private SuinoCourse course;
 
     private final int PRICE_MAX = 50;
-    private final int PRICE_DEFAULT =15;
+    private final int PRICE_DEFAULT = 15;
+    private final int GROUP_SIZE_MAX = 20;
+    private final int GROUP_SIZE_DEFAULT= 2;
+    private final int DESCRIPTION_MAX = 200;
+
+
 
     public CreateCourseFragment() {
     }
 
     @Override
+    public void onCreate (Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_create_course, container, false);
     }
     @Override
@@ -52,8 +69,10 @@ public class CreateCourseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(course == null){
+            course = new SuinoCourse("123123","Dani","somedomain.com/pic");
+        }
         initCardViews();
-        course = new SuinoCourse("123123","Dani","somedomain.com/pic");
     }
 
     private void initCardViews(){
@@ -71,6 +90,10 @@ public class CreateCourseFragment extends Fragment {
     private void initCategoryCardView(){
         cv_category = (CardView) getView().findViewById(R.id.cv_category);
         tv_category = (TextView) getView().findViewById(R.id.tv_category);
+        if(course.getCategory() != null && !course.getCategory().isEmpty()){
+            tv_category.setText(course.getCategory());
+            tv_category.setTextColor(getResources().getColor(R.color.textColorPrimaryDark));
+        }
         cv_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +103,7 @@ public class CreateCourseFragment extends Fragment {
                         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                course.setDescription(text.toString());
+                                course.setCategory(text.toString());
                                 tv_category.setText(text);
                                 tv_category.setTextColor(getResources().getColor(R.color.textColorPrimaryDark));
                                 dialog.hide();
@@ -122,6 +145,44 @@ public class CreateCourseFragment extends Fragment {
     }
 
     private void initGroupSizeCardView(){
+        cv_increase = (CardView) getView().findViewById(R.id.cv_increase);
+        cv_decrease = (CardView) getView().findViewById(R.id.cv_decrease);
+        tv_groupSize = (TextView) getView().findViewById(R.id.tv_groupSize);
+        if(course.getGroupSize() != 0){
+            tv_groupSize.setText(course.getGroupSize() + " Curious Minds");
+        }else{
+            course.setGroupSize(GROUP_SIZE_DEFAULT);
+            tv_groupSize.setText(GROUP_SIZE_DEFAULT + " Curious Minds");
+        }
+
+
+        cv_decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int groupSize = course.getGroupSize() - 1;
+                if (groupSize < 1) {
+                    return;
+                }
+
+                course.setGroupSize(groupSize);
+                tv_groupSize.setText(groupSize + " Curious Minds");
+
+            }
+        });
+
+        cv_increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int groupSize = course.getGroupSize() + 1;
+                if(groupSize > GROUP_SIZE_MAX){
+                    return;
+                }
+                course.setGroupSize(groupSize);
+                tv_groupSize.setText(groupSize + " Curious Minds");
+            }
+        });
 
     }
 
@@ -130,7 +191,27 @@ public class CreateCourseFragment extends Fragment {
     }
 
     private void initDescriptionCardView(){
+        et_description = (EditText) getView().findViewById(R.id.et_description);
+        et_description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() > DESCRIPTION_MAX){
+                    et_description.setText(course.getDescription());
+                    return;
+                }
+                course.setDescription(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void initLocationCardView(){

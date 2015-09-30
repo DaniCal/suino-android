@@ -1,7 +1,7 @@
 package borell.com.suino.activity;
 
 import android.app.Activity;
-import android.location.Location;
+import android.content.Intent;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +26,8 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     private Toolbar mToolbar;
     private Button createCourse;
     private Activity activity;
+    Fragment createCourseFragment;
+    SuinoCourse course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,8 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create Course");
+        createCourseFragment = new CreateCourseFragment();
         displayView();
-
         activity = this;
         createCourse = (Button) findViewById(R.id.button_create_course);
         createCourse.setOnClickListener(new View.OnClickListener() {
@@ -73,14 +75,29 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         fragmentTransaction.commit();
     }
 
-    private void displayView() {
-        Fragment fragment = new CreateCourseFragment();
+    @Override
+    public void onSaveCourse(SuinoCourse course) {
+        this.course = course;
+    }
 
-        if (fragment != null) {
+    private void displayView() {
+
+        if (createCourseFragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_create_course, fragment);
+            fragmentTransaction.replace(R.id.container_create_course, createCourseFragment);
             fragmentTransaction.commit();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_create_course);
+        if (f instanceof MyMapFragment){
+            displayView();
+        }else if(f instanceof CreateCourseFragment){
+            Intent intent = new Intent(this, Suino.class);
+            startActivity(intent);
         }
     }
 }
