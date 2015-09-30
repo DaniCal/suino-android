@@ -11,15 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.SupportMapFragment;
 
+import com.google.android.gms.maps.model.LatLng;
 
 import borell.com.suino.R;
 import borell.com.suino.fragment.CreateCourseFragment;
-import borell.com.suino.fragment.MyMapFragment;
+import borell.com.suino.fragment.SelectLocationFragment;
 import borell.com.suino.model.SuinoCourse;
 
 
@@ -27,7 +25,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     private Toolbar mToolbar;
     private CardView createCourse;
     private Activity activity;
-    Fragment createCourseFragment;
+    CreateCourseFragment createCourseFragment;
     SuinoCourse course;
 
     @Override
@@ -68,7 +66,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
 
     @Override
     public void onShowMap(){
-        SupportMapFragment mMapFragment = new MyMapFragment();
+        SelectLocationFragment mMapFragment = new SelectLocationFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_create_course, mMapFragment);
@@ -79,6 +77,14 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     @Override
     public void onSaveCourse(SuinoCourse course) {
         this.course = course;
+    }
+
+    @Override
+    public void onConfirmLocation(LatLng latLng) {
+        if(latLng != null){
+            createCourseFragment.setLocation(latLng);
+            displayView();
+        }
     }
 
     private void displayView() {
@@ -98,7 +104,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     @Override
     public void onBackPressed() {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_create_course);
-        if (f instanceof MyMapFragment){
+        if (f instanceof SelectLocationFragment){
             displayView();
 
         }else if(f instanceof CreateCourseFragment){

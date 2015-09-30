@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.maps.model.LatLng;
 
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
@@ -81,6 +82,12 @@ public class CreateCourseFragment extends Fragment {
         }
         scrollView = (ScrollView) getView().findViewById(R.id.scrollView_createCourse);
         initCardViews();
+    }
+
+    public void setLocation(LatLng latLng){
+        if(latLng != null){
+            course.setLocation(latLng.longitude, latLng.latitude);
+        }
     }
 
     private void initCardViews(){

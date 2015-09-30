@@ -9,8 +9,8 @@ public class SuinoCourse {
     private String teacherFirstName;
     private String teacherFbPictureLink;
     private int level;
-    private int longitude;
-    private int latitude;
+    private double longitude;
+    private double latitude;
     private String category;
     private ArrayList<String> tags;
     //private ArrayList<String> material;
@@ -62,16 +62,16 @@ public class SuinoCourse {
         this.level = level;
     }
 
-    public void setLocation(int latitude, int longitude){
+    public void setLocation(double latitude, double longitude){
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public int getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public int getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
