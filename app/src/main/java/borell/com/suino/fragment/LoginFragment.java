@@ -2,6 +2,7 @@ package borell.com.suino.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -205,6 +206,11 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(activity, "Login Error", Toast.LENGTH_SHORT).show();
 
             }
+
+            @Override
+            public void onSuccessLoadingImage(Bitmap result) {
+
+            }
         });
     }
 
@@ -222,6 +228,11 @@ public class LoginFragment extends Fragment {
             @Override
             public void onError() {
                 Toast.makeText(activity, "Register Error", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccessLoadingImage(Bitmap result) {
+
             }
         });
     }

@@ -105,7 +105,7 @@ public class MyMapFragment extends SupportMapFragment {
     }
 
     public LatLng getSelectLocation(){
-        return locationMarker.getPosition();
+        return getMap().getCameraPosition().target;
     }
 
     private void setLatLng(LatLng latlng){
