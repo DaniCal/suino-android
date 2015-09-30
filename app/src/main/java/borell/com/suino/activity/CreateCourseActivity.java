@@ -1,12 +1,9 @@
 package borell.com.suino.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+
 import android.os.Bundle;
-//import android.support.v4.app.Fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,29 +13,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+
 
 import borell.com.suino.R;
 import borell.com.suino.fragment.CreateCourseFragment;
 import borell.com.suino.fragment.MyMapFragment;
-import borell.com.suino.fragment.SuinoFragment;
+import borell.com.suino.model.SuinoCourse;
 
 
 public class CreateCourseActivity extends AppCompatActivity implements CreateCourseInterface {
     private Toolbar mToolbar;
     private Button createCourse;
     private Activity activity;
+    private SuinoCourse course;
 
-    private void makeUseOfNewLocation(Location location) {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +40,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create Course");
-        displayView(0);
+        displayView();
 
         activity = this;
         createCourse = (Button) findViewById(R.id.button_create_course);
@@ -61,11 +50,6 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
                 Toast.makeText(activity, "TODO: Create Course", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
     }
 
     @Override
@@ -75,40 +59,24 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     @Override
     protected void onResume() {
         super.onResume();
-        // Logs 'install' and 'app activate' App Events.
-        //AppEventsLogger.activateApp(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // Logs 'app deactivate' App Event.
-        //AppEventsLogger.deactivateApp(this);
     }
 
     @Override
     public void showMap(){
-
         SupportMapFragment mMapFragment = new MyMapFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_create_course, mMapFragment);
         fragmentTransaction.commit();
-
-
-
-        
     }
 
-    private void displayView(int position) {
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new CreateCourseFragment();
-                break;
-            default:
-                break;
-        }
+    private void displayView() {
+        Fragment fragment = new CreateCourseFragment();
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
