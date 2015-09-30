@@ -13,14 +13,16 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import borell.com.suino.R;
+import borell.com.suino.activity.CreateCourseInterface;
 import borell.com.suino.activity.UIInterface;
 
 
 public class CreateCourseFragment extends Fragment {
 
-    private UIInterface mCallback;
+    private CreateCourseInterface mCallback;
     private Activity activity;
     private CardView cv_category;
+    private CardView cv_location;
 
     public CreateCourseFragment() {
     }
@@ -32,7 +34,7 @@ public class CreateCourseFragment extends Fragment {
     }
     @Override
     public void onAttach(final Activity activity){
-//        mCallback = (UIInterface) activity;
+        mCallback = (CreateCourseInterface) activity;
         super.onAttach(activity);
         this.activity = activity;
 
@@ -42,6 +44,13 @@ public class CreateCourseFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        cv_location =(CardView) getView().findViewById(R.id.cv_location);
+        cv_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCallback.showMap();
+            }
+        });
 
         cv_category = (CardView) getView().findViewById(R.id.cv_category);
         cv_category.setOnClickListener(new View.OnClickListener() {

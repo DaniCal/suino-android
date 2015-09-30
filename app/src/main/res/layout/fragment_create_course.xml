@@ -186,7 +186,7 @@
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view_5"
+        android:id="@+id/cv_location"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
@@ -226,6 +226,12 @@
                 />
 
     </RelativeLayout>
+
+        <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:name="com.google.android.gms.maps.MapFragment"-->
+            <!--android:id="@+id/map"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
