@@ -14,6 +14,8 @@
     <dimen name="card_height_medium">101dp</dimen>
     <dimen name="card_height_large">163dp</dimen>
     <dimen name="card_radius">1dp</dimen>
+    <dimen name="level_radius">40dp</dimen>
+
 
     <dimen name="icon_level_height">80dp</dimen>
 

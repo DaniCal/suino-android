@@ -203,6 +203,8 @@
             card_view:cardElevation="0dp"
             android:layout_marginStart="44dp"
             android:layout_marginTop="@dimen/card_margin_top_default"
+            card_view:cardCornerRadius="@dimen/level_radius"
+
             >
 
             <ImageView
@@ -210,7 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_plus_curiouse_mind"
+                android:src="@drawable/icon_newbie_off_level"
                 />
         </android.support.v7.widget.CardView>
 
@@ -224,13 +226,14 @@
             android:clickable="true"
             card_view:cardElevation="0dp"
             android:layout_marginTop="@dimen/card_margin_top_default"
+            card_view:cardCornerRadius="@dimen/level_radius"
             >
             <ImageView
                 android:id="@+id/iv_select_beginner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_plus_curiouse_mind"
+                android:src="@drawable/icon_beginner_off_level"
                 />
         </android.support.v7.widget.CardView>
 
@@ -246,13 +249,14 @@
             card_view:cardElevation="0dp"
             android:layout_marginEnd="44dp"
             android:layout_marginTop="@dimen/card_margin_top_default"
+            card_view:cardCornerRadius="@dimen/level_radius"
             >
             <ImageView
                 android:id="@+id/iv_select_advanced"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_plus_curiouse_mind"
+                android:src="@drawable/icon_advanced_off_level"
                 />
         </android.support.v7.widget.CardView>
 
@@ -298,6 +302,9 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:id="@+id/sb_price"
+            android:thumb="@drawable/ic_pin"
+            android:progressDrawable="@drawable/icon_plus_curiouse_mind"
+            android:indeterminateDrawable="@drawable/icon_minus_curiouse_mind"
             android:layout_below="@id/tv_price"
             android:indeterminate="false" />
     </RelativeLayout>

@@ -3,6 +3,7 @@ package borell.com.suino.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,8 +27,6 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.LinkedHashMap;
-
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
 import borell.com.suino.model.SuinoCourse;
@@ -46,6 +45,13 @@ public class CreateCourseFragment extends Fragment {
     private CardView cv_location;
     private CardView cv_increase;
     private CardView cv_decrease;
+    private CardView cv_newbiew;
+    private ImageView iv_newbiew;
+    private CardView cv_beginner;
+    private ImageView iv_beginner;
+    private CardView cv_advanced;
+    private ImageView iv_advanced;
+
     private CardView cv_description;
     private TextView tv_groupSize;
     private EditText et_description;
@@ -227,7 +233,7 @@ public class CreateCourseFragment extends Fragment {
             public void onClick(View view) {
 
                 int groupSize = course.getGroupSize() + 1;
-                if(groupSize > GROUP_SIZE_MAX){
+                if (groupSize > GROUP_SIZE_MAX) {
                     return;
                 }
                 course.setGroupSize(groupSize);
@@ -238,7 +244,78 @@ public class CreateCourseFragment extends Fragment {
     }
 
     private void initLevelCardView(){
+        cv_newbiew = (CardView) getView().findViewById(R.id.cv_newbie);
+        iv_newbiew =(ImageView) getView().findViewById(R.id.iv_select_newbie);
+        cv_beginner = (CardView) getView().findViewById(R.id.cv_beginner);
+        iv_beginner =(ImageView) getView().findViewById(R.id.iv_select_beginner);
+        cv_advanced = (CardView) getView().findViewById(R.id.cv_advanced);
+        iv_advanced = (ImageView) getView().findViewById(R.id.iv_select_advanced);
+        cv_newbiew.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                setLevel(1);
+            }
+        });
+        cv_beginner.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                setLevel(2);
+            }
+        });
+        cv_advanced.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setLevel(3);
+            }
+        });
+
+
+    }
+
+    private void setLevel(int level){
+        switch(level){
+            case 1:
+                course.setLevel(level);
+                selectNewbie();
+                break;
+            case 2:
+                course.setLevel(level);
+                selectBeginner();
+                break;
+            case 3:
+                course.setLevel(level);
+                selectAdvanced();
+                break;
+        }
+    }
+
+    public void selectNewbie(){
+        Drawable newbieSelected = getResources().getDrawable(R.drawable.icon_newbie_on_level );
+        Drawable beginnerUnselected = getResources().getDrawable(R.drawable.icon_beginner_off_level );
+        Drawable advancedUnselected = getResources().getDrawable(R.drawable.icon_advanced_off_level );
+        iv_newbiew.setImageDrawable(newbieSelected);
+        iv_beginner.setImageDrawable(beginnerUnselected);
+        iv_advanced.setImageDrawable(advancedUnselected);
+    }
+
+    public void selectBeginner(){
+        Drawable newbieUnselected = getResources().getDrawable(R.drawable.icon_newbie_off_level );
+        Drawable beginnerSelected = getResources().getDrawable(R.drawable.icon_beginner_on_level );
+        Drawable advancedUnselected = getResources().getDrawable(R.drawable.icon_advanced_off_level );
+        iv_newbiew.setImageDrawable(newbieUnselected);
+        iv_beginner.setImageDrawable(beginnerSelected);
+        iv_advanced.setImageDrawable(advancedUnselected);
+    }
+
+    public void selectAdvanced(){
+        Drawable newbieUnselected = getResources().getDrawable(R.drawable.icon_newbie_off_level );
+        Drawable beginnerUnselected = getResources().getDrawable(R.drawable.icon_beginner_off_level );
+        Drawable advancedSelected = getResources().getDrawable(R.drawable.icon_advanced_on_level );
+        iv_newbiew.setImageDrawable(newbieUnselected);
+        iv_beginner.setImageDrawable(beginnerUnselected);
+        iv_advanced.setImageDrawable(advancedSelected);
     }
 
     private void initDescriptionCardView(){
