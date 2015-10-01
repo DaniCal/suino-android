@@ -66,6 +66,8 @@ public class CreateCourseFragment extends Fragment {
     private final int DESCRIPTION_MAX = 200;
 
     MapFormFragment mapFragment;
+    CourseDatesFragment courseDatesFragment;
+
     LatLng latLng;
 
     public CreateCourseFragment() {
@@ -103,6 +105,17 @@ public class CreateCourseFragment extends Fragment {
         initCardViews();
 
         initMap();
+        initCourseDatesFragment();
+    }
+
+    public void initCourseDatesFragment(){
+        if(courseDatesFragment == null){
+            courseDatesFragment = new CourseDatesFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_course_dates, courseDatesFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     private void initMap(){

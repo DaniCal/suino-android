@@ -108,7 +108,7 @@ public class SuinoCourse {
     }
 
 
-    private class CourseDay{
+    public class CourseDay{
         private int dayOfTheWeek;
         private int start;
         private int end;
@@ -120,7 +120,7 @@ public class SuinoCourse {
         }
     }
 
-    private class CourseDate{
+    public class CourseDate{
         private int date;
         private int start;
         private int end;
