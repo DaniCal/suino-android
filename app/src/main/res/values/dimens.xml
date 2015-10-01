@@ -3,8 +3,19 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_drawer_width">260dp</dimen>
-    <dimen name="card_margin_side">15dp</dimen>
-    <dimen name="card_margin_top">10dp</dimen>
+    <dimen name="card_margin_side">14dp</dimen>
+    <dimen name="card_margin_top_category">24dp</dimen>
+    <dimen name="card_margin_top_default">20dp</dimen>
+    <dimen name="card_margin_top_location">31dp</dimen>
+    <dimen name="card_margin_top_course_dates">28dp</dimen>
+
+
+    <dimen name="card_height_small">50dp</dimen>
+    <dimen name="card_height_medium">101dp</dimen>
+    <dimen name="card_height_large">163dp</dimen>
+    <dimen name="card_radius">1dp</dimen>
+
+    <dimen name="icon_level_height">80dp</dimen>
 
 
     <dimen name="text_size_tiny">14sp</dimen>

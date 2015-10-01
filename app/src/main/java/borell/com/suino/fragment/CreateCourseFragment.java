@@ -2,6 +2,7 @@ package borell.com.suino.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,12 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.LinkedHashMap;
 
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
@@ -44,6 +50,8 @@ public class CreateCourseFragment extends Fragment {
     private TextView tv_groupSize;
     private EditText et_description;
     private SuinoCourse course;
+    private LinearLayout ll_default_map;
+    private RelativeLayout iv_map_circle;
 
     private final int PRICE_MAX = 50;
     private final int PRICE_DEFAULT = 15;
@@ -55,10 +63,6 @@ public class CreateCourseFragment extends Fragment {
     LatLng latLng;
 
     public CreateCourseFragment() {
-    }
-
-    public void setLatLng(LatLng latLng){
-        this.latLng = latLng;
     }
 
     @Override
@@ -79,7 +83,6 @@ public class CreateCourseFragment extends Fragment {
         mCallback = (CreateCourseInterface) activity;
         super.onAttach(activity);
         this.activity = activity;
-        initMap();
     }
 
     @Override
@@ -89,16 +92,31 @@ public class CreateCourseFragment extends Fragment {
             course = new SuinoCourse("123123","Dani","somedomain.com/pic");
         }
         scrollView = (ScrollView) getView().findViewById(R.id.scrollView_createCourse);
+        ll_default_map = (LinearLayout) getView().findViewById(R.id.ll_default_map);
+        iv_map_circle = (RelativeLayout) getView().findViewById(R.id.rl_address);
         initCardViews();
+
+        initMap();
     }
 
     private void initMap(){
-        MapFormFragment mapFragment = new MapFormFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_map_form, mapFragment);
-        fragmentTransaction.commit();
-        mapFragment.updateCamera(latLng);
+        if(latLng != null){
+            MapFormFragment mapFragment = new MapFormFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_map_form, mapFragment);
+            fragmentTransaction.commit();
+            mapFragment.updateCamera(latLng);
+            cv_location.setBackgroundColor(Color.TRANSPARENT);
+            ll_default_map.setVisibility(View.GONE);
+            iv_map_circle.setVisibility(View.VISIBLE);
+
+        }else{
+            cv_location.setBackgroundColor(Color.WHITE);
+            ll_default_map.setVisibility(View.VISIBLE);
+            iv_map_circle.setVisibility(View.GONE);
+        }
+
     }
 
     public void setLocation(LatLng latLng){
