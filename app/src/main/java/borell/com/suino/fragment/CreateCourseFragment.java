@@ -185,7 +185,7 @@ public class CreateCourseFragment extends Fragment {
         sb_price.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                tv_price.setText(seekBar.getProgress() + "$ per hour");
+                tv_price.setText(seekBar.getProgress() + " €/h");
                 course.setPrice(seekBar.getProgress());
             }
 

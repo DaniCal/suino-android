@@ -267,7 +267,7 @@
     <!-- 5.Card - Price-->
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="53dp">
 
@@ -298,13 +298,15 @@
         <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="27dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
             android:id="@+id/sb_price"
-            android:thumb="@drawable/ic_pin"
-            android:progressDrawable="@drawable/icon_plus_curiouse_mind"
-            android:indeterminateDrawable="@drawable/icon_minus_curiouse_mind"
+            android:thumb="@drawable/thump_price"
+            android:splitTrack="false"
+            android:progressDrawable="@drawable/price_seekbar_progress"
             android:layout_below="@id/tv_price"
             android:indeterminate="false" />
     </RelativeLayout>
