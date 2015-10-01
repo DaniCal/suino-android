@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:id="@+id/scrollView_createCourse"
@@ -37,7 +38,7 @@
                 android:layout_marginTop="25dp"
                 />
 
-            <TextView
+            <borell.com.suino.LatoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -47,6 +48,7 @@
                 android:textColor="@color/textColorHollow"
                 android:text="Choose Category"
                 android:id="@+id/tv_category"
+                custom:typefaceAsset="fonts/Lato-Semibold.ttf"/>
 
                 />
 
@@ -140,7 +142,7 @@
 
         </android.support.v7.widget.CardView>
 
-        <TextView
+        <borell.com.suino.LatoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/card_margin_side"
@@ -148,7 +150,7 @@
             android:textColor="@color/textColorPrimaryDark"
             android:id="@+id/tv_groupSize"
             android:layout_centerInParent="true"
-            />
+            custom:typefaceAsset="fonts/Lato-Semibold.ttf"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
@@ -221,7 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="53dp">
 
-        <TextView
+        <borell.com.suino.LatoTextView
             android:id="@+id/tv_price_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -229,9 +231,10 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/textColorPrimaryDark"
             android:textSize="@dimen/text_size_medium"
-            android:text="Price"/>
+            android:text="Price"
+            custom:typefaceAsset="fonts/Lato-Semibold.ttf"/> />
 
-        <TextView
+        <borell.com.suino.LatoTextView
             android:layout_below="@+id/tv_price_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -241,6 +244,7 @@
             android:layout_centerHorizontal="true"
             android:text="15 $/h"
             android:id="@+id/tv_price"
+            custom:typefaceAsset="fonts/Lato-Black.ttf"
             />
 
         <SeekBar
@@ -331,14 +335,19 @@
 
                     </RelativeLayout>
 
-                    <TextView
+                    <borell.com.suino.LatoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColorPrimary"
                         android:layout_margin="@dimen/card_margin_top_default"
                         android:textSize="@dimen/text_size_medium"
                         android:text="Select your location"
+                        custom:typefaceAsset="fonts/Lato-Semibold.ttf"
+
                         />
+
+
+
 
                     <ImageView
                         android:layout_width="20dp"
@@ -364,12 +373,13 @@
                         android:layout_height="wrap_content"
 
                         android:src="@drawable/ic_pin"/>
-                    <TextView
+                    <borell.com.suino.LatoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_extra_large"
+                        android:textSize="@dimen/text_size_medium"
                         android:text="Select your location"
                         android:textColor="@color/colorPrimary"
+                        custom:typefaceAsset="fonts/Lato-Bold.ttf"
                         />
 
                 </LinearLayout>

@@ -4,9 +4,10 @@
     <color name="colorPrimaryHollow">#AAb7910e</color>
     <color name="colorPrimaryDark">#ffb7910e</color>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="textColorPrimaryDark">#BF504f4c</color>
+    <color name="textColorPrimaryDark">#b3504f4c</color>
     <color name="textColorHollow">#66504f4c</color>
-    <color name="windowBackground">#E0E0E0</color>
+    <color name="windowBackground">#f5f6f5</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#ffffd652</color>
+
 </resources>
