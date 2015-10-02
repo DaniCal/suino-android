@@ -9,5 +9,7 @@
     <color name="windowBackground">#f5f6f5</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#ffffd652</color>
+    <color name="lineListColor">#66b9b9b7</color>
+
 
 </resources>

@@ -108,30 +108,8 @@ public class SuinoCourse {
     }
 
 
-    public class CourseDay{
-        private int dayOfTheWeek;
-        private int start;
-        private int end;
 
-        public CourseDay(int dayOfTheWeek, int start, int end){
-            this.dayOfTheWeek = dayOfTheWeek;
-            this.start = start;
-            this.end = end;
-        }
-    }
 
-    public class CourseDate{
-        private int date;
-        private int start;
-        private int end;
-        private ArrayList<String> participants;
 
-        public CourseDate(int date, int start, int end){
-            this.date = date;
-            this.start = start;
-            this.end = end;
-            participants = new ArrayList<String>();
-        }
-    }
 
 }

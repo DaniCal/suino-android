@@ -11,17 +11,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import borell.com.suino.R;
-import borell.com.suino.model.SuinoCourse;
+import borell.com.suino.model.CourseDate;
+import borell.com.suino.model.CourseDay;
 
 
 public class CourseDatesAdapter extends RecyclerView.Adapter<CourseDatesAdapter.MyViewHolder>  {
     private LayoutInflater inflater;
-    ArrayList<SuinoCourse.CourseDate> dates;
-    ArrayList<SuinoCourse.CourseDay> days;
+    ArrayList<CourseDate> dates;
+    ArrayList<CourseDay> days;
     private FragmentActivity context;
 
 
-    public CourseDatesAdapter(FragmentActivity activity, ArrayList<SuinoCourse.CourseDate> dates, ArrayList<SuinoCourse.CourseDay> days) {
+    public CourseDatesAdapter(FragmentActivity activity, ArrayList<CourseDate> dates, ArrayList<CourseDay> days) {
         this.context = activity;
         this.dates = dates;
         this.days = days;
@@ -37,18 +38,25 @@ public class CourseDatesAdapter extends RecyclerView.Adapter<CourseDatesAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        CourseDay current = days.get(position);
+        holder.tv_day.setText("Test");
+        holder.tv_freq.setText("Weekly");
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+            return days.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-
+        TextView tv_day;
+        TextView tv_freq;
         public MyViewHolder(View itemView) {
             super(itemView);
+            tv_day = (TextView) itemView.findViewById(R.id.tv_day_course_list);
+            tv_freq = (TextView) itemView.findViewById(R.id.tv_freq_course_list);
+
         }
     }
 }

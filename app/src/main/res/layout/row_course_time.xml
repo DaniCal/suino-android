@@ -16,6 +16,7 @@
         custom:typefaceAsset="fonts/Lato-Regular.ttf"
         />
     <borell.com.suino.LatoTextView
+        android:id="@+id/tv__time_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
@@ -32,6 +33,7 @@
         custom:typefaceAsset="fonts/Lato-Regular.ttf"
         />
     <borell.com.suino.LatoTextView
+        android:id="@+id/tv__time_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
