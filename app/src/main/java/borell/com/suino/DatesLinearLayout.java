@@ -56,9 +56,9 @@ public class DatesLinearLayout extends LinearLayout {
 
 
         TextView tv_start = (TextView) itemView.findViewById(R.id.tv__time_start);
-        tv_start.setText(start + ":00");
+        tv_start.setText(" " + start + ":00 ");
         TextView tv_end = (TextView) itemView.findViewById(R.id.tv__time_end);
-        tv_end.setText(end + ":00");
+        tv_end.setText(" " +  end + ":00 ");
         return itemView;
     }
 

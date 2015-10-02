@@ -10,6 +10,7 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#ffffd652</color>
     <color name="lineListColor">#66b9b9b7</color>
+    <color name="textColorInteraction">#ff1779e9</color>
 
 
 </resources>

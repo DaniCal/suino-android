@@ -17,7 +17,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_location"
+        android:src="@drawable/pin_map_locatore"
         android:layout_centerInParent="true"
         android:id="@+id/iv_location"
         />

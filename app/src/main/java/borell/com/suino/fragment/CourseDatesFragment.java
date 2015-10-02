@@ -55,8 +55,8 @@ public class CourseDatesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         days = new ArrayList<CourseDay>();
 
-        days.add(new CourseDay(1,10,12));
-        days.add(new CourseDay(1,14,16));
+        days.add(new CourseDay(1, 10, 12));
+        days.add(new CourseDay(1, 14, 16));
 
         dates = new ArrayList<CourseDate>();
 
@@ -66,6 +66,18 @@ public class CourseDatesFragment extends Fragment {
         courseDatesListView = (LinearLayout) getView().findViewById(R.id.rv_course_date_list);
         //LinearLayout ll = inflateLayout();
         courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
+
+        days = new ArrayList<CourseDay>();
+
+        days.add(new CourseDay(2, 18, 20));
+
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
+
+        days = new ArrayList<CourseDay>();
+
+
+        days.add(new CourseDay(5,18,20));
+
         courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
 
 //        courseDatesListView.addView(new DatesLinearLayout(getActivity()));
