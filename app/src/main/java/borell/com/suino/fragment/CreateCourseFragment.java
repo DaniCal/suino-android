@@ -422,10 +422,10 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
             public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
                 start.set(Calendar.YEAR, year);
                 start.set(Calendar.MONTH, monthOfYear);
-                start.set(Calendar.YEAR, dayOfMonth);
+                start.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 end.set(Calendar.YEAR, year);
                 end.set(Calendar.MONTH, monthOfYear);
-                end.set(Calendar.YEAR, dayOfMonth);
+                end.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 showPickStartTimeDialog(start, end, true);
 

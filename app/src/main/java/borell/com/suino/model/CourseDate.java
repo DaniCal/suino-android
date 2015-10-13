@@ -13,4 +13,11 @@ public class CourseDate{
         end.setTimeInMillis(endStamp);
         participants = new ArrayList<String>();
     }
+    public Calendar getStart(){
+        return start;
+    }
+
+    public Calendar getEnd(){
+        return end;
+    }
 }

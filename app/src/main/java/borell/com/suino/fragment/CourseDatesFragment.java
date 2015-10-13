@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 import borell.com.suino.DatesLinearLayout;
 import borell.com.suino.R;
@@ -63,6 +64,18 @@ public class CourseDatesFragment extends Fragment {
         courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.FRIDAY)));
         courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SATURDAY)));
         courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SUNDAY)));
+
+        ArrayList<CourseDate> tmpDates = new ArrayList<>();
+        for(CourseDate date : dates){
+            tmpDates.add(date);
+        }
+
+        while(tmpDates.size() > 0){
+            courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADate(tmpDates, tmpDates.get(0).getStart()), true));
+            tmpDates = removeCourseByDate(tmpDates, tmpDates.get(0).getStart());
+        }
+
+
     }
 
     private ArrayList<CourseDay> getCoursesOfADay(ArrayList<CourseDay> days, int dayOfTheWeek){
@@ -73,5 +86,44 @@ public class CourseDatesFragment extends Fragment {
             }
         }
         return courses;
+    }
+
+    private ArrayList<CourseDate> getCoursesOfADate(ArrayList<CourseDate> dates, Calendar date){
+        ArrayList<CourseDate> courses = new ArrayList<>();
+        for(CourseDate item : dates){
+            Calendar itemCal = item.getStart();
+            if(itemCal.get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
+                    itemCal.get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
+                    itemCal.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
+                    ){
+                courses.add(item);
+            }
+        }
+        return courses;
+    }
+
+    private ArrayList<CourseDate> removeCourseByDate(ArrayList<CourseDate> dates, Calendar date){
+
+        for (Iterator<CourseDate> iterator = dates.iterator(); iterator.hasNext();) {
+            CourseDate item = iterator.next();
+            Calendar itemCal = item.getStart();
+            if(itemCal.get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
+                    itemCal.get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
+                    itemCal.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
+                    ){
+                iterator.remove();
+            }
+        }
+
+//        for(CourseDate item : dates){
+//            Calendar itemCal = item.getStart();
+//            if(itemCal.get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
+//                    itemCal.get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
+//                    itemCal.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
+//                    ){
+//                dates.remove(item);
+//            }
+//        }
+        return dates;
     }
 }

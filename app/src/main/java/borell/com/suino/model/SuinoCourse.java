@@ -33,6 +33,11 @@ public class SuinoCourse {
         days.add(courseDay);
     }
 
+    public void addCourseDate(long start, long end){
+        CourseDate courseDate = new CourseDate(start, end);
+        dates.add(courseDate);
+    }
+
     public ArrayList<CourseDay> getDays(){
         return days;
     }
@@ -41,10 +46,7 @@ public class SuinoCourse {
         return dates;
     }
 
-    public void addCourseDate(long start, long end){
-        CourseDate courseDate = new CourseDate(start, end);
-        dates.add(courseDate);
-    }
+
 
     public void addTag(String tag){
         tags.add(tag);

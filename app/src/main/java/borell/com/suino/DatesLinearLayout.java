@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import borell.com.suino.model.CourseDate;
 import borell.com.suino.model.CourseDay;
 
 
@@ -22,11 +23,19 @@ public class DatesLinearLayout extends LinearLayout {
         super(context);
         inflater = LayoutInflater.from(context);
         if(data != null && data.size() > 0){
-            this.addView(inflateLayout(data));
+            this.addView(inflateDayLayout(data));
         }
     }
 
-    public CardView inflateLayout(ArrayList<CourseDay> data){
+    public DatesLinearLayout(Context context, ArrayList<CourseDate> data, boolean dif){
+        super(context);
+        inflater = LayoutInflater.from(context);
+        if(data != null && data.size() > 0){
+            this.addView(inflateDateLayout(data));
+        }
+    }
+
+    public CardView inflateDayLayout(ArrayList<CourseDay> data){
 
         CardView itemView = (CardView) inflater.inflate(R.layout.row_course_day_dates, this, false);
         TextView tv_day = (TextView) itemView.findViewById(R.id.tv_day_course_list);
@@ -39,6 +48,23 @@ public class DatesLinearLayout extends LinearLayout {
 
         for(CourseDay day : data){
             rv.addView(inflateTimesLayout(rv, day.getStart(), day.getEnd()));
+        }
+        return  itemView;
+    }
+
+    public CardView inflateDateLayout(ArrayList<CourseDate> data){
+        CardView itemView = (CardView) inflater.inflate(R.layout.row_course_day_dates, this, false);
+        TextView tv_day = (TextView) itemView.findViewById(R.id.tv_day_course_list);
+        TextView tv_freq = (TextView) itemView.findViewById(R.id.tv_freq_course_list);
+        Calendar start = data.get(0).getStart();
+        tv_freq.setText(getDayOfTheWeekString((start.get(Calendar.DAY_OF_WEEK))));
+        tv_day.setText(getDateString(start));
+
+        LinearLayout rv = (LinearLayout) itemView.findViewById(R.id.rv_times);
+        rv.setGravity(Gravity.END);
+
+        for(CourseDate date : data){
+            rv.addView(inflateTimesLayout(rv, date.getStart(), date.getEnd()));
         }
         return  itemView;
     }
@@ -71,6 +97,13 @@ public class DatesLinearLayout extends LinearLayout {
             default:
                 return "Error";
         }
+    }
+
+    private String getDateString(Calendar date){
+        String result = date.get(Calendar.DAY_OF_MONTH) + ".";
+        result += date.get(Calendar.MONTH) + ".";
+        result += date.get(Calendar.YEAR);
+        return result;
     }
 
     private String getTime(Calendar time){
