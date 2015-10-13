@@ -1,17 +1,12 @@
 package borell.com.suino.fragment;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,15 +16,12 @@ import borell.com.suino.R;
 import borell.com.suino.adapter.CourseDatesAdapter;
 import borell.com.suino.model.CourseDate;
 import borell.com.suino.model.CourseDay;
-import borell.com.suino.model.SuinoCourse;
 
 
 public class CourseDatesFragment extends Fragment {
     private LinearLayout courseDatesListView;
-    private CourseDatesAdapter adapter;
     private ArrayList<CourseDate> dates;
     private ArrayList<CourseDay>days;
-    private RecyclerView.LayoutManager mLayoutManager;
 
 
     @Override

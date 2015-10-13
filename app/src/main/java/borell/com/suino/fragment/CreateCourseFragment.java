@@ -381,7 +381,19 @@ public class CreateCourseFragment extends Fragment {
         cv_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                        .title("Choose Day for weekly Course")
+                        .items(R.array.day_list)
+                        .widgetColorRes(R.color.colorPrimary)
+                        .positiveText("OK")
+                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
+                                return true;
+                            }
+                        })
+                        .show();
             }
         });
     }
