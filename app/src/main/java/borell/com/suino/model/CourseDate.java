@@ -1,17 +1,16 @@
 package borell.com.suino.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CourseDate{
-    private int date;
-    private int start;
-    private int end;
+    Calendar start = Calendar.getInstance();
+    Calendar end = Calendar.getInstance();
     private ArrayList<String> participants;
 
-    public CourseDate(int date, int start, int end){
-        this.date = date;
-        this.start = start;
-        this.end = end;
+    public CourseDate(int startStamp, int endStamp){
+        start.setTimeInMillis(startStamp*1000);
+        end.setTimeInMillis(endStamp*1000);
         participants = new ArrayList<String>();
     }
 }

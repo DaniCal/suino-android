@@ -51,7 +51,7 @@ public class CreateCourseFragment extends Fragment {
     private ImageView iv_beginner;
     private CardView cv_advanced;
     private ImageView iv_advanced;
-
+    private CardView cv_add_date;
     private CardView cv_description;
     private TextView tv_groupSize;
     private EditText et_description;
@@ -103,19 +103,16 @@ public class CreateCourseFragment extends Fragment {
         ll_default_map = (LinearLayout) getView().findViewById(R.id.ll_default_map);
         iv_map_circle = (RelativeLayout) getView().findViewById(R.id.rl_address);
         initCardViews();
-
         initMap();
         initCourseDatesFragment();
     }
 
     public void initCourseDatesFragment(){
-        if(courseDatesFragment == null){
             courseDatesFragment = new CourseDatesFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_course_dates, courseDatesFragment);
             fragmentTransaction.commit();
-        }
     }
 
     private void initMap(){
@@ -380,7 +377,13 @@ public class CreateCourseFragment extends Fragment {
     }
 
     private void initCourseDateCardView(){
+        cv_add_date = (CardView) getView().findViewById(R.id.cv_add_date);
+        cv_add_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
     }
 }
 

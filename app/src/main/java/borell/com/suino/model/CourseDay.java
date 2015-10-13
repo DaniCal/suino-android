@@ -1,25 +1,27 @@
 package borell.com.suino.model;
 
+import java.util.Calendar;
+
 public class CourseDay{
     private int dayOfTheWeek;
-    private int start;
-    private int end;
+    Calendar start = Calendar.getInstance();
+    Calendar end = Calendar.getInstance();
 
-    public CourseDay(int dayOfTheWeek, int start, int end){
+    public CourseDay(int dayOfTheWeek, int startStamp, int endStamp){
         this.dayOfTheWeek = dayOfTheWeek;
-        this.start = start;
-        this.end = end;
+        start.setTimeInMillis(startStamp*1000L);
+        end.setTimeInMillis(endStamp*1000L);
     }
 
     public int getDayOfTheWeek() {
         return dayOfTheWeek;
     }
 
-    public int getStart() {
+    public Calendar getStart() {
         return start;
     }
 
-    public int getEnd() {
+    public Calendar getEnd() {
         return end;
     }
 }

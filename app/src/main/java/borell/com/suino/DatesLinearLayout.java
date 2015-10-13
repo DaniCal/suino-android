@@ -1,42 +1,32 @@
 package borell.com.suino;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import borell.com.suino.model.CourseDay;
 
-/**
- * Created by daniellohse on 10/2/15.
- */
+
 public class DatesLinearLayout extends LinearLayout {
 
     LayoutInflater inflater;
 
 
-
-//    public DatesLinearLayout(Context context) {
-//        super(context);
-//
-//    }
-
     public DatesLinearLayout(Context context, ArrayList<CourseDay> data) {
         super(context);
         inflater = LayoutInflater.from(context);
         this.addView(inflateLayout(data));
-
     }
 
-    public RelativeLayout inflateLayout(ArrayList<CourseDay> data){
+    public CardView inflateLayout(ArrayList<CourseDay> data){
 
-        RelativeLayout itemView = (RelativeLayout) inflater.inflate(R.layout.row_course_day_dates, this, false);
+        CardView itemView = (CardView) inflater.inflate(R.layout.row_course_day_dates, this, false);
         TextView tv_day = (TextView) itemView.findViewById(R.id.tv_day_course_list);
         TextView tv_freq = (TextView) itemView.findViewById(R.id.tv_freq_course_list);
         tv_day.setText(getDayOfTheWeekString(data.get(0).getDayOfTheWeek()));
@@ -51,36 +41,58 @@ public class DatesLinearLayout extends LinearLayout {
         return  itemView;
     }
 
-    public LinearLayout inflateTimesLayout(LinearLayout ll, int start, int end){
+    public LinearLayout inflateTimesLayout(LinearLayout ll, Calendar start, Calendar end){
         LinearLayout itemView = (LinearLayout) inflater.inflate(R.layout.row_course_time, ll, false);
-
-
         TextView tv_start = (TextView) itemView.findViewById(R.id.tv__time_start);
-        tv_start.setText(" " + start + ":00 ");
+        tv_start.setText(getTime(start));
         TextView tv_end = (TextView) itemView.findViewById(R.id.tv__time_end);
-        tv_end.setText(" " +  end + ":00 ");
+        tv_end.setText(getTime(end));
         return itemView;
     }
 
     private String getDayOfTheWeekString(int day){
         switch(day){
-            case 1:
+            case Calendar.MONDAY:
                 return "Monday";
-            case 2:
+            case Calendar.TUESDAY:
                 return "Tuesday";
-            case 3:
+            case Calendar.WEDNESDAY:
                 return "Wednesday";
-            case 4:
+            case Calendar.THURSDAY:
                 return "Thursday";
-            case 5:
+            case Calendar.FRIDAY:
                 return "Friday";
-            case 6:
+            case Calendar.SATURDAY:
                 return "Saturday";
-            case 7:
+            case Calendar.SUNDAY:
                 return "Sunday";
             default:
                 return "Error";
         }
+    }
+
+    private String getTime(Calendar time){
+
+        int hour = time.get(Calendar.HOUR_OF_DAY);
+        int minute = time.get(Calendar.MINUTE);
+        String hourText = Integer.toString(hour);
+        String minuteText = Integer.toString(minute);
+
+        String result = "";
+        if(hour < 10){
+            hourText = "0" + hour;
+        }
+        if(minute < 10) {
+            minuteText = "0" + minute;
+        }
+
+        return " " + hourText + ":" + minuteText + " ";
+    }
+
+    private String getDate(int timestamp){
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(timestamp*1000);
+        return date.get(Calendar.DAY_OF_MONTH) + "." + date.get(Calendar.MONTH) + "." + date.get(Calendar.YEAR);
     }
 
 

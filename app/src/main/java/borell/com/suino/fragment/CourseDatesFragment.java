@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import borell.com.suino.DatesLinearLayout;
 import borell.com.suino.R;
@@ -55,47 +56,10 @@ public class CourseDatesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         days = new ArrayList<CourseDay>();
 
-        days.add(new CourseDay(1, 10, 12));
-        days.add(new CourseDay(1, 14, 16));
-
-        dates = new ArrayList<CourseDate>();
-
-        dates.add(new CourseDate(1,2,3));
-        dates.add(new CourseDate(1, 2, 3));
+        days.add(new CourseDay(Calendar.MONDAY, 1443875400, 1443880800));
 
         courseDatesListView = (LinearLayout) getView().findViewById(R.id.rv_course_date_list);
-        //LinearLayout ll = inflateLayout();
         courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
-
-        days = new ArrayList<CourseDay>();
-
-        days.add(new CourseDay(2, 18, 20));
-
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
-
-        days = new ArrayList<CourseDay>();
-
-
-        days.add(new CourseDay(5,18,20));
-
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
-
-//        courseDatesListView.addView(new DatesLinearLayout(getActivity()));
-
-
-
-//        int viewHeight = 150 * days.size();
-//        courseDatesListView.getLayoutParams().height = viewHeight;
-
-
-
-    }
-
-    private void setTestData(){
-//        dates.add(new CourseDate(1,2,3));
-//        dates.add(new CourseDate(1,2,3));
-
-
 
     }
 

@@ -33,8 +33,8 @@ public class SuinoCourse {
         days.add(courseDay);
     }
 
-    public void addCourseDate(int date, int start, int end){
-        CourseDate courseDate = new CourseDate(date, start, end);
+    public void addCourseDate(int start, int end){
+        CourseDate courseDate = new CourseDate(start, end);
         dates.add(courseDate);
     }
 
