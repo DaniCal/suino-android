@@ -25,6 +25,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.google.android.gms.maps.model.LatLng;
@@ -41,21 +42,12 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     private CreateCourseInterface mCallback;
     private Activity activity;
     private ScrollView scrollView;
-    private Toolbar toolbar;
-    private CardView cv_category;
     private TextView tv_category;
     private TextView tv_price;
-    private SeekBar sb_price;
     private CardView cv_location;
-    private CardView cv_increase;
-    private CardView cv_decrease;
-    private CardView cv_newbiew;
     private ImageView iv_newbiew;
-    private CardView cv_beginner;
     private ImageView iv_beginner;
-    private CardView cv_advanced;
     private ImageView iv_advanced;
-    private CardView cv_add_date;
     private CardView cv_description;
     private TextView tv_groupSize;
     private EditText et_description;
@@ -69,7 +61,6 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     private final int GROUP_SIZE_DEFAULT= 2;
     private final int DESCRIPTION_MAX = 200;
 
-    MapFormFragment mapFragment;
     CourseDatesFragment courseDatesFragment;
 
     LatLng latLng;
@@ -157,7 +148,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
 
 
     private void initCategoryCardView(){
-        cv_category = (CardView) getView().findViewById(R.id.cv_category);
+        CardView cv_category = (CardView) getView().findViewById(R.id.cv_category);
         tv_category = (TextView) getView().findViewById(R.id.tv_category);
         if(course.getCategory() != null && !course.getCategory().isEmpty()){
             tv_category.setText(course.getCategory());
@@ -190,7 +181,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
 
     private void initPriceCardView(){
         tv_price = (TextView) getView().findViewById(R.id.tv_price);
-        sb_price = (SeekBar) getView().findViewById(R.id.sb_price);
+        SeekBar sb_price = (SeekBar) getView().findViewById(R.id.sb_price);
         sb_price.setMax(PRICE_MAX);
         sb_price.setProgress(PRICE_DEFAULT);
         course.setPrice(PRICE_DEFAULT);
@@ -214,8 +205,8 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     }
 
     private void initGroupSizeCardView(){
-        cv_increase = (CardView) getView().findViewById(R.id.cv_increase);
-        cv_decrease = (CardView) getView().findViewById(R.id.cv_decrease);
+        CardView cv_increase = (CardView) getView().findViewById(R.id.cv_increase);
+        CardView cv_decrease = (CardView) getView().findViewById(R.id.cv_decrease);
         tv_groupSize = (TextView) getView().findViewById(R.id.tv_groupSize);
         if(course.getGroupSize() != 0){
             tv_groupSize.setText(course.getGroupSize() + " Curious Minds");
@@ -256,11 +247,11 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     }
 
     private void initLevelCardView(){
-        cv_newbiew = (CardView) getView().findViewById(R.id.cv_newbie);
+        CardView cv_newbiew = (CardView) getView().findViewById(R.id.cv_newbie);
         iv_newbiew =(ImageView) getView().findViewById(R.id.iv_select_newbie);
-        cv_beginner = (CardView) getView().findViewById(R.id.cv_beginner);
+        CardView cv_beginner = (CardView) getView().findViewById(R.id.cv_beginner);
         iv_beginner =(ImageView) getView().findViewById(R.id.iv_select_beginner);
-        cv_advanced = (CardView) getView().findViewById(R.id.cv_advanced);
+        CardView cv_advanced = (CardView) getView().findViewById(R.id.cv_advanced);
         iv_advanced = (ImageView) getView().findViewById(R.id.iv_select_advanced);
         cv_newbiew.setOnClickListener(new View.OnClickListener() {
 
@@ -379,81 +370,115 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     }
 
     private void initCourseDateCardView(){
-        cv_add_date = (CardView) getView().findViewById(R.id.cv_add_date);
+        CardView cv_add_date = (CardView) getView().findViewById(R.id.cv_add_date);
         cv_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                        .title("Choose Day of the Week")
-                        .positiveText("OK")
-                        .items(R.array.day_list)
-
-                        .widgetColorRes(R.color.colorPrimary)
-                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                final Calendar start = Calendar.getInstance();
-                                final Calendar end = Calendar.getInstance();
-
-                                while (start.get(Calendar.DAY_OF_WEEK) != getDayOfTheWeekFromDialog(which)) {
-                                    start.add(Calendar.DATE, 1);
-                                    end.add(Calendar.DATE, 1);
-                                }
-                                TimePickerDialog dpd = TimePickerDialog.newInstance(
-                                        null,
-                                        start.get(Calendar.HOUR_OF_DAY),
-                                        0,
-                                        true
-                                );
-
-                                dpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
-
-                                        start.set(Calendar.HOUR_OF_DAY, i);
-                                        start.set(Calendar.MINUTE, i1);
-
-                                        TimePickerDialog dpd2 = TimePickerDialog.newInstance(
-                                                CreateCourseFragment.this,
-                                                18,
-                                                0,
-                                                true
-                                        );
-
-                                        dpd2.setTitle("Select End Time (Starting at " + i + ":" + i1  + " )");
-                                        dpd2.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
-                                            @Override
-                                            public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
-                                                end.set(Calendar.HOUR_OF_DAY, i);
-                                                end.set(Calendar.MINUTE, i1);
-                                                course.addCourseDay(start.get(Calendar.DAY_OF_WEEK), start.getTimeInMillis(), end.getTimeInMillis());
-                                                courseDatesFragment.updateList(course.getDates(), course.getDays());
-                                            }
-                                        });
-                                        dpd2.show(activity.getFragmentManager(), "Datepickerdialog");
-                                    }
-                                });
-                                dpd.setTitle("Select Start Time");
-                                dpd.show(activity.getFragmentManager(), "Datepickerdialog");
-
-                                return true;
-                            }
-                        })
-                        .show();
+                showPickDayDialog();
             }
         });
     }
 
     private void showPickDayDialog(){
+        MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                .title("Choose Day of the Week")
+                .positiveText("OK")
+                .items(R.array.day_list)
 
+                .widgetColorRes(R.color.colorPrimary)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        final Calendar start = Calendar.getInstance();
+                        final Calendar end = Calendar.getInstance();
+
+                        if (getDayOfTheWeekFromDialog(which) == -1) {
+                            showPickDateDialog(start, end);
+                            return true;
+                        }
+                        while (start.get(Calendar.DAY_OF_WEEK) != getDayOfTheWeekFromDialog(which)) {
+                            start.add(Calendar.DATE, 1);
+                            end.add(Calendar.DATE, 1);
+                        }
+
+
+                        showPickStartTimeDialog(start, end, false);
+
+                        return true;
+                    }
+                })
+                .show();
     }
 
-    private void showPickStartTimeDialog(){
+    private void showPickDateDialog(final Calendar start, final Calendar end){
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                null,
+                start.get(Calendar.YEAR),
+                start.get(Calendar.MONTH),
+                start.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
+                start.set(Calendar.YEAR, year);
+                start.set(Calendar.MONTH, monthOfYear);
+                start.set(Calendar.YEAR, dayOfMonth);
+                end.set(Calendar.YEAR, year);
+                end.set(Calendar.MONTH, monthOfYear);
+                end.set(Calendar.YEAR, dayOfMonth);
 
+                showPickStartTimeDialog(start, end, true);
+
+            }
+        });
+        dpd.show(activity.getFragmentManager(), "Datepickerdialog");
     }
 
-    private void showPickEndTimeDialog(){
+    private void showPickStartTimeDialog(final Calendar start, final Calendar end, final boolean isDate){
+        TimePickerDialog dpd = TimePickerDialog.newInstance(
+                null,
+                start.get(Calendar.HOUR_OF_DAY),
+                0,
+                true
+        );
 
+        dpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
+                start.set(Calendar.HOUR_OF_DAY, i);
+                start.set(Calendar.MINUTE, i1);
+                showPickEndTimeDialog(start, end, isDate);
+            }
+        });
+        dpd.setTitle("Select Start Time");
+        dpd.show(activity.getFragmentManager(), "Datepickerdialog");
+    }
+
+    private void showPickEndTimeDialog(final Calendar start, final Calendar end, final boolean isDate){
+
+
+        TimePickerDialog dpd2 = TimePickerDialog.newInstance(
+                CreateCourseFragment.this,
+                start.get(Calendar.HOUR_OF_DAY) + 1,
+                0,
+                true
+        );
+
+        dpd2.setTitle("Starting at " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE));
+        dpd2.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
+                end.set(Calendar.HOUR_OF_DAY, i);
+                end.set(Calendar.MINUTE, i1);
+                if(isDate){
+                    course.addCourseDate(start.getTimeInMillis(), end.getTimeInMillis());
+                }else{
+                    course.addCourseDay(start.get(Calendar.DAY_OF_WEEK), start.getTimeInMillis(), end.getTimeInMillis());
+                }
+                courseDatesFragment.updateList(course.getDates(), course.getDays());
+            }
+        });
+        dpd2.show(activity.getFragmentManager(), "Datepickerdialog");
     }
 
     private int getDayOfTheWeekFromDialog(int which){

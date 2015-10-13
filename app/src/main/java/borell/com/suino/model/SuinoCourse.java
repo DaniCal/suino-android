@@ -41,7 +41,7 @@ public class SuinoCourse {
         return dates;
     }
 
-    public void addCourseDate(int start, int end){
+    public void addCourseDate(long start, long end){
         CourseDate courseDate = new CourseDate(start, end);
         dates.add(courseDate);
     }

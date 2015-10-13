@@ -8,9 +8,9 @@ public class CourseDate{
     Calendar end = Calendar.getInstance();
     private ArrayList<String> participants;
 
-    public CourseDate(int startStamp, int endStamp){
-        start.setTimeInMillis(startStamp*1000);
-        end.setTimeInMillis(endStamp*1000);
+    public CourseDate(long startStamp, long endStamp){
+        start.setTimeInMillis(startStamp);
+        end.setTimeInMillis(endStamp);
         participants = new ArrayList<String>();
     }
 }
