@@ -34,7 +34,7 @@
         <item>"Friday"</item>
         <item>"Saturday"</item>
         <item>"Sunday"</item>
-        <item>"Date (Pick a specific date)"</item>
+        <item>"Specific date"</item>
 
 
     </string-array>

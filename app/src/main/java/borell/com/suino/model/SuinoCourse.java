@@ -28,9 +28,17 @@ public class SuinoCourse {
     }
 
 
-    public void addCourseDay(int day, int start, int end){
+    public void addCourseDay(int day, long start, long end){
         CourseDay courseDay = new CourseDay(day, start, end);
         days.add(courseDay);
+    }
+
+    public ArrayList<CourseDay> getDays(){
+        return days;
+    }
+
+    public ArrayList<CourseDate> getDates(){
+        return dates;
     }
 
     public void addCourseDate(int start, int end){

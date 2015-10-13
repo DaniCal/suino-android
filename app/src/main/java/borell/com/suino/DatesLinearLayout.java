@@ -21,7 +21,9 @@ public class DatesLinearLayout extends LinearLayout {
     public DatesLinearLayout(Context context, ArrayList<CourseDay> data) {
         super(context);
         inflater = LayoutInflater.from(context);
-        this.addView(inflateLayout(data));
+        if(data != null && data.size() > 0){
+            this.addView(inflateLayout(data));
+        }
     }
 
     public CardView inflateLayout(ArrayList<CourseDay> data){
@@ -78,7 +80,6 @@ public class DatesLinearLayout extends LinearLayout {
         String hourText = Integer.toString(hour);
         String minuteText = Integer.toString(minute);
 
-        String result = "";
         if(hour < 10){
             hourText = "0" + hour;
         }

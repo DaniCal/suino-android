@@ -46,17 +46,32 @@ public class CourseDatesFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        days = new ArrayList<CourseDay>();
-
-        days.add(new CourseDay(Calendar.MONDAY, 1443875400, 1443880800));
-
         courseDatesListView = (LinearLayout) getView().findViewById(R.id.rv_course_date_list);
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), days));
+
+
 
     }
 
     public void updateList(ArrayList<CourseDate> dates, ArrayList<CourseDay> days){
+        if(courseDatesListView.getChildCount() > 0) {
+            courseDatesListView.removeAllViews();
+        }
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.MONDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.TUESDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.WEDNESDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.THURSDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.FRIDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SATURDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SUNDAY)));
+    }
 
-
+    private ArrayList<CourseDay> getCoursesOfADay(ArrayList<CourseDay> days, int dayOfTheWeek){
+        ArrayList<CourseDay> courses = new ArrayList<>();
+        for(CourseDay day : days){
+            if(day.getDayOfTheWeek() == dayOfTheWeek){
+                courses.add(day);
+            }
+        }
+        return courses;
     }
 }

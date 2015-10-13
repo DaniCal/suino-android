@@ -25,14 +25,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Calendar;
 
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
 import borell.com.suino.model.SuinoCourse;
 
 
-public class CreateCourseFragment extends Fragment {
+public class CreateCourseFragment extends Fragment implements TimePickerDialog.OnTimeSetListener {
 
     private CreateCourseInterface mCallback;
     private Activity activity;
@@ -76,8 +80,6 @@ public class CreateCourseFragment extends Fragment {
     @Override
     public void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -349,7 +351,7 @@ public class CreateCourseFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() > DESCRIPTION_MAX){
+                if (charSequence.length() > DESCRIPTION_MAX) {
                     et_description.setText(course.getDescription());
                     return;
                 }
@@ -382,13 +384,57 @@ public class CreateCourseFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                        .title("Choose Day for weekly Course")
-                        .items(R.array.day_list)
-                        .widgetColorRes(R.color.colorPrimary)
+                        .title("Choose Day of the Week")
                         .positiveText("OK")
+                        .items(R.array.day_list)
+
+                        .widgetColorRes(R.color.colorPrimary)
                         .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                final Calendar start = Calendar.getInstance();
+                                final Calendar end = Calendar.getInstance();
+
+                                while (start.get(Calendar.DAY_OF_WEEK) != getDayOfTheWeekFromDialog(which)) {
+                                    start.add(Calendar.DATE, 1);
+                                    end.add(Calendar.DATE, 1);
+                                }
+                                TimePickerDialog dpd = TimePickerDialog.newInstance(
+                                        null,
+                                        start.get(Calendar.HOUR_OF_DAY),
+                                        0,
+                                        true
+                                );
+
+                                dpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
+
+                                        start.set(Calendar.HOUR_OF_DAY, i);
+                                        start.set(Calendar.MINUTE, i1);
+
+                                        TimePickerDialog dpd2 = TimePickerDialog.newInstance(
+                                                CreateCourseFragment.this,
+                                                18,
+                                                0,
+                                                true
+                                        );
+
+                                        dpd2.setTitle("Select End Time (Starting at " + i + ":" + i1  + " )");
+                                        dpd2.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                                            @Override
+                                            public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
+                                                end.set(Calendar.HOUR_OF_DAY, i);
+                                                end.set(Calendar.MINUTE, i1);
+                                                course.addCourseDay(start.get(Calendar.DAY_OF_WEEK), start.getTimeInMillis(), end.getTimeInMillis());
+                                                courseDatesFragment.updateList(course.getDates(), course.getDays());
+                                            }
+                                        });
+                                        dpd2.show(activity.getFragmentManager(), "Datepickerdialog");
+                                    }
+                                });
+                                dpd.setTitle("Select Start Time");
+                                dpd.show(activity.getFragmentManager(), "Datepickerdialog");
 
                                 return true;
                             }
@@ -396,6 +442,50 @@ public class CreateCourseFragment extends Fragment {
                         .show();
             }
         });
+    }
+
+    private void showPickDayDialog(){
+
+    }
+
+    private void showPickStartTimeDialog(){
+
+    }
+
+    private void showPickEndTimeDialog(){
+
+    }
+
+    private int getDayOfTheWeekFromDialog(int which){
+        switch(which){
+            case 0:
+                return Calendar.MONDAY;
+            case 1:
+                return Calendar.TUESDAY;
+            case 2:
+                return Calendar.WEDNESDAY;
+            case 3:
+                return Calendar.THURSDAY;
+            case 4:
+                return Calendar.FRIDAY;
+            case 5:
+                return Calendar.SATURDAY;
+            case 6:
+                return Calendar.SUNDAY;
+            default:
+                return -1;
+
+
+        }
+    }
+
+
+    @Override
+    public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
+
+        int a = i;
+        int b = i1;
+
     }
 }
 

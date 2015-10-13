@@ -7,10 +7,10 @@ public class CourseDay{
     Calendar start = Calendar.getInstance();
     Calendar end = Calendar.getInstance();
 
-    public CourseDay(int dayOfTheWeek, int startStamp, int endStamp){
+    public CourseDay(int dayOfTheWeek, long startStamp, long endStamp){
         this.dayOfTheWeek = dayOfTheWeek;
-        start.setTimeInMillis(startStamp*1000L);
-        end.setTimeInMillis(endStamp*1000L);
+        start.setTimeInMillis(startStamp);
+        end.setTimeInMillis(endStamp);
     }
 
     public int getDayOfTheWeek() {
