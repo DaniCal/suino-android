@@ -41,6 +41,7 @@ public class SuinoCourse {
         latitude = -1;
         days = new ArrayList<CourseDay>();
         dates = new ArrayList<CourseDate>();
+        tags = new ArrayList<String>();
     }
 
 
@@ -218,6 +219,8 @@ public class SuinoCourse {
         private static final String VALUE_PRICE = "price";
         private static final String VALUE_GROUP_SIZE = "groupSize";
         private static final String VALUE_AVAILABILITY = "availability";
+        private static final String VALUE_DAYS = "days";
+        private static final String VALUE_DATES = "dates";
 
 
 
@@ -234,6 +237,19 @@ public class SuinoCourse {
                 tagArray.add(element);
             }
 
+            final JsonObject availabilityObject = new JsonObject();
+            final JsonArray daysArray = new JsonArray();
+            for(CourseDay day : days){
+                daysArray.add(day.createCourseDayJson());
+            }
+            availabilityObject.add(VALUE_DAYS, daysArray);
+
+
+            final JsonArray datesArray = new JsonArray();
+            for(CourseDate date : dates){
+                datesArray.add(date.createCourseDateJson());
+            }
+            availabilityObject.add(VALUE_DATES, datesArray);
 
             final JsonObject jsonObject = new JsonObject();
 
@@ -248,12 +264,7 @@ public class SuinoCourse {
             jsonObject.addProperty(VALUE_GROUP_SIZE, getGroupSize());
             jsonObject.add(VALUE_LOCATION, locationObject);
             jsonObject.add(VALUE_TAGS, tagArray);
-
-
-
-
-
-
+            jsonObject.add(VALUE_AVAILABILITY, availabilityObject);
 
             return jsonObject;
         }

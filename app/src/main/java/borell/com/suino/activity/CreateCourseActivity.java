@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.okhttp.Response;
 
@@ -53,10 +54,10 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         createCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(createCourseFragment.getCourse().isValid()){
-
-                }else{
-                    Toast.makeText(CreateCourseActivity.this,createCourseFragment.getCourse().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                if (createCourseFragment.getCourse().isValid()) {
+                    createCourse(createCourseFragment.getCourse());
+                } else {
+                    Toast.makeText(CreateCourseActivity.this, createCourseFragment.getCourse().getErrorMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -125,25 +126,45 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         }
     }
 
-    private void createCourse(){
-//        httpUtils.postRequest(user.createRegisterUrl(),user.createRegisterJson(),  new HttpCallback() {
-//            @Override
-//            public void onSuccess(Response response) {
-//                if(response.code() == 201){
-//                }else{
-//                    Toast.makeText(CreateCourseActivity.this, "Create Course Error" + response.message(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onError() {
-//                Toast.makeText(CreateCourseActivity.this, "Create Course Error", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onSuccessLoadingImage(Bitmap result) {
-//
-//            }
-//        });
+
+
+
+    private void createCourse(SuinoCourse course){
+        course.addTag("Tag");
+        final MaterialDialog createCourseDialog = new MaterialDialog.Builder(this)
+                .title("Create course")
+                .content("Loading")
+                .progress(true, 0)
+                .build();
+
+        createCourseDialog.show();
+
+
+        httpUtils.postRequest(course.createCreateCourseUrl(),course.createCreateCourseJson(),  new HttpCallback() {
+            @Override
+            public void onSuccess(Response response) {
+                if (response.code() == 201) {
+                    Toast.makeText(CreateCourseActivity.this, "Create Course Success" + response.message(), Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(CreateCourseActivity.this, "Create Course Error" + response.message(), Toast.LENGTH_SHORT).show();
+                }
+
+                createCourseDialog.dismiss();
+            }
+
+
+            @Override
+            public void onError() {
+                Toast.makeText(CreateCourseActivity.this, "Create Course Error", Toast.LENGTH_SHORT).show();
+                createCourseDialog.dismiss();
+
+            }
+
+            @Override
+            public void onSuccessLoadingImage(Bitmap result) {
+
+            }
+        });
     }
 }
