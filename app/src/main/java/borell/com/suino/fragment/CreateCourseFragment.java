@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -39,19 +38,20 @@ import borell.com.suino.model.SuinoCourse;
 
 public class CreateCourseFragment extends Fragment implements TimePickerDialog.OnTimeSetListener {
 
+    private SuinoCourse course;
+
     private CreateCourseInterface mCallback;
     private Activity activity;
     private ScrollView scrollView;
     private TextView tv_category;
     private TextView tv_price;
     private CardView cv_location;
-    private ImageView iv_newbiew;
+    private ImageView iv_newbie;
     private ImageView iv_beginner;
     private ImageView iv_advanced;
     private CardView cv_description;
     private TextView tv_groupSize;
     private EditText et_description;
-    private SuinoCourse course;
     private LinearLayout ll_default_map;
     private RelativeLayout iv_map_circle;
 
@@ -145,7 +145,6 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         initLocationCardView();
         initCourseDateCardView();
     }
-
 
     private void initCategoryCardView(){
         CardView cv_category = (CardView) getView().findViewById(R.id.cv_category);
@@ -247,13 +246,13 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     }
 
     private void initLevelCardView(){
-        CardView cv_newbiew = (CardView) getView().findViewById(R.id.cv_newbie);
-        iv_newbiew =(ImageView) getView().findViewById(R.id.iv_select_newbie);
+        CardView cv_newbie = (CardView) getView().findViewById(R.id.cv_newbie);
+        iv_newbie =(ImageView) getView().findViewById(R.id.iv_select_newbie);
         CardView cv_beginner = (CardView) getView().findViewById(R.id.cv_beginner);
         iv_beginner =(ImageView) getView().findViewById(R.id.iv_select_beginner);
         CardView cv_advanced = (CardView) getView().findViewById(R.id.cv_advanced);
         iv_advanced = (ImageView) getView().findViewById(R.id.iv_select_advanced);
-        cv_newbiew.setOnClickListener(new View.OnClickListener() {
+        cv_newbie.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -298,7 +297,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         Drawable newbieSelected = getResources().getDrawable(R.drawable.icon_newbie_on_level );
         Drawable beginnerUnselected = getResources().getDrawable(R.drawable.icon_beginner_off_level );
         Drawable advancedUnselected = getResources().getDrawable(R.drawable.icon_advanced_off_level );
-        iv_newbiew.setImageDrawable(newbieSelected);
+        iv_newbie.setImageDrawable(newbieSelected);
         iv_beginner.setImageDrawable(beginnerUnselected);
         iv_advanced.setImageDrawable(advancedUnselected);
     }
@@ -307,7 +306,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         Drawable newbieUnselected = getResources().getDrawable(R.drawable.icon_newbie_off_level );
         Drawable beginnerSelected = getResources().getDrawable(R.drawable.icon_beginner_on_level );
         Drawable advancedUnselected = getResources().getDrawable(R.drawable.icon_advanced_off_level );
-        iv_newbiew.setImageDrawable(newbieUnselected);
+        iv_newbie.setImageDrawable(newbieUnselected);
         iv_beginner.setImageDrawable(beginnerSelected);
         iv_advanced.setImageDrawable(advancedUnselected);
     }
@@ -316,7 +315,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         Drawable newbieUnselected = getResources().getDrawable(R.drawable.icon_newbie_off_level );
         Drawable beginnerUnselected = getResources().getDrawable(R.drawable.icon_beginner_off_level );
         Drawable advancedSelected = getResources().getDrawable(R.drawable.icon_advanced_on_level );
-        iv_newbiew.setImageDrawable(newbieUnselected);
+        iv_newbie.setImageDrawable(newbieUnselected);
         iv_beginner.setImageDrawable(beginnerUnselected);
         iv_advanced.setImageDrawable(advancedSelected);
     }
@@ -470,9 +469,9 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
             public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
                 end.set(Calendar.HOUR_OF_DAY, i);
                 end.set(Calendar.MINUTE, i1);
-                if(isDate){
+                if (isDate) {
                     course.addCourseDate(start.getTimeInMillis(), end.getTimeInMillis());
-                }else{
+                } else {
                     course.addCourseDay(start.get(Calendar.DAY_OF_WEEK), start.getTimeInMillis(), end.getTimeInMillis());
                 }
                 courseDatesFragment.updateList(course.getDates(), course.getDays());
@@ -511,6 +510,10 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         int a = i;
         int b = i1;
 
+    }
+
+    public SuinoCourse getCourse() {
+        return course;
     }
 }
 

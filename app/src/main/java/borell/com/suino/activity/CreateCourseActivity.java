@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.google.android.gms.maps.model.LatLng;
@@ -26,6 +27,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     private CardView createCourse;
     CreateCourseFragment createCourseFragment;
     SuinoCourse course;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,6 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         setContentView(R.layout.activity_create_course);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create Course");
@@ -46,6 +47,11 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         createCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(createCourseFragment.getCourse().isValid()){
+
+                }else{
+                    Toast.makeText(CreateCourseActivity.this,createCourseFragment.getCourse().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

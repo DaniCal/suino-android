@@ -100,8 +100,22 @@ public class DatesLinearLayout extends LinearLayout {
     }
 
     private String getDateString(Calendar date){
-        String result = date.get(Calendar.DAY_OF_MONTH) + ".";
-        result += date.get(Calendar.MONTH) + ".";
+        String result = "";
+
+        if( date.get(Calendar.DAY_OF_MONTH) >= 10){
+            result += date.get(Calendar.DAY_OF_MONTH) + ".";
+        }else{
+            result += "0" + date.get(Calendar.DAY_OF_MONTH) + ".";
+
+        }
+
+
+        if( date.get(Calendar.MONTH) >= 10){
+            result += date.get(Calendar.MONTH) + ".";
+        }else{
+            result += "0" + date.get(Calendar.MONTH) + ".";
+
+        }
         result += date.get(Calendar.YEAR);
         return result;
     }

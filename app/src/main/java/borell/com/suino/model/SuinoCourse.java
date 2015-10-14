@@ -23,6 +23,8 @@ public class SuinoCourse {
         this.teacherFbId = teacherFbId;
         this.teacherFirstName = teacherFirstName;
         this.teacherFbPictureLink = teacherFbPictureLink;
+        longitude = -1;
+        latitude = -1;
         days = new ArrayList<CourseDay>();
         dates = new ArrayList<CourseDate>();
     }
@@ -118,8 +120,53 @@ public class SuinoCourse {
     }
 
 
+    public boolean isValid() {
+        return getErrorMessage().length() <= 0;
+    }
 
+    public String getErrorMessage(){
+        if(!checkCategory()){
+            return "Please choose a category";
+//        }else if(!checkTags()){
+//            return "Please add at least one tag";
 
+        }else if(!checkLevel()){
+            return "Please set the course level";
 
+        }else if(!checkDescription()){
+            return "Please specify the course description";
+
+        }else if(!checkLocation()){
+            return "Please select the course location";
+
+        }else if(!checkDates()){
+            return "Please add at least one day, when the course will take place";
+        }
+        return "";
+    }
+
+    private boolean checkCategory(){
+        return !(category == null || category.length() == 0);
+    }
+
+    private boolean checkTags(){
+        return !(tags == null || tags.size() == 0);
+    }
+
+    private boolean checkLevel(){
+        return !(level < 1 || level > 3);
+    }
+
+    private boolean checkDescription(){
+        return !(description == null || description.length() < 20);
+    }
+
+    private boolean checkLocation(){
+        return !(latitude == -1 || longitude == -1);
+    }
+
+    private boolean checkDates(){
+        return !(dates.size() == 0 && days.size() == 0);
+    }
 
 }

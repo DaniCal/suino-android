@@ -40,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_medium"
-                android:text="Monday"
+                android:textSize="@dimen/text_size_small"
+                android:text="Wednesday"
                 custom:typefaceAsset="fonts/Lato-Black.ttf"
                 />
             <borell.com.suino.LatoTextView
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColorPrimaryDark"
                 android:textSize="@dimen/text_size_tiny"
-                android:text="01.10.2015"
+                android:text="Weekly"
                 custom:typefaceAsset="fonts/Lato-Bold.ttf"
                 />
 

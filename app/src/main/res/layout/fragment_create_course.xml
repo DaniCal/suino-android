@@ -503,13 +503,7 @@
 
         </LinearLayout>
 
-
-
         />
-
-
-
-
 
     </android.support.v7.widget.CardView>
 
@@ -517,7 +511,7 @@
     <!-- Bottom Space-->
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="100dp"
         android:background="@null">
 
     </RelativeLayout>
