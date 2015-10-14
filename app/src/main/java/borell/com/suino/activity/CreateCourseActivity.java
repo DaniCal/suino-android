@@ -3,6 +3,7 @@ package borell.com.suino.activity;
 import android.app.Activity;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +16,10 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.okhttp.Response;
 
+import borell.com.suino.Http.HttpCallback;
+import borell.com.suino.Http.HttpManager;
 import borell.com.suino.R;
 import borell.com.suino.fragment.CreateCourseFragment;
 import borell.com.suino.fragment.SelectLocationFragment;
@@ -28,12 +32,14 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
     CreateCourseFragment createCourseFragment;
     SuinoCourse course;
     Activity activity;
+    private HttpManager httpUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_create_course);
+        httpUtils = new HttpManager();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -117,5 +123,27 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
             Intent intent = new Intent(this, Suino.class);
             startActivity(intent);
         }
+    }
+
+    private void createCourse(){
+//        httpUtils.postRequest(user.createRegisterUrl(),user.createRegisterJson(),  new HttpCallback() {
+//            @Override
+//            public void onSuccess(Response response) {
+//                if(response.code() == 201){
+//                }else{
+//                    Toast.makeText(CreateCourseActivity.this, "Create Course Error" + response.message(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onError() {
+//                Toast.makeText(CreateCourseActivity.this, "Create Course Error", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onSuccessLoadingImage(Bitmap result) {
+//
+//            }
+//        });
     }
 }

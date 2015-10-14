@@ -1,6 +1,20 @@
 package borell.com.suino.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.squareup.okhttp.HttpUrl;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import borell.com.suino.Http.HttpConfig;
+import borell.com.suino.Http.HttpValues;
 
 
 public class SuinoCourse {
@@ -167,6 +181,82 @@ public class SuinoCourse {
 
     private boolean checkDates(){
         return !(dates.size() == 0 && days.size() == 0);
+    }
+
+
+    public String createCreateCourseUrl(){
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("http")
+                .host(HttpConfig.HOST)
+                .port(HttpConfig.PORT)
+                .addPathSegment(HttpValues.PATH_CREATE_COURSE)
+                .build();
+        return url.toString();
+    }
+
+    public String createCreateCourseJson(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(SuinoCourse.class, new SuinoCourseSerializer());
+        final Gson gson = gsonBuilder.create();
+        return gson.toJsonTree(this, SuinoCourse.class).toString();
+    }
+
+    private class SuinoCourseSerializer implements JsonSerializer<SuinoCourse> {
+
+        private static final String VALUE_TITLE = "title";
+        private static final String VALUE_DESCRIPTION = "description";
+        private static final String VALUE_TEACHER_DB_ID = "teacherFbId";
+        private static final String VALUE_TEACHER_FIRST_NAME = "teacherFirstName";
+        private static final String VALUE_TEACHER_FB_PICTURE_LINK = "teacherFbPictureLink";
+        private static final String VALUE_LEVEL = "level";
+        private static final String VALUE_LOCATION = "location";
+        private static final String VALUE_LONGITUDE = "longitude";
+        private static final String VALUE_LATITUDE = "latitude";
+
+        private static final String VALUE_CATEGORY = "category";
+        private static final String VALUE_TAGS = "tags";
+        private static final String VALUE_PRICE = "price";
+        private static final String VALUE_GROUP_SIZE = "groupSize";
+        private static final String VALUE_AVAILABILITY = "availability";
+
+
+
+
+        @Override
+        public JsonElement serialize(SuinoCourse src, Type typeOfSrc, JsonSerializationContext context) {
+            final JsonObject locationObject = new JsonObject();
+            locationObject.addProperty(VALUE_LONGITUDE, getLongitude());
+            locationObject.addProperty(VALUE_LATITUDE, getLatitude());
+
+            final JsonArray tagArray = new JsonArray();
+            for(String tag : tags){
+                JsonPrimitive element = new JsonPrimitive(tag);
+                tagArray.add(element);
+            }
+
+
+            final JsonObject jsonObject = new JsonObject();
+
+
+            jsonObject.addProperty(VALUE_DESCRIPTION, getDescription());
+            jsonObject.addProperty(VALUE_TEACHER_DB_ID, teacherFbId);
+            jsonObject.addProperty(VALUE_TEACHER_FIRST_NAME, teacherFirstName);
+            jsonObject.addProperty(VALUE_TEACHER_FB_PICTURE_LINK, teacherFbPictureLink);
+            jsonObject.addProperty(VALUE_LEVEL, getLevel());
+            jsonObject.addProperty(VALUE_CATEGORY, getCategory());
+            jsonObject.addProperty(VALUE_PRICE, getPrice());
+            jsonObject.addProperty(VALUE_GROUP_SIZE, getGroupSize());
+            jsonObject.add(VALUE_LOCATION, locationObject);
+            jsonObject.add(VALUE_TAGS, tagArray);
+
+
+
+
+
+
+
+            return jsonObject;
+        }
     }
 
 }
