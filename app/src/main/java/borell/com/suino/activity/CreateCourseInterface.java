@@ -11,5 +11,6 @@ public interface CreateCourseInterface {
     public void onShowMap();
     void onSaveCourse(SuinoCourse course);
     void onConfirmLocation(LatLng latLng);
+    void onDeleteTag(int position);
 
 }

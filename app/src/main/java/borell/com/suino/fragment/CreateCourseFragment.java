@@ -28,9 +28,13 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.google.android.gms.maps.model.LatLng;
+import com.wefika.flowlayout.FlowLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
+import borell.com.suino.LabelLinearLayout;
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
 import borell.com.suino.model.SuinoCourse;
@@ -54,12 +58,14 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     private EditText et_description;
     private LinearLayout ll_default_map;
     private RelativeLayout iv_map_circle;
-
+    private FlowLayout fl_tag;
     private final int PRICE_MAX = 50;
     private final int PRICE_DEFAULT = 15;
     private final int GROUP_SIZE_MAX = 20;
     private final int GROUP_SIZE_DEFAULT= 2;
     private final int DESCRIPTION_MAX = 200;
+
+    private ArrayList<LabelLinearLayout> labels = new ArrayList<>();
 
     CourseDatesFragment courseDatesFragment;
 
@@ -95,10 +101,14 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         scrollView = (ScrollView) getView().findViewById(R.id.scrollView_createCourse);
         ll_default_map = (LinearLayout) getView().findViewById(R.id.ll_default_map);
         iv_map_circle = (RelativeLayout) getView().findViewById(R.id.rl_address);
+        fl_tag  = (FlowLayout) getView().findViewById(R.id.fl_tags);
+
+        fl_tag.removeAllViews();
         initCardViews();
         initMap();
         initCourseDatesFragment();
     }
+
 
     public void initCourseDatesFragment(){
             courseDatesFragment = new CourseDatesFragment();
@@ -174,8 +184,47 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         });
     }
 
-    private void initTagCardView(){
+    public void deleteTag(int position){
+        fl_tag.removeViewAt(position);
+        labels.remove(position);
+        course.removeTag(position);
+        for(int i = position; i < labels.size(); i++){
+            LabelLinearLayout item = labels.get(i);
+            item.decreasePosition();
+        }
+    }
 
+    private void initTagCardView(){
+        CardView cv_tag = (CardView) getView().findViewById(R.id.cv_tag);
+        final FlowLayout fl_tag  = (FlowLayout) getView().findViewById(R.id.fl_tags);
+        cv_tag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(activity)
+                        .inputRangeRes(2, 20, R.color.textColorPrimaryDark)
+                        .title("Add a Keyword (Volleyball, Techniques...)")
+
+                        .input(null, null, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                addLabel(input.toString());
+
+                            }
+                        }).show();
+            }
+        });
+        for(LabelLinearLayout item : labels){
+            fl_tag.addView(item);
+        }
+
+
+    }
+
+    private void addLabel(String tag){
+        LabelLinearLayout labelView = new LabelLinearLayout(getActivity(), tag, fl_tag.getChildCount());
+        labels.add(labelView);
+        fl_tag.addView(labelView);
+        course.addTag(tag);
     }
 
     private void initPriceCardView(){
@@ -273,6 +322,8 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
             }
         });
 
+        setLevel(course.getLevel());
+
 
     }
 
@@ -361,6 +412,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         cv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fl_tag.removeAllViews();
                 mCallback.onShowMap();
             }
         });

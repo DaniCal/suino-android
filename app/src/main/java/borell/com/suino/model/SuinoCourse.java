@@ -12,6 +12,7 @@ import com.squareup.okhttp.HttpUrl;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import borell.com.suino.Http.HttpConfig;
 import borell.com.suino.Http.HttpValues;
@@ -69,8 +70,9 @@ public class SuinoCourse {
         tags.add(tag);
     }
 
-    public void removeTag(String tag){
-        tags.remove(tag);
+    public void removeTag(int position){
+
+        tags.remove(position);
     }
 
     public String getDescription() {
@@ -142,8 +144,8 @@ public class SuinoCourse {
     public String getErrorMessage(){
         if(!checkCategory()){
             return "Please choose a category";
-//        }else if(!checkTags()){
-//            return "Please add at least one tag";
+        }else if(!checkTags()){
+            return "Please add at least one keyword";
 
         }else if(!checkLevel()){
             return "Please set the course level";

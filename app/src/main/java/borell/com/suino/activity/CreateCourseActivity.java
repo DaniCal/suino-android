@@ -100,6 +100,11 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         }
     }
 
+    @Override
+    public void onDeleteTag(int position) {
+        createCourseFragment.deleteTag(position);
+    }
+
     private void displayView() {
 
         if (createCourseFragment != null) {
@@ -130,7 +135,6 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
 
 
     private void createCourse(SuinoCourse course){
-        course.addTag("Tag");
         final MaterialDialog createCourseDialog = new MaterialDialog.Builder(this)
                 .title("Create course")
                 .content("Loading")
