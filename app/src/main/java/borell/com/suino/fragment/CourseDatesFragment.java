@@ -2,7 +2,6 @@ package borell.com.suino.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import java.util.Iterator;
 
 import borell.com.suino.DatesLinearLayout;
 import borell.com.suino.R;
-import borell.com.suino.adapter.CourseDatesAdapter;
 import borell.com.suino.model.CourseDate;
 import borell.com.suino.model.CourseDay;
 
@@ -26,45 +24,36 @@ public class CourseDatesFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_course_dates, container, false);
-
-        return layout;
+        return inflater.inflate(R.layout.fragment_course_dates, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         courseDatesListView = (LinearLayout) getView().findViewById(R.id.rv_course_date_list);
+        updateList();
+    }
 
-
-
+    private void updateList(){
+        this.updateList(this.dates, this.days);
     }
 
     public void updateList(ArrayList<CourseDate> dates, ArrayList<CourseDay> days){
-        if(courseDatesListView.getChildCount() > 0) {
-            courseDatesListView.removeAllViews();
-        }
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.MONDAY)));
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.TUESDAY)));
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.WEDNESDAY)));
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.THURSDAY)));
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.FRIDAY)));
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SATURDAY)));
-        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SUNDAY)));
+        this.dates = dates;
+        this.days = days;
 
+        if(courseDatesListView == null){
+            return;
+        }
+
+        courseDatesListView.removeAllViews();
+
+        drawDaysList(days);
+        drawDatesList(dates);
+    }
+    private void drawDatesList(ArrayList<CourseDate> dates){
         ArrayList<CourseDate> tmpDates = new ArrayList<>();
         for(CourseDate date : dates){
             tmpDates.add(date);
@@ -72,10 +61,17 @@ public class CourseDatesFragment extends Fragment {
 
         while(tmpDates.size() > 0){
             courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADate(tmpDates, tmpDates.get(0).getStart()), true));
-            tmpDates = removeCourseByDate(tmpDates, tmpDates.get(0).getStart());
+            tmpDates = removeCourseByDateHelper(tmpDates, tmpDates.get(0).getStart());
         }
-
-
+    }
+    private void drawDaysList(ArrayList<CourseDay> days){
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.MONDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.TUESDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.WEDNESDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.THURSDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.FRIDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SATURDAY)));
+        courseDatesListView.addView(new DatesLinearLayout(getActivity(), getCoursesOfADay(days, Calendar.SUNDAY)));
     }
 
     private ArrayList<CourseDay> getCoursesOfADay(ArrayList<CourseDay> days, int dayOfTheWeek){
@@ -102,7 +98,7 @@ public class CourseDatesFragment extends Fragment {
         return courses;
     }
 
-    private ArrayList<CourseDate> removeCourseByDate(ArrayList<CourseDate> dates, Calendar date){
+    private ArrayList<CourseDate> removeCourseByDateHelper(ArrayList<CourseDate> dates, Calendar date){
 
         for (Iterator<CourseDate> iterator = dates.iterator(); iterator.hasNext();) {
             CourseDate item = iterator.next();
@@ -114,16 +110,6 @@ public class CourseDatesFragment extends Fragment {
                 iterator.remove();
             }
         }
-
-//        for(CourseDate item : dates){
-//            Calendar itemCal = item.getStart();
-//            if(itemCal.get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
-//                    itemCal.get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
-//                    itemCal.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
-//                    ){
-//                dates.remove(item);
-//            }
-//        }
         return dates;
     }
 }

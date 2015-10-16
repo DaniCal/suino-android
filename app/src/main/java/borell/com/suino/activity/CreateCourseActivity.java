@@ -1,6 +1,5 @@
 package borell.com.suino.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -28,11 +27,9 @@ import borell.com.suino.model.SuinoCourse;
 
 
 public class CreateCourseActivity extends AppCompatActivity implements CreateCourseInterface {
-    private Toolbar mToolbar;
     private CardView createCourse;
     CreateCourseFragment createCourseFragment;
     SuinoCourse course;
-    Activity activity;
     private HttpManager httpUtils;
 
     @Override
@@ -42,26 +39,40 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         setContentView(R.layout.activity_create_course);
         httpUtils = new HttpManager();
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        initToolbar();
+        initCreateCourseFragment();
+        initCreateCourseButton();
+
+        displayView();
+    }
+
+    private void initToolbar(){
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create Course");
+    }
+
+    private void initCreateCourseFragment(){
         if(createCourseFragment == null){
             createCourseFragment = new CreateCourseFragment();
         }
-        displayView();
+    }
+
+    private void initCreateCourseButton(){
         createCourse = (CardView) findViewById(R.id.cv_createCourse);
         createCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (createCourseFragment.getCourse().isValid()) {
-                    createCourse(createCourseFragment.getCourse());
+                    createCourseRequest(createCourseFragment.getCourse());
                 } else {
                     Toast.makeText(CreateCourseActivity.this, createCourseFragment.getCourse().getErrorMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
 
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -84,7 +95,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_create_course, mMapFragment);
         fragmentTransaction.commit();
-        createCourse.setVisibility(View.GONE);
+        hideCreateCourseButton();
     }
 
     @Override
@@ -107,34 +118,32 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
 
     private void displayView() {
 
-        if (createCourseFragment != null) {
+        if(createCourseFragment == null){
+            initCreateCourseFragment();
+        }
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_create_course, createCourseFragment);
             fragmentTransaction.commit();
-        }
 
+            showCreateCourseButton();
+
+    }
+
+    private void showCreateCourseButton(){
         if(createCourse != null){
             createCourse.setVisibility(View.VISIBLE);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_create_course);
-        if (f instanceof SelectLocationFragment){
-            displayView();
-
-        }else if(f instanceof CreateCourseFragment){
-            Intent intent = new Intent(this, Suino.class);
-            startActivity(intent);
+    private void hideCreateCourseButton(){
+        if(createCourse != null){
+            createCourse.setVisibility(View.GONE);
         }
     }
 
-
-
-
-    private void createCourse(SuinoCourse course){
+    private void createCourseRequest(SuinoCourse course){
         final MaterialDialog createCourseDialog = new MaterialDialog.Builder(this)
                 .title("Create course")
                 .content("Loading")
@@ -170,5 +179,17 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container_create_course);
+        if (f instanceof SelectLocationFragment){
+            displayView();
+
+        }else if(f instanceof CreateCourseFragment){
+            Intent intent = new Intent(this, Suino.class);
+            startActivity(intent);
+        }
     }
 }

@@ -72,12 +72,11 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     LatLng latLng;
 
     public CreateCourseFragment() {
+        if(course == null){
+            course = new SuinoCourse("123123","Dani","somedomain.com/pic");
+        }
     }
 
-    @Override
-    public void onCreate (Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,27 +94,33 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(course == null){
-            course = new SuinoCourse("123123","Dani","somedomain.com/pic");
-        }
+
         scrollView = (ScrollView) getView().findViewById(R.id.scrollView_createCourse);
         ll_default_map = (LinearLayout) getView().findViewById(R.id.ll_default_map);
         iv_map_circle = (RelativeLayout) getView().findViewById(R.id.rl_address);
         fl_tag  = (FlowLayout) getView().findViewById(R.id.fl_tags);
-
         fl_tag.removeAllViews();
+
+        initCourseDatesFragment();
         initCardViews();
         initMap();
-        initCourseDatesFragment();
     }
 
 
     public void initCourseDatesFragment(){
-            courseDatesFragment = new CourseDatesFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_course_dates, courseDatesFragment);
-            fragmentTransaction.commit();
+        courseDatesFragment = new CourseDatesFragment();
+
+        if(course != null && course.getDates() != null && course.getDays() != null){
+            courseDatesFragment.updateList(course.getDates(), course.getDays());
+        }
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_course_dates, courseDatesFragment);
+        fragmentTransaction.commit();
+
+
+
     }
 
     private void initMap(){
@@ -135,7 +140,6 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
             ll_default_map.setVisibility(View.VISIBLE);
             iv_map_circle.setVisibility(View.GONE);
         }
-
     }
 
     public void setLocation(LatLng latLng){
@@ -221,11 +225,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         for(LabelLinearLayout item : labels){
             fl_tag.addView(item);
         }
-
-
     }
-
-
 
     private void addLabel(String tag){
         LabelLinearLayout labelView = new LabelLinearLayout(getActivity(), tag, fl_tag.getChildCount());
@@ -428,7 +428,9 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     }
 
     private void initCourseDateCardView(){
+        initCourseDatesFragment();
         CardView cv_add_date = (CardView) getView().findViewById(R.id.cv_add_date);
+
         cv_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
