@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
-import borell.com.suino.DatesLinearLayout;
+import borell.com.suino.view.createCourseView.DatesLinearLayout;
 import borell.com.suino.R;
 import borell.com.suino.model.CourseDate;
 import borell.com.suino.model.CourseDay;

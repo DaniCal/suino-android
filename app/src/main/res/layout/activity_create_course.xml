@@ -40,7 +40,7 @@
             android:background="@color/colorPrimary"
             >
 
-            <borell.com.suino.LatoTextView
+            <borell.com.suino.view.LatoTextView
 
                 custom:typefaceAsset="fonts/Lato-Semibold.ttf"
                 android:layout_width="wrap_content"

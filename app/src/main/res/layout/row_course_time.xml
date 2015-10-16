@@ -7,7 +7,7 @@
     android:layout_marginBottom="32dp"
     android:layout_gravity="bottom">
 
-    <borell.com.suino.LatoTextView
+    <borell.com.suino.view.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
@@ -15,7 +15,7 @@
         android:text="From"
         custom:typefaceAsset="fonts/Lato-Regular.ttf"
         />
-    <borell.com.suino.LatoTextView
+    <borell.com.suino.view.LatoTextView
         android:id="@+id/tv__time_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:text=" 10:00 "
         custom:typefaceAsset="fonts/Lato-Black.ttf"
         />
-    <borell.com.suino.LatoTextView
+    <borell.com.suino.view.LatoTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
@@ -32,7 +32,7 @@
         android:text="To"
         custom:typefaceAsset="fonts/Lato-Regular.ttf"
         />
-    <borell.com.suino.LatoTextView
+    <borell.com.suino.view.LatoTextView
         android:id="@+id/tv__time_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

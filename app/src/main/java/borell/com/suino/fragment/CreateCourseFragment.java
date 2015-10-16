@@ -33,7 +33,7 @@ import com.wefika.flowlayout.FlowLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import borell.com.suino.LabelLinearLayout;
+import borell.com.suino.view.createCourseView.LabelLinearLayout;
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
 import borell.com.suino.model.SuinoCourse;
@@ -208,11 +208,10 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         tv_keyword = (TextView) getView().findViewById(R.id.tv_keyword);
         cv_tag.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 new MaterialDialog.Builder(activity)
                         .inputRangeRes(2, 20, R.color.textColorPrimaryDark)
                         .title("Add a Keyword (Volleyball, Techniques...)")
-
                         .input(null, null, new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
@@ -224,6 +223,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         });
         for(LabelLinearLayout item : labels){
             fl_tag.addView(item);
+            tv_keyword.setVisibility(View.GONE);
         }
     }
 
@@ -351,7 +351,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         }
     }
 
-    public void selectNewbie(){
+    private void selectNewbie(){
         Drawable newbieSelected = getResources().getDrawable(R.drawable.icon_newbie_on_level );
         Drawable beginnerUnselected = getResources().getDrawable(R.drawable.icon_beginner_off_level );
         Drawable advancedUnselected = getResources().getDrawable(R.drawable.icon_advanced_off_level );
@@ -360,7 +360,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         iv_advanced.setImageDrawable(advancedUnselected);
     }
 
-    public void selectBeginner(){
+    private void selectBeginner(){
         Drawable newbieUnselected = getResources().getDrawable(R.drawable.icon_newbie_off_level );
         Drawable beginnerSelected = getResources().getDrawable(R.drawable.icon_beginner_on_level );
         Drawable advancedUnselected = getResources().getDrawable(R.drawable.icon_advanced_off_level );
@@ -369,7 +369,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         iv_advanced.setImageDrawable(advancedUnselected);
     }
 
-    public void selectAdvanced(){
+    private void selectAdvanced(){
         Drawable newbieUnselected = getResources().getDrawable(R.drawable.icon_newbie_off_level );
         Drawable beginnerUnselected = getResources().getDrawable(R.drawable.icon_beginner_off_level );
         Drawable advancedSelected = getResources().getDrawable(R.drawable.icon_advanced_on_level );
