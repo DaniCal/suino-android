@@ -1,9 +1,10 @@
 package borell.com.suino.activity;
 
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import borell.com.suino.R;
 
@@ -13,9 +14,13 @@ public class SearchCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_search_course);
-
         initToolbar();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 
     private void initToolbar(){
@@ -23,5 +28,11 @@ public class SearchCourseActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Search Course");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Suino.class);
+        startActivity(intent);
     }
 }

@@ -150,6 +150,12 @@ public class Suino extends AppCompatActivity implements FragmentDrawer.FragmentD
     }
 
     @Override
+    public void onSearchCourse() {
+        Intent intent = new Intent(this, SearchCourseActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onBackPressed() {
         if(loginSession){
             loginFragment.hide();
