@@ -32,7 +32,6 @@ import com.wefika.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 
 import borell.com.suino.LabelLinearLayout;
 import borell.com.suino.R;
@@ -59,6 +58,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     private LinearLayout ll_default_map;
     private RelativeLayout iv_map_circle;
     private FlowLayout fl_tag;
+    private TextView tv_keyword;
     private final int PRICE_MAX = 50;
     private final int PRICE_DEFAULT = 15;
     private final int GROUP_SIZE_MAX = 20;
@@ -192,11 +192,16 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
             LabelLinearLayout item = labels.get(i);
             item.decreasePosition();
         }
+
+        if(course.getTags().size() == 0){
+            tv_keyword.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initTagCardView(){
         CardView cv_tag = (CardView) getView().findViewById(R.id.cv_tag);
         final FlowLayout fl_tag  = (FlowLayout) getView().findViewById(R.id.fl_tags);
+        tv_keyword = (TextView) getView().findViewById(R.id.tv_keyword);
         cv_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,7 +213,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 addLabel(input.toString());
-
+                                tv_keyword.setVisibility(View.GONE);
                             }
                         }).show();
             }
@@ -219,6 +224,8 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
 
 
     }
+
+
 
     private void addLabel(String tag){
         LabelLinearLayout labelView = new LabelLinearLayout(getActivity(), tag, fl_tag.getChildCount());
