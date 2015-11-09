@@ -12,7 +12,6 @@ import com.squareup.okhttp.HttpUrl;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import borell.com.suino.Http.HttpConfig;
 import borell.com.suino.Http.HttpValues;
@@ -20,80 +19,103 @@ import borell.com.suino.Http.HttpValues;
 
 public class SuinoCourse {
     private String description;
-    private String teacherFbId;
-    private String teacherFirstName;
-    private String teacherFbPictureLink;
     private int level;
     private double longitude;
     private double latitude;
     private String category;
     private ArrayList<String> tags;
-    //private ArrayList<String> material;
     private int price;
     private int groupSize;
-    private ArrayList<CourseDay> days;
-    private ArrayList<CourseDate> dates;
+    private ArrayList<SuinoEvent> events;
+    private SuinoUser teacherUser;
 
-    public SuinoCourse(String teacherFbId, String teacherFirstName, String teacherFbPictureLink){
-        this.teacherFbId = teacherFbId;
-        this.teacherFirstName = teacherFirstName;
-        this.teacherFbPictureLink = teacherFbPictureLink;
+    private final int LEVEL_MIN = 1;
+    private final int LEVEL_MAX = 3;
+    private final int PRICE_MAX = 50;
+    private final int PRICE_DEFAULT = 15;
+    private final int GROUP_SIZE_MIN = 1;
+    private final int GROUP_SIZE_MAX = 20;
+    private final int GROUP_SIZE_DEFAULT= 2;
+    private final int DESCRIPTION_MIN = 20;
+    private final int DESCRIPTION_MAX = 200;
+    private double LATITUDE_MAX = 90;
+    private double LATITUDE_MIN = -90;
+    private double LONGITUDE_MAX = 180;
+    private double LONGITUDE_MIN = -180;
+
+
+    public SuinoCourse(){
+
         longitude = -1;
         latitude = -1;
-        days = new ArrayList<CourseDay>();
-        dates = new ArrayList<CourseDate>();
+        events = new ArrayList<SuinoEvent>();
         tags = new ArrayList<String>();
+        level = Integer.MIN_VALUE;
+        price = PRICE_DEFAULT;
+        groupSize = GROUP_SIZE_DEFAULT;
     }
 
 
-    public void addCourseDay(int day, long start, long end){
-        CourseDay courseDay = new CourseDay(day, start, end);
-        days.add(courseDay);
+    public void addSuinoEvent(SuinoEvent newEvent){
+        events.add(newEvent);
     }
 
-    public void addCourseDate(long start, long end){
-        CourseDate courseDate = new CourseDate(start, end);
-        dates.add(courseDate);
+    public boolean removeEvent(int position){
+        if(position >= events.size()){
+            return false;
+        }
+        events.remove(0);
+        return true;
     }
 
-    public ArrayList<CourseDay> getDays(){
-        return days;
+    public ArrayList<SuinoEvent> getEvents(){
+        return events;
     }
 
-    public ArrayList<CourseDate> getDates(){
-        return dates;
-    }
-
-
-
-    public void addTag(String tag){
+    public void addKeyword(String tag){
         tags.add(tag);
     }
 
-    public void removeTag(int position){
-
+    public void removeKeyword(int position){
         tags.remove(position);
+    }
+
+    public ArrayList<String> getKeywords() {
+        return tags;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public boolean setDescription(String description) {
+        if(description.length() < DESCRIPTION_MIN || description.length() > DESCRIPTION_MAX){
+            return false;
+        }
         this.description = description;
+        return true;
     }
 
     public int getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public boolean setLevel(int level) {
+        if(level < LEVEL_MIN || level > LEVEL_MAX){
+            return false;
+        }
         this.level = level;
+        return true;
     }
 
-    public void setLocation(double latitude, double longitude){
+    public boolean setLocation(double latitude, double longitude){
+        if(latitude > LATITUDE_MAX || latitude < LATITUDE_MIN || longitude > LONGITUDE_MAX || longitude < LONGITUDE_MIN){
+            return false;
+        }
+
         this.latitude = latitude;
         this.longitude = longitude;
+        return true;
     }
 
     public double getLongitude() {
@@ -112,30 +134,37 @@ public class SuinoCourse {
         this.category = category;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public boolean setPrice(int price) {
+        if(price < 0 || price > PRICE_MAX){
+            return false;
+        }
         this.price = price;
+        return true;
     }
 
     public int getGroupSize() {
         return groupSize;
     }
 
-    public void setGroupSize(int groupSize) {
+    public boolean setGroupSize(int groupSize) {
+        if(groupSize < GROUP_SIZE_MIN || groupSize > GROUP_SIZE_MAX){
+            return false;
+        }
         this.groupSize = groupSize;
+        return true;
     }
 
+    public boolean increaseGroupSize(){
+        return setGroupSize(groupSize + 1);
+    }
+
+    public boolean decreaseGroupSize(){
+        return setGroupSize(groupSize - 1);
+    }
 
     public boolean isValid() {
         return getErrorMessage().length() <= 0;
@@ -156,9 +185,8 @@ public class SuinoCourse {
         }else if(!checkLocation()){
             return "Please select the course location";
 
-        }else if(!checkDates()){
-            return "Please add at least one day, when the course will take place";
         }
+
         return "";
     }
 
@@ -182,11 +210,6 @@ public class SuinoCourse {
         return !(latitude == -1 || longitude == -1);
     }
 
-    private boolean checkDates(){
-        return !(dates.size() == 0 && days.size() == 0);
-    }
-
-
     public String createCreateCourseUrl(){
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
@@ -206,67 +229,35 @@ public class SuinoCourse {
 
     private class SuinoCourseSerializer implements JsonSerializer<SuinoCourse> {
 
-        private static final String VALUE_TITLE = "title";
-        private static final String VALUE_DESCRIPTION = "description";
-        private static final String VALUE_TEACHER_DB_ID = "teacherFbId";
-        private static final String VALUE_TEACHER_FIRST_NAME = "teacherFirstName";
-        private static final String VALUE_TEACHER_FB_PICTURE_LINK = "teacherFbPictureLink";
-        private static final String VALUE_LEVEL = "level";
-        private static final String VALUE_LOCATION = "location";
-        private static final String VALUE_LONGITUDE = "longitude";
-        private static final String VALUE_LATITUDE = "latitude";
-
         private static final String VALUE_CATEGORY = "category";
-        private static final String VALUE_TAGS = "tags";
-        private static final String VALUE_PRICE = "price";
+        private static final String VALUE_DESCRIPTION = "description";
         private static final String VALUE_GROUP_SIZE = "groupSize";
-        private static final String VALUE_AVAILABILITY = "availability";
-        private static final String VALUE_DAYS = "days";
-        private static final String VALUE_DATES = "dates";
-
-
+        private static final String VALUE_KEYWORDS = "keywords";
+        private static final String VALUE_LEVEL = "level";
+        private static final String VALUE_LATITUDE = "latitude";
+        private static final String VALUE_LONGITUDE = "longitude";
+        private static final String VALUE_PRICE = "price";
 
 
         @Override
         public JsonElement serialize(SuinoCourse src, Type typeOfSrc, JsonSerializationContext context) {
-            final JsonObject locationObject = new JsonObject();
-            locationObject.addProperty(VALUE_LONGITUDE, getLongitude());
-            locationObject.addProperty(VALUE_LATITUDE, getLatitude());
 
-            final JsonArray tagArray = new JsonArray();
-            for(String tag : tags){
-                JsonPrimitive element = new JsonPrimitive(tag);
-                tagArray.add(element);
+            final JsonArray keywords = new JsonArray();
+            for(String keyword : getKeywords()){
+                JsonPrimitive element = new JsonPrimitive(keyword);
+                keywords.add(element);
             }
-
-            final JsonObject availabilityObject = new JsonObject();
-            final JsonArray daysArray = new JsonArray();
-            for(CourseDay day : days){
-                daysArray.add(day.createCourseDayJson());
-            }
-            availabilityObject.add(VALUE_DAYS, daysArray);
-
-
-            final JsonArray datesArray = new JsonArray();
-            for(CourseDate date : dates){
-                datesArray.add(date.createCourseDateJson());
-            }
-            availabilityObject.add(VALUE_DATES, datesArray);
 
             final JsonObject jsonObject = new JsonObject();
 
-
-            jsonObject.addProperty(VALUE_DESCRIPTION, getDescription());
-            jsonObject.addProperty(VALUE_TEACHER_DB_ID, teacherFbId);
-            jsonObject.addProperty(VALUE_TEACHER_FIRST_NAME, teacherFirstName);
-            jsonObject.addProperty(VALUE_TEACHER_FB_PICTURE_LINK, teacherFbPictureLink);
-            jsonObject.addProperty(VALUE_LEVEL, getLevel());
             jsonObject.addProperty(VALUE_CATEGORY, getCategory());
-            jsonObject.addProperty(VALUE_PRICE, getPrice());
+            jsonObject.addProperty(VALUE_DESCRIPTION, getDescription());
             jsonObject.addProperty(VALUE_GROUP_SIZE, getGroupSize());
-            jsonObject.add(VALUE_LOCATION, locationObject);
-            jsonObject.add(VALUE_TAGS, tagArray);
-            jsonObject.add(VALUE_AVAILABILITY, availabilityObject);
+            jsonObject.add(VALUE_KEYWORDS, keywords);
+            jsonObject.addProperty(VALUE_LEVEL, getLevel());
+            jsonObject.addProperty(VALUE_LATITUDE, getLatitude());
+            jsonObject.addProperty(VALUE_LONGITUDE, getLongitude());
+            jsonObject.addProperty(VALUE_PRICE, getPrice());
 
             return jsonObject;
         }

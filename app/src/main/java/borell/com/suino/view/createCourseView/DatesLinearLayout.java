@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import borell.com.suino.R;
-import borell.com.suino.model.CourseDate;
-import borell.com.suino.model.CourseDay;
+import borell.com.suino.model.SuinoEvent;
 
 
 public class DatesLinearLayout extends LinearLayout {
@@ -20,15 +19,13 @@ public class DatesLinearLayout extends LinearLayout {
     LayoutInflater inflater;
 
 
-    public DatesLinearLayout(Context context, ArrayList<CourseDay> data) {
+    public DatesLinearLayout(Context context) {
         super(context);
         inflater = LayoutInflater.from(context);
-        if(data != null && data.size() > 0){
-            this.addView(inflateDayLayout(data));
-        }
+
     }
 
-    public DatesLinearLayout(Context context, ArrayList<CourseDate> data, boolean dif){
+    public DatesLinearLayout(Context context, ArrayList<SuinoEvent> data, boolean dif){
         super(context);
         inflater = LayoutInflater.from(context);
         if(data != null && data.size() > 0){
@@ -36,24 +33,8 @@ public class DatesLinearLayout extends LinearLayout {
         }
     }
 
-    public CardView inflateDayLayout(ArrayList<CourseDay> data){
 
-        CardView itemView = (CardView) inflater.inflate(R.layout.row_course_day_dates, this, false);
-        TextView tv_day = (TextView) itemView.findViewById(R.id.tv_day_course_list);
-        TextView tv_freq = (TextView) itemView.findViewById(R.id.tv_freq_course_list);
-        tv_day.setText(getDayOfTheWeekString(data.get(0).getDayOfTheWeek()));
-        tv_freq.setText("Weekly");
-
-        LinearLayout rv = (LinearLayout) itemView.findViewById(R.id.rv_times);
-        rv.setGravity(Gravity.END);
-
-        for(CourseDay day : data){
-            rv.addView(inflateTimesLayout(rv, day.getStart(), day.getEnd()));
-        }
-        return  itemView;
-    }
-
-    public CardView inflateDateLayout(ArrayList<CourseDate> data){
+    public CardView inflateDateLayout(ArrayList<SuinoEvent> data){
         CardView itemView = (CardView) inflater.inflate(R.layout.row_course_day_dates, this, false);
         TextView tv_day = (TextView) itemView.findViewById(R.id.tv_day_course_list);
         TextView tv_freq = (TextView) itemView.findViewById(R.id.tv_freq_course_list);
@@ -64,7 +45,7 @@ public class DatesLinearLayout extends LinearLayout {
         LinearLayout rv = (LinearLayout) itemView.findViewById(R.id.rv_times);
         rv.setGravity(Gravity.END);
 
-        for(CourseDate date : data){
+        for(SuinoEvent date : data){
             rv.addView(inflateTimesLayout(rv, date.getStart(), date.getEnd()));
         }
         return  itemView;

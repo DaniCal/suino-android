@@ -33,6 +33,7 @@ import com.wefika.flowlayout.FlowLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import borell.com.suino.model.SuinoEvent;
 import borell.com.suino.view.createCourseView.LabelLinearLayout;
 import borell.com.suino.R;
 import borell.com.suino.activity.CreateCourseInterface;
@@ -73,7 +74,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
 
     public CreateCourseFragment() {
         if(course == null){
-            course = new SuinoCourse("123123","Dani","somedomain.com/pic");
+            course = new SuinoCourse();
         }
     }
 
@@ -110,8 +111,8 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     public void initCourseDatesFragment(){
         courseDatesFragment = new CourseDatesFragment();
 
-        if(course != null && course.getDates() != null && course.getDays() != null){
-            courseDatesFragment.updateList(course.getDates(), course.getDays());
+        if(course != null && course.getEvents() != null){
+            courseDatesFragment.updateList(course.getEvents());
         }
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -191,13 +192,13 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     public void deleteTag(int position){
         fl_tag.removeViewAt(position);
         labels.remove(position);
-        course.removeTag(position);
+        course.removeKeyword(position);
         for(int i = position; i < labels.size(); i++){
             LabelLinearLayout item = labels.get(i);
             item.decreasePosition();
         }
 
-        if(course.getTags().size() == 0){
+        if(course.getKeywords().size() == 0){
             tv_keyword.setVisibility(View.VISIBLE);
         }
     }
@@ -231,7 +232,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
         LabelLinearLayout labelView = new LabelLinearLayout(getActivity(), tag, fl_tag.getChildCount());
         labels.add(labelView);
         fl_tag.addView(labelView);
-        course.addTag(tag);
+        course.addKeyword(tag);
     }
 
     private void initPriceCardView(){
@@ -531,11 +532,10 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
                 end.set(Calendar.HOUR_OF_DAY, i);
                 end.set(Calendar.MINUTE, i1);
                 if (isDate) {
-                    course.addCourseDate(start.getTimeInMillis(), end.getTimeInMillis());
-                } else {
-                    course.addCourseDay(start.get(Calendar.DAY_OF_WEEK), start.getTimeInMillis(), end.getTimeInMillis());
+                    SuinoEvent event = new SuinoEvent(start.getTimeInMillis(), end.getTimeInMillis());
+                    course.addSuinoEvent(event);
                 }
-                courseDatesFragment.updateList(course.getDates(), course.getDays());
+                courseDatesFragment.updateList(course.getEvents());
             }
         });
         dpd2.show(activity.getFragmentManager(), "Datepickerdialog");

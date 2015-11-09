@@ -1,15 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "23"
 
     defaultConfig {
         applicationId "borell.com.suino"
         minSdkVersion 19
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+//        multiDexEnabled true
+
+
+    }
+    dexOptions {
+        preDexLibraries = false
     }
     buildTypes {
         release {
@@ -17,16 +24,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
+//    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.+'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
-    compile 'com.android.support:recyclerview-v7:22.2.+'
+    compile 'com.android.support:recyclerview-v7:23.0.+'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.google.code.gson:gson:1.7.2'
-    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.google.android.gms:play-services:3.1.36'
     compile 'com.wdullaer:materialdatetimepicker:1.5.3'
     compile "com.wefika:flowlayout:0.4.1"
@@ -34,4 +44,10 @@ dependencies {
         transitive = true
     }
 
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.hamcrest:hamcrest-core:1.1'
+    testCompile 'org.hamcrest:hamcrest-library:1.1'
+    testCompile 'org.hamcrest:hamcrest-integration:1.1'
 }

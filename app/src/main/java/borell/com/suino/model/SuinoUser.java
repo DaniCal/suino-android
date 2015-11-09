@@ -41,6 +41,13 @@ public class SuinoUser {
         this.fbPictureLink = profile.getProfilePictureUri(180,180);
     }
 
+    public SuinoUser(String firstName, String lastName, String fbId, Uri fbPictureLink){
+        this.fbFirstName = firstName;
+        this.fbLastName = lastName;
+        this.fbId = fbId;
+        this.fbPictureLink = fbPictureLink;
+    }
+
     public void setFbEmail(String email){
         this.fbEmail = email;
     }
