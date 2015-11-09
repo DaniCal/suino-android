@@ -161,7 +161,7 @@ public class CreateCourseActivity extends AppCompatActivity implements CreateCou
         createCourseDialog.show();
 
 
-        httpUtils.postRequest(course.createCreateCourseUrl(),course.createCreateCourseJson(),  new HttpCallback() {
+        httpUtils.postRequest(course.createCreateCourseUrl(),course.createPostCourseJson(),  new HttpCallback() {
             @Override
             public void onSuccess(Response response) {
                 if (response.code() == 201) {

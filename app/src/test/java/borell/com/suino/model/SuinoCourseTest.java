@@ -1,11 +1,11 @@
-package borell.com.suino;
-
+package borell.com.suino.model;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import borell.com.suino.BuildConfig;
 import borell.com.suino.model.SuinoCourse;
 import borell.com.suino.model.SuinoEvent;
 
@@ -274,8 +274,8 @@ public class SuinoCourseTest{
         mSuinoCourse.setGroupSize(validGroupSize);
         mSuinoCourse.setPrice(validPrice);
 
-        String result = mSuinoCourse.createCreateCourseJson();
-//        assertEquals(validJson.length(), result.length());
+        String result = mSuinoCourse.createPostCourseJson();
+        assertEquals(validJson.length(), result.length());
         assertEquals(validJson, result);
 
     }

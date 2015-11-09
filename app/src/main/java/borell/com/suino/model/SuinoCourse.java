@@ -3,8 +3,11 @@ package borell.com.suino.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
@@ -18,6 +21,7 @@ import borell.com.suino.Http.HttpValues;
 
 
 public class SuinoCourse {
+    private String id;
     private String description;
     private int level;
     private double longitude;
@@ -45,7 +49,6 @@ public class SuinoCourse {
 
 
     public SuinoCourse(){
-
         longitude = -1;
         latitude = -1;
         events = new ArrayList<SuinoEvent>();
@@ -55,6 +58,13 @@ public class SuinoCourse {
         groupSize = GROUP_SIZE_DEFAULT;
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return id;
+    }
 
     public void addSuinoEvent(SuinoEvent newEvent){
         events.add(newEvent);
@@ -220,15 +230,20 @@ public class SuinoCourse {
         return url.toString();
     }
 
-    public String createCreateCourseJson(){
+    public String createPostCourseJson(){
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(SuinoCourse.class, new SuinoCourseSerializer());
         final Gson gson = gsonBuilder.create();
         return gson.toJsonTree(this, SuinoCourse.class).toString();
     }
 
-    private class SuinoCourseSerializer implements JsonSerializer<SuinoCourse> {
+    public String createPutCourseJson(){
+        return null;
+    }
 
+    private class SuinoCourseSerializer implements JsonSerializer<SuinoCourse>, JsonDeserializer<SuinoCourse>{
+
+        private static final String VALUE_ID = "_id";
         private static final String VALUE_CATEGORY = "category";
         private static final String VALUE_DESCRIPTION = "description";
         private static final String VALUE_GROUP_SIZE = "groupSize";
@@ -260,6 +275,20 @@ public class SuinoCourse {
             jsonObject.addProperty(VALUE_PRICE, getPrice());
 
             return jsonObject;
+        }
+
+        @Override
+        public SuinoCourse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
+
+            final JsonObject jsonObject = json.getAsJsonObject();
+
+//                final String fbId = jsonObject.get("fbId").getAsString();
+//                final String fbName = jsonObject.get("fbName").getAsString();
+//
+
+            return new SuinoCourse();
+
         }
     }
 

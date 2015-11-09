@@ -14,7 +14,7 @@
         >
 
         <instrumentation android:name="android.test.InstrumentationTestRunner"
-            android:targetPackage="borell.com.suino.SuinoCourseTest"
+            android:targetPackage="borell.com.suino.model.SuinoCourseTest"
             android:label="Tests"/>
 
         <activity
