@@ -24,12 +24,13 @@ public class SuinoUser {
     private String fbFirstName;
     private String fbLastName;
     private String fbId;
-    private Uri fbLink;
     private Uri fbPictureLink;
     private String fbEmail;
     private String fbGender;
     private String id;
     private int age;
+    private String deviceToken;
+    private final String PLATFORM = "android";
 
     private static final String VALUE_FB_NAME = "fbName";
     private static final String VALUE_FB_ID = "fbId";
@@ -38,22 +39,37 @@ public class SuinoUser {
     private static final String VALUE_EMAIL = "email";
 
 
+    public SuinoUser(){
+
+    }
+
     public SuinoUser(Profile profile){
         this.fbFirstName = profile.getFirstName();
         this.fbLastName = profile.getLastName();
         this.fbId = profile.getId();
-        this.fbLink = profile.getLinkUri();
         this.fbPictureLink = profile.getProfilePictureUri(180,180);
     }
 
-    public SuinoUser(String firstName, String lastName, String fbId, Uri fbPictureLink){
+    public SuinoUser(Profile profile, int age, String gender, String deviceToken){
+        this(profile);
+        this.deviceToken = deviceToken;
+        this.age = age;
+        this.fbGender = gender;
+    }
+
+    public SuinoUser(String firstName, String lastName, String fbId, String fbPictureLink,
+                     String fbEmail, String fbGender, int age, String deviceToken){
         this.fbFirstName = firstName;
         this.fbLastName = lastName;
         this.fbId = fbId;
-        this.fbPictureLink = fbPictureLink;
+        this.fbPictureLink = Uri.parse(fbPictureLink);
+        this.fbEmail = fbEmail;
+        this.fbGender = fbGender;
+        this.age = age;
+        this.deviceToken = deviceToken;
     }
 
-    public SuinoUser(String id, String fbFirstName, int age, String fbPictureLink){
+    public SuinoUser(String id, String fbFirstName, String fbPictureLink, int age){
         this.id = id;
         this.fbFirstName = fbFirstName;
         this.fbPictureLink = Uri.parse(fbPictureLink);
@@ -104,10 +120,6 @@ public class SuinoUser {
         return fbId;
     }
 
-    public Uri getFbLink() {
-        return fbLink;
-    }
-
     public Uri getFbPictureLink() {
         return fbPictureLink;
     }
@@ -137,7 +149,14 @@ public class SuinoUser {
     }
 
     public SuinoUser deserializeFromSearchResult(String json){
-        return null;
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(SuinoUser.class, new SuinoUserDeserializer());
+
+        return gsonBuilder.create().fromJson(json, SuinoUser.class);
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
     }
 
     private class SuinoUserSerializer implements JsonSerializer<SuinoUser> {
@@ -149,9 +168,12 @@ public class SuinoUser {
 
             jsonObject.addProperty(VALUE_FB_ID, getFbId());
             jsonObject.addProperty(VALUE_FB_NAME, getFbFirstName());
+            jsonObject.addProperty("age", getAge());
+            jsonObject.addProperty("gender", getFbGender());
+            jsonObject.addProperty("fbPictureLink", getFbPictureLink().toString());
             jsonObject.addProperty(VALUE_EMAIL, getFbEmail());
-            jsonObject.addProperty(VALUE_PLATFORM, "android");
-            jsonObject.addProperty(VALUE_DEVICE_TOKEN, "123123");
+            jsonObject.addProperty(VALUE_DEVICE_TOKEN, getDeviceToken());
+            jsonObject.addProperty(VALUE_PLATFORM, PLATFORM);
 
             return jsonObject;
         }
@@ -168,7 +190,7 @@ public class SuinoUser {
             final String fbPictureLink = jsonObject.get("fbPictureLink").getAsString();
             final int age = jsonObject.get("age").getAsInt();
 
-            return new SuinoUser(id, fbName, age, fbPictureLink);
+            return new SuinoUser(id, fbName, fbPictureLink, age);
 
         }
     }
