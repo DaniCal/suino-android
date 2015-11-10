@@ -241,6 +241,13 @@ public class SuinoCourse {
         return null;
     }
 
+    public SuinoCourse deserializeFromSearchResult(String json){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(SuinoCourse.class, new SuinoCourseSerializer());
+
+        return gsonBuilder.create().fromJson(json, SuinoCourse.class);
+    }
+
     private class SuinoCourseSerializer implements JsonSerializer<SuinoCourse>, JsonDeserializer<SuinoCourse>{
 
         private static final String VALUE_ID = "_id";
@@ -283,11 +290,31 @@ public class SuinoCourse {
 
             final JsonObject jsonObject = json.getAsJsonObject();
 
-//                final String fbId = jsonObject.get("fbId").getAsString();
-//                final String fbName = jsonObject.get("fbName").getAsString();
-//
+            final String id = jsonObject.get("_id").getAsString();
+            final String category = jsonObject.get("category").getAsString();
+            final String description = jsonObject.get("description").getAsString();
+            final int groupSize = jsonObject.get("groupSize").getAsInt();
+            final JsonArray keywords = jsonObject.get("keywords").getAsJsonArray();
+            final int level = jsonObject.get("level").getAsInt();
+            final JsonArray location = jsonObject.get("location").getAsJsonArray();
+            final double latitude = location.get(0).getAsDouble();
+            final double longitude = location.get(1).getAsDouble();
+            final int price = jsonObject.get("price").getAsInt();
 
-            return new SuinoCourse();
+            SuinoCourse course = new SuinoCourse();
+            course.setId(id);
+            course.setCategory(category);
+            course.setDescription(description);
+            course.setGroupSize(groupSize);
+            course.setLevel(level);
+            course.setPrice(price);
+            course.setLocation(latitude, longitude);
+            for(int i = 0; i < keywords.size(); i++){
+                String keyword = keywords.get(i).getAsString();
+                course.addKeyword(keyword);
+            }
+
+            return course;
 
         }
     }

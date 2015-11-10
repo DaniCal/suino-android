@@ -280,5 +280,45 @@ public class SuinoCourseTest{
 
     }
 
+    @Test
+    public void deserialize_search_result(){
+        String validCategory = "sports";
+        int validLevel = 1;
+        String validDescription = "This should be a very valid description";
+        double validLatitude = 22.3333;
+        double validLongitude = 44.1231;
+        String validKeyword = "beachvolley";
+        int validPrice = 10;
+        int validGroupSize = 3;
+        String validId = "4edd40c86762e0fb12000102";
+
+        String validJson = "{" +
+                "\"_id\":\"" + validId + "\"," +
+                "\"category\":\"" + validCategory + "\"," +
+                "\"description\":\"" + validDescription + "\"," +
+                "\"groupSize\":" + validGroupSize + "," +
+                "\"keywords\":" + "[\"" + validKeyword + "\"]," +
+                "\"level\":" + + validLevel + "," +
+                "\"location\":[" + validLatitude + ","+ validLongitude + "]," +
+                "\"price\":" + validPrice +
+                "}";
+
+        SuinoCourse result = new SuinoCourse().deserializeFromSearchResult(validJson);
+        assertTrue(result instanceof SuinoCourse);
+
+        assertEquals(validId, result.getId());
+        assertEquals(validCategory, result.getCategory());
+        assertEquals(validDescription, result.getDescription());
+        assertEquals(validGroupSize, result.getGroupSize());
+        assertEquals(validKeyword, result.getKeywords().get(0));
+        assertEquals(validLevel, result.getLevel());
+        assertEquals(validLatitude, result.getLatitude(),0);
+        assertEquals(validLongitude, result.getLongitude(),0);
+        assertEquals(validPrice, result.getPrice());
+
+
+    }
+
+
 
 }
