@@ -5,8 +5,11 @@ import android.net.Uri;
 import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.squareup.okhttp.HttpUrl;
@@ -25,6 +28,8 @@ public class SuinoUser {
     private Uri fbPictureLink;
     private String fbEmail;
     private String fbGender;
+    private String id;
+    private int age;
 
     private static final String VALUE_FB_NAME = "fbName";
     private static final String VALUE_FB_ID = "fbId";
@@ -48,6 +53,13 @@ public class SuinoUser {
         this.fbPictureLink = fbPictureLink;
     }
 
+    public SuinoUser(String id, String fbFirstName, int age, String fbPictureLink){
+        this.id = id;
+        this.fbFirstName = fbFirstName;
+        this.fbPictureLink = Uri.parse(fbPictureLink);
+        this.age = age;
+    }
+
     public void setFbEmail(String email){
         this.fbEmail = email;
     }
@@ -55,7 +67,6 @@ public class SuinoUser {
     public void setFbGender(String gender){
         this.fbGender = gender;
     }
-
 
     public String createLoginUrl(){
         HttpUrl url = new HttpUrl.Builder()
@@ -79,13 +90,6 @@ public class SuinoUser {
                 .addPathSegment(HttpValues.PATH_REGISTER)
                 .build();
         return url.toString();
-    }
-
-    public String createRegisterJson(){
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(SuinoUser.class, new SuinoUserSerializer());
-        final Gson gson = gsonBuilder.create();
-        return gson.toJsonTree(this, SuinoUser.class).toString();
     }
 
     public String getFbFirstName() {
@@ -116,6 +120,25 @@ public class SuinoUser {
         return fbGender;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+
+    public String createRegisterJson(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(SuinoUser.class, new SuinoUserSerializer());
+        final Gson gson = gsonBuilder.create();
+        return gson.toJsonTree(this, SuinoUser.class).toString();
+    }
+
+    public SuinoUser deserializeFromSearchResult(String json){
+        return null;
+    }
 
     private class SuinoUserSerializer implements JsonSerializer<SuinoUser> {
 
@@ -134,18 +157,19 @@ public class SuinoUser {
         }
     }
 
-//    private class SuinoUserDeserializer implements JsonDeserializer<SuinoUser> {
-//        public SuinoUser deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-//                throws JsonParseException {
-//
-//            final JsonObject jsonObject = json.getAsJsonObject();
-//
-//            final String fbId = jsonObject.get("fbId").getAsString();
-//            final String fbName = jsonObject.get("fbName").getAsString();
-//
-//
-//            return new SuinoUser(fb_id, fb_name, readString);
-//
-//        }
-//    }
+    private class SuinoUserDeserializer implements JsonDeserializer<SuinoUser> {
+        public SuinoUser deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
+
+            final JsonObject jsonObject = json.getAsJsonObject();
+
+            final String id = jsonObject.get("_id").getAsString();
+            final String fbName = jsonObject.get("fbName").getAsString();
+            final String fbPictureLink = jsonObject.get("fbPictureLink").getAsString();
+            final int age = jsonObject.get("age").getAsInt();
+
+            return new SuinoUser(id, fbName, age, fbPictureLink);
+
+        }
+    }
 }

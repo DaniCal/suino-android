@@ -27,11 +27,11 @@ public class SuinoCourse {
     private double longitude;
     private double latitude;
     private String category;
-    private ArrayList<String> tags;
+    private ArrayList<String> keywords;
     private int price;
     private int groupSize;
     private ArrayList<SuinoEvent> events;
-    private SuinoUser teacherUser;
+    private SuinoUser teacher;
 
     private final int LEVEL_MIN = 1;
     private final int LEVEL_MAX = 3;
@@ -52,7 +52,7 @@ public class SuinoCourse {
         longitude = -1;
         latitude = -1;
         events = new ArrayList<SuinoEvent>();
-        tags = new ArrayList<String>();
+        keywords = new ArrayList<String>();
         level = Integer.MIN_VALUE;
         price = PRICE_DEFAULT;
         groupSize = GROUP_SIZE_DEFAULT;
@@ -83,15 +83,15 @@ public class SuinoCourse {
     }
 
     public void addKeyword(String tag){
-        tags.add(tag);
+        keywords.add(tag);
     }
 
     public void removeKeyword(int position){
-        tags.remove(position);
+        keywords.remove(position);
     }
 
     public ArrayList<String> getKeywords() {
-        return tags;
+        return keywords;
     }
 
     public String getDescription() {
@@ -205,7 +205,7 @@ public class SuinoCourse {
     }
 
     private boolean checkTags(){
-        return !(tags == null || tags.size() == 0);
+        return !(keywords == null || keywords.size() == 0);
     }
 
     private boolean checkLevel(){
@@ -318,5 +318,4 @@ public class SuinoCourse {
 
         }
     }
-
 }
