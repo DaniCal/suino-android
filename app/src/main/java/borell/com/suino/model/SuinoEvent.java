@@ -21,6 +21,10 @@ public class SuinoEvent {
     private String id;
     private SuinoCourse course;
 
+    public SuinoEvent(){
+
+    }
+
     public SuinoEvent(long startStamp, long endStamp){
         this.start.setTimeInMillis(startStamp);
         this.end.setTimeInMillis(endStamp);

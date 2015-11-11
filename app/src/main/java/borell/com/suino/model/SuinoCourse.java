@@ -48,6 +48,8 @@ public class SuinoCourse {
     private double LONGITUDE_MIN = -180;
 
 
+
+
     public SuinoCourse(){
         longitude = -1;
         latitude = -1;
