@@ -1,11 +1,14 @@
 package borell.com.suino.model;
 
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -64,7 +67,7 @@ public class SuinoSearch {
     }
 
     public void replaceResult(String json){
-
+        this.result = deserializeSearchResult(json);
     }
 
     public int getResultLength(){
@@ -75,6 +78,14 @@ public class SuinoSearch {
        return result.get(position);
     }
 
+
+    private ArrayList<SuinoResultItem> deserializeSearchResult(String json){
+
+        Type listType = new TypeToken<ArrayList<SuinoResultItem>>() {}.getType();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(listType, new SuinoSearchDeserializer());
+        return gsonBuilder.create().fromJson(json, listType);
+    }
 
     private class SuinoFilter{
         String categoryFilter;
@@ -89,16 +100,21 @@ public class SuinoSearch {
         }
     }
 
-    private class SuinoUserDeserializer implements JsonDeserializer<SuinoSearch> {
-        public SuinoSearch deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    private class SuinoSearchDeserializer implements JsonDeserializer<ArrayList<SuinoResultItem>> {
+        public ArrayList<SuinoResultItem> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
                 throws JsonParseException {
 
-            final JsonObject jsonObject = json.getAsJsonObject();
+            final JsonArray jsonArray = json.getAsJsonArray();
+            ArrayList<SuinoResultItem> list =  new ArrayList<SuinoResultItem>();
 
-//            final String id = jsonObject.get("_id").getAsString();
+            for(int i = 0; i < jsonArray.size(); i++){
+                JsonObject object = jsonArray.get(i).getAsJsonObject();
+                SuinoResultItem item = new SuinoResultItem().deserializeFromSearchResult(object.toString());
+                list.add(item);
+            }
 
 
-            return null;
+            return list;
 
         }
     }
