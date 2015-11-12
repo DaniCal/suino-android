@@ -38,6 +38,7 @@ public class SearchFilterFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initLevelFilter();
         initGroupFilter();
+        initMaxDistanceFilter();
     }
 
     public SuinoFilter getFilterOption(){
@@ -169,7 +170,28 @@ public class SearchFilterFragment extends Fragment {
 
     public void initMaxDistanceFilter(){
         SeekBar sb_maxDistance = (SeekBar) getView().findViewById(R.id.sb_filter_distance);
+        final TextView tv_maxDistance = (TextView) getView().findViewById(R.id.tv_filter_category);
+        sb_maxDistance.setMax(SuinoFilter.DISTANCE_MAX);
+        sb_maxDistance.setProgress(SuinoFilter.DISTANCE_DEFAULT);
+        filterOptions.setMaxDistanceFilter(SuinoFilter.DISTANCE_DEFAULT);
+        tv_maxDistance.setText(SuinoFilter.DISTANCE_DEFAULT + " km");
+        sb_maxDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                tv_maxDistance.setText(seekBar.getProgress() + " km");
+                filterOptions.setMaxDistanceFilter(seekBar.getProgress());
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 

@@ -30,6 +30,12 @@ public class SuinoFilter {
     ArrayList<Integer> levelFilter;
     ArrayList<String> keywords;
 
+    public static final int DISTANCE_MAX = 50;
+    public static final int DISTANCE_DEFAULT = 20;
+    public static final int DISTANCE_MIN = 5;
+
+
+
     public SuinoFilter(double latitude, double longitude){
         this.latitude = latitude;
         this.longitude = longitude;

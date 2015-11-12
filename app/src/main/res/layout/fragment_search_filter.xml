@@ -263,7 +263,7 @@
             />
 
         <borell.com.suino.view.LatoTextView
-            android:id="@+id/tc_maxDistance_value_filter"
+            android:id="@+id/tv_filter_maxDistance"
             custom:typefaceAsset="fonts/Lato-Heavy.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
             android:thumb="@drawable/thump_price"
             android:splitTrack="false"
             android:progressDrawable="@drawable/price_seekbar_progress"
-            android:layout_below="@id/tc_maxDistance_value_filter"
+            android:layout_below="@id/tv_filter_maxDistance"
             android:indeterminate="false" />
 
 
