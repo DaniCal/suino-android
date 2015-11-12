@@ -13,7 +13,7 @@ public class SearchCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_search_course);
+        setContentView(R.layout.activity_search_filter);
         initToolbar();
     }
 

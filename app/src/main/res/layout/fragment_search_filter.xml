@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrollView_createCourse"
+    android:fillViewport="true"
+    >
+
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        //Category
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cv_filter_category"
+            android:layout_below="@+id/rl_search_input"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="14dp"
+            card_view:cardCornerRadius="@dimen/card_radius">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+                <borell.com.suino.view.LatoTextView
+                    android:id="@+id/tv_add_filter"
+                    custom:typefaceAsset="fonts/Lato-Semibold.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorPrimaryDark"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="18dp"
+                    android:textSize="@dimen/text_size_medium"
+                    android:text="Category"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_arrow_expand_choose_course"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_alignParentEnd="true"
+                    />
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+        //Level
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_level_filter_title"
+            custom:typefaceAsset="fonts/Lato-Semibold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimaryDark"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="18dp"
+            android:textSize="@dimen/text_size_medium"
+            android:text="Level"
+            android:layout_below="@+id/cv_filter_category"
+            android:layout_centerHorizontal="true"
+
+            />
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cv_level"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/tv_level_filter_title"
+            android:layout_height="71dp"
+            android:layout_marginEnd="@dimen/card_margin_side"
+            android:layout_marginStart="@dimen/card_margin_side"
+            android:layout_marginTop="6dp"
+            card_view:cardCornerRadius="@dimen/card_radius">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/cv_newbie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_toStartOf="@id/cv_beginner"
+                    card_view:cardElevation="0dp"
+                    android:layout_marginEnd="36dp"
+                    android:layout_marginTop="19dp"
+                    card_view:cardCornerRadius="@dimen/level_radius"
+
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_select_newbie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_level_newbie_grey_xxxhdpi"
+                        />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/cv_beginner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    card_view:cardElevation="0dp"
+                    android:layout_marginTop="19dp"
+                    card_view:cardCornerRadius="@dimen/level_radius"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_select_beginner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_level_beginner_grey_xxxhdpi"
+                        />
+
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/cv_advanced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    card_view:cardElevation="0dp"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_toEndOf="@id/cv_beginner"
+
+                    card_view:cardCornerRadius="@dimen/level_radius"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_select_advanced"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_level_advanced_grey_xxxhdpi"
+                        />
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        //Class Size
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_class_size_filter_title"
+            custom:typefaceAsset="fonts/Lato-Semibold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimaryDark"
+            android:layout_marginTop="80dp"
+            android:layout_marginStart="18dp"
+            android:textSize="@dimen/text_size_medium"
+            android:text="Class Size"
+            android:layout_below="@+id/cv_level"
+            android:layout_centerHorizontal="true"
+
+            />
+
+
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cv_single_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_below="@id/cv_level"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="56dp"
+            card_view:cardCornerRadius="33dp">
+
+            >
+
+            <ImageView
+                android:layout_margin="7dp"
+                android:id="@+id/iv_single_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_group_single_grey_xxxhdpi"
+                />
+        </android.support.v7.widget.CardView>
+
+
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cv_group_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_below="@id/cv_level"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="45dp"
+            android:layout_marginTop="56dp"
+            card_view:cardCornerRadius="33dp">
+
+            >
+
+            <ImageView
+                android:src="@drawable/icon_group_group_grey_xxxhdpi"
+                android:layout_margin="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                />
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/iv_pin_location_filter"
+            android:src="@drawable/icon_pin_serah_info_xxxhdpi"
+            android:layout_below="@+id/tv_class_size_filter_title"
+            android:layout_marginTop="72dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_maxDistance_filter"
+            custom:typefaceAsset="fonts/Lato-Semibold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimaryDark"
+            android:layout_marginTop="7dp"
+            android:textSize="@dimen/text_size_medium"
+            android:text="Distance"
+            android:layout_below="@+id/iv_pin_location_filter"
+            android:layout_centerHorizontal="true"
+
+            />
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tc_maxDistance_value_filter"
+            custom:typefaceAsset="fonts/Lato-Heavy.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="7dp"
+            android:textSize="20dp"
+            android:text="85 km"
+            android:layout_below="@id/tv_maxDistance_filter"
+            android:layout_centerHorizontal="true"
+
+            />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:progress="70"
+            android:id="@+id/sb_price"
+            android:thumb="@drawable/thump_price"
+            android:splitTrack="false"
+            android:progressDrawable="@drawable/price_seekbar_progress"
+            android:layout_below="@id/tc_maxDistance_value_filter"
+            android:indeterminate="false" />
+
+
+
+    </RelativeLayout>
+
+
+
+    </ScrollView>

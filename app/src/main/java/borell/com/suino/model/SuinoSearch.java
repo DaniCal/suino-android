@@ -18,43 +18,7 @@ public class SuinoSearch {
     ArrayList<SuinoResultItem> result;
     SuinoFilter filter;
 
-
-
-    public void setCategoryFilter(String category){
-
-    }
-
-    public void setGroupFilter(int groupSize){
-
-    }
-
-    public void setLevelFilter(int level){
-
-    }
-
-    public void setPriceFilter(int price){
-
-    }
-
-    public void setMaxDistanceFilter(int maxDistance){
-
-    }
-
-    public void addKeyword(String keyword){
-
-    }
-
-    
-
-    public void resetFilter(){
-
-    }
-
     public String createSearchUrl(){
-        return "";
-    }
-
-    public String createSearchJson(){
         return "";
     }
 
@@ -87,18 +51,7 @@ public class SuinoSearch {
         return gsonBuilder.create().fromJson(json, listType);
     }
 
-    private class SuinoFilter{
-        String categoryFilter;
-        int groupFilter;
-        int levelFilter;
-        int priceFilter;
-        int maxDistance;
-        ArrayList<String> keywords;
 
-        public void resetFilter(){
-
-        }
-    }
 
     private class SuinoSearchDeserializer implements JsonDeserializer<ArrayList<SuinoResultItem>> {
         public ArrayList<SuinoResultItem> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)

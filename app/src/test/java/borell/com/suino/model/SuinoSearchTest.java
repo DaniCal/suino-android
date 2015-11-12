@@ -20,15 +20,7 @@ import static org.junit.Assert.assertTrue;
 @Config(sdk = 21,constants = BuildConfig.class)
 public class SuinoSearchTest {
 
-    @Test
-    public void test_deserialize_search_result(){
 
-    }
-
-    @Test
-    public void test_serialize_search_json(){
-
-    }
 
     @Test
     public void test_create_search_url(){
@@ -65,12 +57,12 @@ public class SuinoSearchTest {
     }
 
     @Test
-    public void test_add_result(){
+    public void test_reset_result(){
 
     }
 
     @Test
-    public void test_set_filter(){
+    public void test_add_result(){
 
     }
 

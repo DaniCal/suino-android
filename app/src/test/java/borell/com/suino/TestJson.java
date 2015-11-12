@@ -57,4 +57,30 @@ public class TestJson {
             resultItemJson +
             "]";
 
+
+    public static double latitude = 41.3802437;
+    public static double longitude = 2.1590683;
+    public static String category = "sport";
+    public static int groupSize = 1;
+    public static int level_1 = 1;
+    public static int level_2 = 2;
+    public static int price = 15;
+    public static int maxDistance = 25;
+    public static String keyword = "beachvolley";
+
+    public static String searchJson = "{" +
+            "\"latitude\":" + latitude + "," +
+            "\"longitude\":" + longitude + "," +
+            "\"category\":\"" + category + "\"," +
+            "\"keywords\":" + "[\"" + keyword + "\"]" + "," +
+            "\"groupSize\":" + groupSize + "," +
+            "\"level\":" + "[" + level_1 + "," + level_2 + "]" + "," +
+            "\"price\":" + price + "," +
+            "\"maxDistance\":" + maxDistance +
+            "}";
+
+
+
+
+
 }
