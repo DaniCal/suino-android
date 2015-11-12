@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.FacebookSdk;
 
 import borell.com.suino.R;
@@ -31,9 +33,6 @@ public class SearchFilterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search_filter, container, false);
     }
 
-
-
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -47,6 +46,29 @@ public class SearchFilterFragment extends Fragment {
 
     public void initCategoryFilter(){
         CardView cv_category = (CardView) getView().findViewById(R.id.cv_filter_category);
+
+
+        final TextView tv_category = (TextView) getView().findViewById(R.id.tv_filter_category);
+
+        cv_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                        .title("Choose Category")
+                        .items(R.array.category_list)
+                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                filterOptions.setCategoryFilter(text.toString());
+                                tv_category.setText(text);
+                                tv_category.setTextColor(getResources().getColor(R.color.textColorPrimaryDark));
+                                dialog.hide();
+                                return true;
+                            }
+                        })
+                        .show();
+            }
+        });
 
     }
 

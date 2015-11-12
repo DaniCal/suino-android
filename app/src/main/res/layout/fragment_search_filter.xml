@@ -30,7 +30,7 @@
 
                 >
                 <borell.com.suino.view.LatoTextView
-                    android:id="@+id/tv_add_filter"
+                    android:id="@+id/tv_filter_category"
                     custom:typefaceAsset="fonts/Lato-Semibold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
