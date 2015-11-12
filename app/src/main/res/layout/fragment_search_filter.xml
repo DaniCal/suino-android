@@ -95,12 +95,12 @@
                 >
                 <android.support.v7.widget.CardView
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/cv_newbie"
+                    android:id="@+id/cv_filter_newbie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
-                    android:layout_toStartOf="@id/cv_beginner"
+                    android:layout_toStartOf="@id/cv_filter_beginner"
                     card_view:cardElevation="0dp"
                     android:layout_marginEnd="36dp"
                     android:layout_marginTop="19dp"
@@ -109,7 +109,7 @@
                     >
 
                     <ImageView
-                        android:id="@+id/iv_select_newbie"
+                        android:id="@+id/iv_filter_newbie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -119,7 +119,7 @@
 
                 <android.support.v7.widget.CardView
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/cv_beginner"
+                    android:id="@+id/cv_filter_beginner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -130,7 +130,7 @@
                     card_view:cardCornerRadius="@dimen/level_radius"
                     >
                     <ImageView
-                        android:id="@+id/iv_select_beginner"
+                        android:id="@+id/iv_filter_beginner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -142,7 +142,7 @@
 
                 <android.support.v7.widget.CardView
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/cv_advanced"
+                    android:id="@+id/cv_filter_advanced"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -150,12 +150,12 @@
                     card_view:cardElevation="0dp"
                     android:layout_marginStart="36dp"
                     android:layout_marginTop="19dp"
-                    android:layout_toEndOf="@id/cv_beginner"
+                    android:layout_toEndOf="@id/cv_filter_beginner"
 
                     card_view:cardCornerRadius="@dimen/level_radius"
                     >
                     <ImageView
-                        android:id="@+id/iv_select_advanced"
+                        android:id="@+id/iv_filter_advanced"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -188,7 +188,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cv_single_filter"
+            android:id="@+id/cv_filter_single"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foreground="?android:attr/selectableItemBackground"
@@ -202,7 +202,7 @@
 
             <ImageView
                 android:layout_margin="7dp"
-                android:id="@+id/iv_single_group"
+                android:id="@+id/iv_filter_single"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -214,7 +214,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cv_group_filter"
+            android:id="@+id/cv_filter_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foreground="?android:attr/selectableItemBackground"
@@ -228,6 +228,7 @@
             >
 
             <ImageView
+                android:id="@+id/iv_filter_group"
                 android:src="@drawable/icon_group_group_grey_xxxhdpi"
                 android:layout_margin="7dp"
                 android:layout_width="wrap_content"
@@ -276,6 +277,7 @@
             />
 
         <SeekBar
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="30dp"
@@ -284,7 +286,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:progress="70"
-            android:id="@+id/sb_price"
+            android:id="@+id/sb_filter_distance"
             android:thumb="@drawable/thump_price"
             android:splitTrack="false"
             android:progressDrawable="@drawable/price_seekbar_progress"

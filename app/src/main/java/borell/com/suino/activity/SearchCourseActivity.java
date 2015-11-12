@@ -2,19 +2,37 @@ package borell.com.suino.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import borell.com.suino.R;
+import borell.com.suino.fragment.CreateCourseFragment;
+import borell.com.suino.fragment.SearchButtonFragment;
+import borell.com.suino.fragment.SearchFilterFragment;
+import borell.com.suino.view.LatoEditText;
 
-public class SearchCourseActivity extends AppCompatActivity {
+public class SearchCourseActivity extends AppCompatActivity implements SearchCourseInterface{
+
+    CardView searchCourse;
+    LatoEditText et_keywords;
+    SearchButtonFragment searchButtonFragment;
+    SearchFilterFragment searchFilterFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_search_filter);
+        setContentView(R.layout.activity_search);
         initToolbar();
+        showSearchButtonFragment();
+        initCreateCourseButton();
+        initEditTextView();
     }
 
     @Override
@@ -34,5 +52,45 @@ public class SearchCourseActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, Suino.class);
         startActivity(intent);
+    }
+
+    private void initCreateCourseButton(){
+        searchCourse = (CardView) findViewById(R.id.cv_search_course_button);
+        searchCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchCourseRequest();
+            }
+        });
+    }
+
+    private void initEditTextView(){
+        et_keywords = (LatoEditText) findViewById(R.id.et_search_keywords);
+    }
+
+    private void searchCourseRequest(){
+        searchFilterFragment.getFilterOption();
+    }
+
+    public void showSearchButtonFragment(){
+        searchButtonFragment = new SearchButtonFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_body, searchButtonFragment);
+        fragmentTransaction.commit();
+    }
+
+    public void showSearchFilterFragment(){
+        searchFilterFragment = new SearchFilterFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container_body, searchButtonFragment);
+        fragmentTransaction.commit();
+    }
+
+
+    @Override
+    public void showFilter() {
+        showSearchFilterFragment();
     }
 }

@@ -230,7 +230,7 @@
         >
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cv_newbie"
+            android:id="@+id/cv_filter_newbie"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
@@ -244,7 +244,7 @@
             >
 
             <ImageView
-                android:id="@+id/iv_select_newbie"
+                android:id="@+id/iv_filter_newbie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -254,7 +254,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cv_beginner"
+            android:id="@+id/cv_filter_beginner"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerInParent="true"
@@ -265,7 +265,7 @@
             card_view:cardCornerRadius="@dimen/level_radius"
             >
             <ImageView
-                android:id="@+id/iv_select_beginner"
+                android:id="@+id/iv_filter_beginner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -275,7 +275,7 @@
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cv_advanced"
+            android:id="@+id/cv_filter_advanced"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
@@ -288,7 +288,7 @@
             card_view:cardCornerRadius="@dimen/level_radius"
             >
             <ImageView
-                android:id="@+id/iv_select_advanced"
+                android:id="@+id/iv_filter_advanced"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -339,7 +339,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="27dp"
-            android:id="@+id/sb_price"
+            android:id="@+id/sb_filter_distance"
             android:thumb="@drawable/thump_price"
             android:splitTrack="false"
             android:progressDrawable="@drawable/price_seekbar_progress"

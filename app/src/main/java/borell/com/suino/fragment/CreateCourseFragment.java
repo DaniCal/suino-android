@@ -237,7 +237,7 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
 
     private void initPriceCardView(){
         tv_price = (TextView) getView().findViewById(R.id.tv_price);
-        SeekBar sb_price = (SeekBar) getView().findViewById(R.id.sb_price);
+        SeekBar sb_price = (SeekBar) getView().findViewById(R.id.sb_filter_distance);
         sb_price.setMax(PRICE_MAX);
         sb_price.setProgress(PRICE_DEFAULT);
         course.setPrice(PRICE_DEFAULT);
@@ -303,12 +303,12 @@ public class CreateCourseFragment extends Fragment implements TimePickerDialog.O
     }
 
     private void initLevelCardView(){
-        CardView cv_newbie = (CardView) getView().findViewById(R.id.cv_newbie);
-        iv_newbie =(ImageView) getView().findViewById(R.id.iv_select_newbie);
-        CardView cv_beginner = (CardView) getView().findViewById(R.id.cv_beginner);
-        iv_beginner =(ImageView) getView().findViewById(R.id.iv_select_beginner);
-        CardView cv_advanced = (CardView) getView().findViewById(R.id.cv_advanced);
-        iv_advanced = (ImageView) getView().findViewById(R.id.iv_select_advanced);
+        CardView cv_newbie = (CardView) getView().findViewById(R.id.cv_filter_newbie);
+        iv_newbie =(ImageView) getView().findViewById(R.id.iv_filter_newbie);
+        CardView cv_beginner = (CardView) getView().findViewById(R.id.cv_filter_beginner);
+        iv_beginner =(ImageView) getView().findViewById(R.id.iv_filter_beginner);
+        CardView cv_advanced = (CardView) getView().findViewById(R.id.cv_filter_advanced);
+        iv_advanced = (ImageView) getView().findViewById(R.id.iv_filter_advanced);
         cv_newbie.setOnClickListener(new View.OnClickListener() {
 
             @Override

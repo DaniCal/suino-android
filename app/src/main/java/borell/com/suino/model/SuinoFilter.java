@@ -70,6 +70,14 @@ public class SuinoFilter {
         this.levelFilter.add(level);
     }
 
+    public void removeLevelFilter(int level){
+        this.levelFilter.remove(level);
+    }
+
+    public boolean isLevelSet(int level){
+        return this.levelFilter.contains(level);
+    }
+
     public ArrayList<Integer> getLevelFilter(){
         return this.levelFilter;
     }
