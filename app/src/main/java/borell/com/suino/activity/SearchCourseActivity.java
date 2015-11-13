@@ -67,7 +67,10 @@ public class SearchCourseActivity extends AppCompatActivity implements SearchCou
     }
 
     private void searchCourseRequest(){
-        searchFilterFragment.getFilterOption().createSearchUrl();
+//        searchFilterFragment.getFilterOption().createSearchUrl();
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        startActivity(intent);
+
     }
 
     public void showSearchButtonFragment(){

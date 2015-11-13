@@ -174,7 +174,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_group__search_list_xxxhdpi"
             android:layout_below="@+id/rl_result_item_top_bar"
-            android:layout_marginStart="254dp"
+            android:layout_toStartOf="@+id/tv_time_result_group_1"
+            android:layout_marginEnd="6dp"
             android:layout_marginTop="96dp"/>
 
         <borell.com.suino.view.LatoTextView
@@ -183,12 +184,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fbd144"
-            android:layout_below="@+id/rl_result_item_top_bar"
-            android:layout_toEndOf="@+id/iv_result_item_group"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="96dp"
+            android:layout_toStartOf="@+id/tv_time_result_group_2"
+            android:layout_alignBaseline="@+id/tv_time_result_group_2"
             android:textSize="14dp"
             android:text="14"
+            android:layout_below="@+id/rl_result_item_top_bar"
+
 
             />
 
@@ -198,9 +199,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#504f4c"
-            android:layout_below="@+id/rl_result_item_top_bar"
-            android:layout_toEndOf="@+id/tv_time_result_group_1"
+            android:layout_alignParentEnd="true"
+
             android:layout_marginTop="96dp"
+
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/rl_result_item_top_bar"
             android:textSize="14dp"
             android:text="/20"
 
@@ -212,17 +216,114 @@
 
         //User Information
 
+        <RelativeLayout
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            >
+
+            <borell.com.suino.view.LatoTextView
+                android:id="@+id/tv_time_result_user_name"
+                custom:typefaceAsset="fonts/Lato-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerInParent="true"
+
+                android:textSize="14dp"
+                android:text="Daniel">
+            </borell.com.suino.view.LatoTextView>
+
+
+        </RelativeLayout>
+
+
+
+
+        <ImageView
+            android:id="@+id/iv_search_result_star_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_star_yellow_xxxhdpi"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="99dp"/>
+
+        <ImageView
+            android:id="@+id/iv_search_result_star_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_star_yellow_xxxhdpi"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/iv_search_result_star_1"
+            android:layout_alignBottom="@+id/iv_search_result_star_1"
+            />
+
+        <ImageView
+            android:id="@+id/iv_search_result_star_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_star_yellow_xxxhdpi"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/iv_search_result_star_2"
+            android:layout_alignBottom="@+id/iv_search_result_star_2"
+            />
+
+        <ImageView
+            android:id="@+id/iv_search_result_star_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_star_yellow_xxxhdpi"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/iv_search_result_star_3"
+            android:layout_alignBottom="@+id/iv_search_result_star_3"
+            />
+
+        <ImageView
+            android:id="@+id/iv_search_result_star_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_star_grey_xxxhdpi"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/iv_search_result_star_4"
+            android:layout_alignBottom="@+id/iv_search_result_star_4"
+            />
+
         <borell.com.suino.view.LatoTextView
-            android:id="@+id/tv_time_result_user_name"
-            custom:typefaceAsset="fonts/Lato-Heavy.ttf"
+            android:id="@+id/tv_search_result_rating"
+            custom:typefaceAsset="fonts/Lato-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:layout_below="@+id/rl_result_item_top_bar"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="44dp"
-            android:textSize="20dp"
-            android:text="Daniel">
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@+id/iv_search_result_star_5"
+            android:layout_alignBottom="@+id/iv_search_result_star_5"
+            android:textSize="11dp"
+            android:text="(47)">
+
+        </borell.com.suino.view.LatoTextView>
+
+        <ImageView
+            android:id="@+id/iv_result_item_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_pin_little_search_list_xxxhdpi"
+            android:layout_alignTop="@+id/iv_result_item_level"
+            android:layout_marginStart="25dp"
+            />
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_search_result_distance"
+            custom:typefaceAsset="fonts/Lato-Medium.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/iv_result_item_pin"
+            android:layout_alignBottom="@+id/iv_result_item_level"
+            android:textSize="14dp"
+            android:text="2.2 km">
 
         </borell.com.suino.view.LatoTextView>
 
@@ -256,6 +357,10 @@
         android:text="Today">
 
     </borell.com.suino.view.LatoTextView>
+
+
+
+
 
 
 

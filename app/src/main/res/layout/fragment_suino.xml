@@ -50,4 +50,12 @@
         android:layout_below="@+id/button_create_course_test"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Result"
+        android:id="@+id/button_search_result"
+        android:layout_below="@+id/button_search"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
