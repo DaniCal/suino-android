@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,9 @@ public class SearchButtonFragment  extends Fragment {
     }
 
     public void initClickListener(){
-        getView().setOnClickListener(new View.OnClickListener() {
+        CardView cv_search_button = (CardView) getView().findViewById(R.id.cv_filter_button);
+
+        cv_search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCallback.showFilter();

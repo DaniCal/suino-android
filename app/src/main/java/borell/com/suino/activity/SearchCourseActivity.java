@@ -9,10 +9,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import borell.com.suino.R;
-import borell.com.suino.fragment.CreateCourseFragment;
 import borell.com.suino.fragment.SearchButtonFragment;
 import borell.com.suino.fragment.SearchFilterFragment;
 import borell.com.suino.view.LatoEditText;
@@ -31,7 +29,7 @@ public class SearchCourseActivity extends AppCompatActivity implements SearchCou
         setContentView(R.layout.activity_search);
         initToolbar();
         showSearchButtonFragment();
-        initCreateCourseButton();
+        initSearchCourseButton();
         initEditTextView();
     }
 
@@ -54,7 +52,7 @@ public class SearchCourseActivity extends AppCompatActivity implements SearchCou
         startActivity(intent);
     }
 
-    private void initCreateCourseButton(){
+    private void initSearchCourseButton(){
         searchCourse = (CardView) findViewById(R.id.cv_search_course_button);
         searchCourse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +67,14 @@ public class SearchCourseActivity extends AppCompatActivity implements SearchCou
     }
 
     private void searchCourseRequest(){
-        searchFilterFragment.getFilterOption();
+        searchFilterFragment.getFilterOption().createSearchUrl();
     }
 
     public void showSearchButtonFragment(){
         searchButtonFragment = new SearchButtonFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_body, searchButtonFragment);
+        fragmentTransaction.replace(R.id.container_search, searchButtonFragment);
         fragmentTransaction.commit();
     }
 
@@ -84,8 +82,9 @@ public class SearchCourseActivity extends AppCompatActivity implements SearchCou
         searchFilterFragment = new SearchFilterFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_body, searchButtonFragment);
+        fragmentTransaction.replace(R.id.container_search, searchFilterFragment);
         fragmentTransaction.commit();
+
     }
 
 

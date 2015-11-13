@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cv_search_result_border"
+        android:layout_width="fill_parent"
+        android:layout_height="159dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_below="@id/cv_level"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        card_view:cardBackgroundColor="@android:color/transparent"
+        card_view:cardElevation="1dp"
+        card_view:cardCornerRadius="@dimen/card_radius">
+
+
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/rl_search_result_information"
+        android:layout_width="match_parent"
+        android:layout_height="159dp"
+        android:background="@color/cardViewBackground"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="10dp"
+        >
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:id="@+id/rl_result_item_top_bar"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/iv_result_item_hashtag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="107dp"
+                android:src="@drawable/icon___xxxhdpi"
+                />
+
+            <borell.com.suino.view.LatoTextView
+                android:id="@+id/tv_result_item_keyword"
+                custom:typefaceAsset="fonts/Lato-Semibold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="2dp"
+                android:layout_toEndOf="@+id/iv_result_item_hashtag"
+                android:textSize="20dp"
+                android:text="Photoshop"
+
+
+                />
+
+            <borell.com.suino.view.LatoTextView
+                android:id="@+id/tv_result_item_price"
+                custom:typefaceAsset="fonts/Lato-Heavy.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ce9f03"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:textSize="20dp"
+                android:text="10 €"
+
+
+                />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_result_item_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_calendar__search_list_xxxhdpi"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="16dp"/>
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_time_result_calendar"
+            custom:typefaceAsset="fonts/Lato-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#504f4c"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_toEndOf="@+id/iv_result_item_calendar"
+
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="16dp"
+            android:textSize="14dp"
+            android:text="31 Wed, October"
+
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_time_search_list_xxxhdpi"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="58dp"/>
+
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_time_result_time"
+            custom:typefaceAsset="fonts/Lato-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#504f4c"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_toEndOf="@+id/iv_result_item_calendar"
+
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="58dp"
+            android:textSize="14dp"
+            android:text="12.00 - 13.30"
+
+            />
+
+        <ImageView
+            android:id="@+id/iv_result_item_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_levele_newbie_search_list_xxxhdpi"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="96dp"/>
+
+
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_time_result_level"
+            custom:typefaceAsset="fonts/Lato-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#504f4c"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_toEndOf="@+id/iv_result_item_calendar"
+
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="96dp"
+            android:textSize="14dp"
+            android:text="Newbie"
+
+            />
+
+
+        <ImageView
+            android:id="@+id/iv_result_item_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_group__search_list_xxxhdpi"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_marginStart="254dp"
+            android:layout_marginTop="96dp"/>
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_time_result_group_1"
+            custom:typefaceAsset="fonts/Lato-Medium.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fbd144"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_toEndOf="@+id/iv_result_item_group"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="96dp"
+            android:textSize="14dp"
+            android:text="14"
+
+            />
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_time_result_group_2"
+            custom:typefaceAsset="fonts/Lato-Light.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#504f4c"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_toEndOf="@+id/tv_time_result_group_1"
+            android:layout_marginTop="96dp"
+            android:textSize="14dp"
+            android:text="/20"
+
+            />
+
+
+
+
+
+        //User Information
+
+        <borell.com.suino.view.LatoTextView
+            android:id="@+id/tv_time_result_user_name"
+            custom:typefaceAsset="fonts/Lato-Heavy.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@+id/rl_result_item_top_bar"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="44dp"
+            android:textSize="20dp"
+            android:text="Daniel">
+
+        </borell.com.suino.view.LatoTextView>
+
+
+
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/iv_profile_image"
+        android:elevation="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/profilepicture"
+        app:civ_border_width="3dp"
+        android:layout_marginTop="19dp"
+        app:civ_border_color="@color/colorPrimary"
+        />
+
+
+    <borell.com.suino.view.LatoTextView
+        android:id="@+id/tv_search_result_time_hint"
+        custom:typefaceAsset="fonts/Lato-Light.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#504f4c"
+        android:layout_toEndOf="@+id/iv_profile_image"
+        android:textSize="20dp"
+        android:layout_marginTop="19dp"
+        android:text="Today">
+
+    </borell.com.suino.view.LatoTextView>
+
+
+
+
+</RelativeLayout>

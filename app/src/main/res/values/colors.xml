@@ -4,6 +4,7 @@
     <color name="colorPrimaryHollow">#fcdd73</color>
     <color name="colorPrimaryDark">#ffb7910e</color>
     <color name="textColorPrimary">#FFFFFF</color>
+    <color name="cardViewBackground">#FFFFFF</color>
     <color name="textColorPrimaryDark">#b3504f4c</color>
     <color name="textColorHollow">#66504f4c</color>
     <color name="windowBackground">#f5f6f5</color>

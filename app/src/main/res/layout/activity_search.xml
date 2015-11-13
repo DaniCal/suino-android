@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/windowBackground">
 
@@ -10,47 +10,64 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-
-    <RelativeLayout
-        android:id="@+id/rl_search_input"
-        android:layout_width="match_parent"
-        android:layout_height="71dp"
-        android:background="#FFFFFF"
-        android:layout_below="@id/toolbar">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_search_icon"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/ic_loupe_search_class_xxxhdpi"/>
-
-        <borell.com.suino.view.LatoEditText
-            android:id="@+id/et_search_keywords"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/iv_search_icon"
-            android:layout_marginStart="10dp"
-            android:textSize="20dp"
-            android:hint="What do you want to learn?"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="4dp"
-            android:textColorHint="@color/textColorHollow"
-            android:textColor="@color/textColorPrimaryDark"
-            custom:typefaceAsset="fonts/Lato-Semibold.ttf"/>
-    </RelativeLayout>
-
-
-    <FrameLayout
-        android:id="@+id/container_create_course"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_search_input"
-        android:layout_weight="1"
-        >
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView_createCourse"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentBottom="true">
+        <!--android:fillViewport="true"-->
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/rl_search_input"
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:background="#FFFFFF"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_search_icon"
+                    android:layout_marginStart="31dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/ic_loupe_search_class_xxxhdpi"/>
+
+                <borell.com.suino.view.LatoEditText
+                    android:id="@+id/et_search_keywords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/iv_search_icon"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20dp"
+                    android:hint="What do you want to learn?"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="4dp"
+                    android:textColorHint="@color/textColorHollow"
+                    android:textColor="@color/textColorPrimaryDark"
+                    custom:typefaceAsset="fonts/Lato-Semibold.ttf"/>
+            </RelativeLayout>
+
+
+            <FrameLayout
+                android:id="@+id/container_search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_search_input"
+                android:layout_weight="1"
+                >
+            </FrameLayout>
+
+        </RelativeLayout>
+
+
+
+
+    </ScrollView>
 
 
 
@@ -94,3 +111,4 @@
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>
+

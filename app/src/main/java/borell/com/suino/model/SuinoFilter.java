@@ -77,7 +77,7 @@ public class SuinoFilter {
     }
 
     public void removeLevelFilter(int level){
-        this.levelFilter.remove(level);
+        this.levelFilter.remove(new Integer(level));
     }
 
     public boolean isLevelSet(int level){

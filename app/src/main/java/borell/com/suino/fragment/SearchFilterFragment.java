@@ -36,6 +36,7 @@ public class SearchFilterFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        initCategoryFilter();
         initLevelFilter();
         initGroupFilter();
         initMaxDistanceFilter();
@@ -170,7 +171,7 @@ public class SearchFilterFragment extends Fragment {
 
     public void initMaxDistanceFilter(){
         SeekBar sb_maxDistance = (SeekBar) getView().findViewById(R.id.sb_filter_distance);
-        final TextView tv_maxDistance = (TextView) getView().findViewById(R.id.tv_filter_category);
+        final TextView tv_maxDistance = (TextView) getView().findViewById(R.id.tv_filter_maxDistance);
         sb_maxDistance.setMax(SuinoFilter.DISTANCE_MAX);
         sb_maxDistance.setProgress(SuinoFilter.DISTANCE_DEFAULT);
         filterOptions.setMaxDistanceFilter(SuinoFilter.DISTANCE_DEFAULT);
